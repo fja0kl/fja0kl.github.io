@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DL,GAN,图片生成,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="GAN由Goodfellow等人于2014年引入的生成对抗网络（GAN）是用于学习图像潜在空间的VAE的替代方案。它们通过强制生成的图像在统计上几乎与真实图像几乎无法区分，从而能够生成相当逼真的合成图像。 理解GAN的直观方式是想象一个伪造者试图创造一幅伪造的毕加索作品。起初，伪造者的任务非常糟糕。他将他的一些假货与真正的毕加索混合在一起，并将它们全部展示给艺术品经销商。艺术品经销商对每幅画进行真">
+<meta name="keywords" content="DL,GAN,图片生成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GAN图片生成">
+<meta property="og:url" content="http://fja0kl.github.io/2018/09/07/GAN图片生成/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="GAN由Goodfellow等人于2014年引入的生成对抗网络（GAN）是用于学习图像潜在空间的VAE的替代方案。它们通过强制生成的图像在统计上几乎与真实图像几乎无法区分，从而能够生成相当逼真的合成图像。 理解GAN的直观方式是想象一个伪造者试图创造一幅伪造的毕加索作品。起初，伪造者的任务非常糟糕。他将他的一些假货与真正的毕加索混合在一起，并将它们全部展示给艺术品经销商。艺术品经销商对每幅画进行真">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/9637742-ab0edb31138ba50c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/9637742-8087833e0c9fe8ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-09-07T13:20:50.530Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GAN图片生成">
+<meta name="twitter:description" content="GAN由Goodfellow等人于2014年引入的生成对抗网络（GAN）是用于学习图像潜在空间的VAE的替代方案。它们通过强制生成的图像在统计上几乎与真实图像几乎无法区分，从而能够生成相当逼真的合成图像。 理解GAN的直观方式是想象一个伪造者试图创造一幅伪造的毕加索作品。起初，伪造者的任务非常糟糕。他将他的一些假货与真正的毕加索混合在一起，并将它们全部展示给艺术品经销商。艺术品经销商对每幅画进行真">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/9637742-ab0edb31138ba50c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/09/07/GAN图片生成/">
+
+
+
+
+
+  <title>GAN图片生成 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/09/07/GAN图片生成/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">GAN图片生成</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T21:19:09+08:00">
+                2018-09-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-09-07T21:20:50+08:00">
+                2018-09-07
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/DL/" itemprop="url" rel="index">
+                    <span itemprop="name">DL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/07/GAN图片生成/" class="leancloud_visitors" data-flag-title="GAN图片生成">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,013
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h2><p>由Goodfellow等人于2014年引入的<strong>生成对抗网络（GAN）是用于学习图像潜在空间的VAE的替代方案</strong>。它们通过<strong>强制生成的图像在统计上几乎与真实图像几乎无法区分，从而能够生成相当逼真的合成图像。</strong></p>
+<p>理解GAN的直观方式是想象一个伪造者试图创造一幅伪造的毕加索作品。起初，伪造者的任务非常糟糕。他将他的一些假货与真正的毕加索混合在一起，并将它们全部展示给艺术品经销商。艺术品经销商对每幅画进行真实性评估，并给出关于毕加索看起来像毕加索的原因的伪造反馈。伪造者回到他的工作室准备一些新的假货。随着时间的推移，伪造者越来越有能力模仿毕加索的风格，艺术品经销商越来越专业地发现假货。最后，他们手上拿着一些优秀的假毕加索。</p>
+<p>这就是GAN的意义：伪造网络和专家网络，每个网络都经过最好的培训。因此，GAN由两部分组成：</p>
+<ul>
+<li>生成网络(generator): 将随机向量（潜在空间中的随机点）作为输入，并将其解码为合成图像；</li>
+<li>辨别网络(discriminator): 将图像（真实的或合成的）作为输入，并预测图像是来自训练集还是由生成器网络创建。</li>
+</ul>
+<p>生成器网络经过训练，能够欺骗鉴别器网络，因此随着训练的进行，它逐渐产生越来越逼真的图像：人工图像看起来与真实图像无法区分，只要鉴别器网络不可能鉴别两张图片。同时，鉴别器不断适应发生器逐渐改进的能力，为生成的图像设置了高度的真实感。一旦训练结束，生成器就能够将其输入空间中的任何点转换为可信的图像。<strong>与VAE不同，这个潜在空间对有意义结构的明确保证较少;特别是，它不是连续的。</strong>
+[图片上传失败…(image-599f61-1536326082049)]</p>
+<p>值得注意的是，<strong>GAN是一个优化最小值不固定的系统</strong>。通常，梯度下降包括在静态损失中滚下山丘。但是使用GAN，从山上下来的每一步都会改变整个景观。这是<strong>一个动态系统，其中优化过程寻求的不是最小，而是两个力之间的平衡</strong>。出于这个原因，GAN是众所周知的<strong>难以训练</strong> - 让GAN工作需要大量仔细调整模型架构和训练参数。</p>
+<h3 id="GAN实现示意图"><a href="#GAN实现示意图" class="headerlink" title="GAN实现示意图"></a>GAN实现示意图</h3><p>使用keras实现一个简单的GAN网络：DCGAN，Generator和Discriminator都是由卷积网络组成。使用Conv2DTranspose网络层在Generator用来对图片上采样。</p>
+<p>在CIFAR10,50000张32x32 RGB图片数据集上训练。为了训练更容易，仅使用“青蛙”类图片。</p>
+<p>实现GAN网络流程：</p>
+<ol>
+<li>generator网络将(latent_dim, )向量转换成(32,32,3)图片；</li>
+<li>discriminator将(32,32,3)图片映射到2分类得分上，得到图片为真的概率；</li>
+<li>gan网络将generator和discriminator结合起来：gan(x) = discriminator(generator(x))。gan网络将隐空间向量映射到鉴别器鉴别generator由隐空间向量生成图片为真的概率上；</li>
+<li>使用带real/fake标签的real、fake图片对Discriminator训练；</li>
+<li>要训练Generator，可以使用gan模型损失对Generator权重的梯度。这意味着，在每个步骤中，将生成器的权重移动到使鉴别器更可能将生成器解码的图像归类为“真实”的方向上。换句话说，你训练生成器来欺骗鉴别器。</li>
+</ol>
+<h3 id="A-bag-of-tricks"><a href="#A-bag-of-tricks" class="headerlink" title="A bag of tricks"></a>A bag of tricks</h3><p>众所周知，<strong>训练GAN和调整GAN实现的过程非常困难。</strong>你应该记住一些已知的技巧。像深度学习中的大多数事情一样：<strong>这些技巧是启发式的，而不是理论支持的指导方针。</strong> 他们得到了对手头现象的直观理解的支持，并且他们已经知道在经验上运作良好，尽管不一定在每种情况下都有效。
+以下是实现GAN生成器和鉴别器时使用的一些技巧。它不是GAN相关技巧的详尽列表;你会在GAN文献中找到更多：</p>
+<ul>
+<li>Generator使用tanh作为最后一层的激活函数，而不是sigmoid；</li>
+<li>隐空间取样时使用正态分布(高斯分布)，而不是均匀分布；</li>
+<li>为了健壮性可以增加随机性。<strong>由于GAN训练导致动态平衡，GAN可能会以各种方式陷入困境。在训练期间引入随机性有助于防止这种情况</strong>。我们<strong>以两种方式引入随机性：通过在鉴别器中使用dropout并通过向鉴别器的标签添加随机噪声。</strong></li>
+<li><strong>稀疏梯度可能会阻碍GAN训练</strong>。<em>在深度学习中，稀疏性通常是理想的属性，但在GAN中则不然。有两件事可以引起梯度稀疏：最大池操作和ReLU激活</em>。建议使用跨步卷积进行下采样，而不是最大池化，建议使用LeakyReLU层而不是ReLU激活。它与ReLU类似，但它通过允许小的负激活值来放宽稀疏性约束。</li>
+<li>在生成的图像中，通常会看到由于生成器中像素空间的不均匀覆盖而导致的棋盘格伪影（见图8.17）。为了解决这个问题，每当我们在生成器和鉴别器中使用跨步的Conv2DTranpose或Conv2D时，我们使用可以被步长大小整除的内核大小。</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/9637742-ab0edb31138ba50c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<h3 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h3><p>首先，开发一个生成器模型，该模型将矢量（从潜在空间 - 在训练期间将随机采样）转换为候选图像。 GAN通常出现的许多问题之一是生成器卡在生成的看起来像噪声的图像。一种可能的解决方案是在鉴别器和发生器上使用dropout。
+<em>GAN 生成器网络</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">latent_dim = <span class="number">2</span></span><br><span class="line">height = <span class="number">32</span></span><br><span class="line">width = <span class="number">32</span></span><br><span class="line">channels = <span class="number">3</span></span><br><span class="line">generator_input = keras.Input(shape=(latent_dim,))</span><br><span class="line"></span><br><span class="line">x = layers.Dense(<span class="number">128</span> * <span class="number">16</span> * <span class="number">16</span>)(generator_input)</span><br><span class="line">x = layers.LeakyReLU()(x)</span><br><span class="line">x = layers.Reshape((<span class="number">16</span>, <span class="number">16</span>, <span class="number">128</span>))(x)<span class="comment">#将输入转换成16*16 128通道的特征图</span></span><br><span class="line"></span><br><span class="line">x = layers.Conv2D(<span class="number">256</span>, <span class="number">5</span>, padding=<span class="string">'same'</span>)(x)</span><br><span class="line">x = layers.LeakyReLU()(x)</span><br><span class="line"></span><br><span class="line">x=layers.Conv2DTranspose(<span class="number">256</span>, <span class="number">4</span>, strides=<span class="number">2</span>, padding=<span class="string">'same'</span>)(x)<span class="comment">#上采样32*32</span></span><br><span class="line">x = layers.LeakyReLU()(x)</span><br><span class="line"></span><br><span class="line">x = layers.Conv2D(<span class="number">256</span>, <span class="number">5</span>, padding=<span class="string">'same'</span>)(x)</span><br><span class="line">x = layers.LeakyReLU()(x)</span><br><span class="line">x = layers.Conv2D(<span class="number">256</span>, <span class="number">5</span>, padding=<span class="string">'same'</span>)(x)</span><br><span class="line">x = layers.LeakyReLU()(x)</span><br><span class="line"></span><br><span class="line"><span class="comment">#产生32x32 1通道的特征图</span></span><br><span class="line">x = layers.Conv2D(channels, <span class="number">7</span>, activation=<span class="string">'tanh'</span>, padding=<span class="string">'same'</span>)(x)</span><br><span class="line">generator = keras.models.Model(generator_input, x)<span class="comment">#将(latent_dim,)-&gt;(32,32,3)</span></span><br><span class="line">generator.summary()</span><br></pre></td></tr></table></figure>
+<h3 id="Discriminator"><a href="#Discriminator" class="headerlink" title="Discriminator"></a>Discriminator</h3><p>接下来，将开发一个鉴别器模型，将候选图像（真实的或合成的）作为输入，并将其分为两类：“生成的图像”或“来自训练集的真实图像”。
+<em>GANs 鉴别器网络</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">discriminator_input = layers.Input(shape=(height, width, channels))</span><br><span class="line">x = layers.Conv2D(<span class="number">128</span>, <span class="number">3</span>)(discriminator_input)</span><br><span class="line">x = layers.LeakyReLU()(x)</span><br><span class="line">x = layers.Conv2D(<span class="number">128</span>, <span class="number">4</span>, strides=<span class="number">2</span>)(x)</span><br><span class="line">x = layers.LeakyReLU()(x)</span><br><span class="line">x = layers.Conv2D(<span class="number">128</span>, <span class="number">4</span>, strides=<span class="number">2</span>)(x)</span><br><span class="line">x = layers.LeakyReLU()(x)</span><br><span class="line">x = layers.Conv2D(<span class="number">128</span>, <span class="number">4</span>, strides=<span class="number">2</span>)(x)</span><br><span class="line">x = layers.LeakyReLU()(x)</span><br><span class="line">x = layers.Flatten()(x)</span><br><span class="line"></span><br><span class="line">x = layers.Dropout(<span class="number">0.4</span>)(x)</span><br><span class="line"></span><br><span class="line">x = layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>)(x)<span class="comment">#二分类</span></span><br><span class="line"></span><br><span class="line">discriminator = keras.models.Model(discriminator_input, x)</span><br><span class="line">discriminator.summary()</span><br><span class="line"></span><br><span class="line">discriminator_optimizer = keras.optimizers.RMSprop(lr=<span class="number">0.0008</span>,</span><br><span class="line">		clipvalue=<span class="number">1.0</span>,decay=<span class="number">1e-8</span>)</span><br><span class="line">discriminator.compile(optimizer=discriminator_optimizer,</span><br><span class="line">	loss=<span class="string">'binary_crossentropy'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="对抗网络"><a href="#对抗网络" class="headerlink" title="对抗网络"></a>对抗网络</h3><p>最后，设置GAN，它链接生成器和鉴别器。经过训练，该模型将使生成器向一个方向移动，从而提高其欺骗鉴别器的能力。这个模型将潜在空间点转换为分类决策（“假”或“真实”） 并且它意味着使用始终“这些是真实图像”的标签进行训练。因此，训练gan将更新生成器的权重。在查看假图像时，使鉴别器更有可能预测“真实”的方式。非常重要的是要注意在训练期间将鉴别器设置为冻结（不可训练）：训练gan时不会更新其权重。如果在此过程中可以更新鉴别器权重，那么将训练鉴别器始终预测“真实”，这不是我们想要的！
+<em>对抗网络</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">discriminator.trainable = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">gan_input = keras.Input(shape=(latent_dim,))</span><br><span class="line">gan_output = discriminator(generator(gan_input))</span><br><span class="line">gan = keras.models.Model(gan_input,gan_output)</span><br><span class="line"></span><br><span class="line">gan_optimizer = keras.optimizers.RMSprop(lr=<span class="number">0.0004</span>,clipvalue=<span class="number">1.0</span>,</span><br><span class="line">		decay=<span class="number">1e-8</span>)</span><br><span class="line">gan.compile(optimizer=gan_optimizer,loss=<span class="string">'binary_crossentropy'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="训练DCGAN"><a href="#训练DCGAN" class="headerlink" title="训练DCGAN"></a>训练DCGAN</h3><p>现在可以开始训练了。总结一下，这就是训练循环的流程。对于每个epoch，执行以下操作：</p>
+<ol>
+<li>在潜在空间中绘制随机点（随机噪声）；</li>
+<li>在生成器中使用随机噪声生成图像；</li>
+<li>将生成的图像与实际图像混合；</li>
+<li>使用这些混合图像训练鉴别器，并使用相应的目标：要么“真实”(对于真实图像)要么“假”(对于生成的图像)；</li>
+<li>在潜在空间中绘制新的随机点；</li>
+<li>使用这些随机向量训练gan，目标都是“这些都是真实的图像。”这会更新生成器的权重（仅因为鉴别器在gan内被冻结）以使它们朝向让鉴别器预测“这些是真实的图像“用于生成的图像：这会训练发生器欺骗鉴别器。</li>
+</ol>
+<p><em>GAN训练</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> keras.preprocessing <span class="keyword">import</span> image</span><br><span class="line"></span><br><span class="line">(x_train, y_train), (_, _) = keras.datasets.cifar10.load_data()</span><br><span class="line">x_train = x_train[y_train.flatten() == <span class="number">6</span>]<span class="comment">#第6类</span></span><br><span class="line"></span><br><span class="line">x_train = x_train.reshape((x_train.shape[<span class="number">0</span>],)+(height, width, 				channels)).astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line"></span><br><span class="line">iterations = <span class="number">10000</span></span><br><span class="line">batch_size = <span class="number">20</span></span><br><span class="line">save_dir = <span class="string">'your_dir'</span><span class="comment">#保存生成图片</span></span><br><span class="line"></span><br><span class="line">start = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> step <span class="keyword">in</span> range(iterations):</span><br><span class="line">	random_latent_vectors = np.random.normal(size=(batch_size,</span><br><span class="line">		latent_dim))<span class="comment">#正态分布随机取点</span></span><br><span class="line">	</span><br><span class="line">	generated_images = generator.predict(random_latent_vectors)<span class="comment">#fake图</span></span><br><span class="line">	</span><br><span class="line">	stop = start + batch_size</span><br><span class="line">	real_images = x_train[start: stop]</span><br><span class="line">	<span class="comment">#混合真、假图片</span></span><br><span class="line">	combined_images = np.concatenate([generated_images, real_images])</span><br><span class="line">	<span class="comment">#标签</span></span><br><span class="line">	labels = np.concatenate([np.ones((batch_size, <span class="number">1</span>)),</span><br><span class="line">		np.zeros((batch_size, <span class="number">1</span>))])</span><br><span class="line">	labels += <span class="number">0.05</span> * np.random.random(labels.shape)<span class="comment">#加随机噪声</span></span><br><span class="line">	</span><br><span class="line">	d_loss = discriminator.train_on_batch(combined_images, labels)</span><br><span class="line">	</span><br><span class="line">	random_latent_vectors = np.random.normal(size=(batch_size,</span><br><span class="line">		latent_dim))</span><br><span class="line">	isleading_targets = np.zeros((batch_size, <span class="number">1</span>))</span><br><span class="line">	<span class="comment">#gan训练：训练generator，固定discriminator</span></span><br><span class="line">	a_loss = gan.train_on_batch(random_latent_vectors,</span><br><span class="line">		misleading_targets)</span><br><span class="line">	</span><br><span class="line">	start += batch_size</span><br><span class="line">	<span class="keyword">if</span> start &gt; len(x_train) - batch_size:</span><br><span class="line">		start = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> step % <span class="number">100</span> == <span class="number">0</span>:<span class="comment">#每100步保存一次</span></span><br><span class="line">		gan.save_weights(<span class="string">'gan.h5'</span>)</span><br><span class="line"></span><br><span class="line">		print(<span class="string">'discriminator loss:'</span>, d_loss)</span><br><span class="line">		print(<span class="string">'adversarial loss:'</span>, a_loss)</span><br><span class="line"></span><br><span class="line">		img = image.array_to_img(generated_images[<span class="number">0</span>] * <span class="number">255.</span>, scale=<span class="keyword">False</span>)</span><br><span class="line">		img.save(os.path.join(save_dir,<span class="string">'generated_frog'</span>\</span><br><span class="line">			+str(step)+<span class="string">'.png'</span>))</span><br><span class="line">		</span><br><span class="line">		img = image.array_to_img(real_images[<span class="number">0</span>] * <span class="number">255.</span>, scale=<span class="keyword">False</span>)</span><br><span class="line">		img.save(os.path.join(save_dir,<span class="string">'real_frog'</span> + str(step) + <span class="string">'.png'</span>))</span><br></pre></td></tr></table></figure>
+<p>训练时，可能会看到对抗性损失开始显着增加，而判别性损失往往为零 - 鉴别者最终可能主导生成器。如果是这种情况，尝试降低鉴别器学习速率，并提高鉴别器的丢失率dropout。
+<img src="http://upload-images.jianshu.io/upload_images/9637742-8087833e0c9fe8ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>GAN由与鉴别器网络和生成器网络组成。训练鉴别器以在生成器的输出和来自训练数据集的真实图像之间进行区分，并且训练生成器以欺骗鉴别器。值得注意的是，<strong>生成器组不能直接从训练集中看到图像;它对数据的信息来自鉴别器。</strong></li>
+<li>GAN难以训练，因为<strong>训练GAN是一个动态过程</strong>，而不是具有固定损失的简单梯度下降过程。GAN正确训练需要使用一些启发式技巧，以及大量的参数调整。</li>
+<li>GAN可以产生高度逼真的图像。但是与VAE不同，他们<strong>学到的潜在空间没有整齐的连续结构</strong>，因此<strong>可能不适合某些实际应用，例如通过潜在空间概念向量进行图像编辑</strong>。</li>
+</ul>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/15/Deep-Learning-with-Python-基于Keras的Reuters新闻分类/">[Deep-Learning-with-Python]基于Keras的Reuters新闻分类</a></li><li><a href="http://fja0kl.github.io/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/">[Deep-Learning-with-Python]神经网络动手学习[上]</a></li><li><a href="http://fja0kl.github.io/2018/07/30/Deep-Learning-with-Python-文本序列中的深度学习/">[Deep-Learning-with-Python]文本序列中的深度学习.md</a></li><li><a href="https://LorrinWWW.github.io/posts/Generative-Adversarial-Network/">Generative Adversarial Network</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
+          
+            <a href="/tags/GAN/" rel="tag"># GAN</a>
+          
+            <a href="/tags/图片生成/" rel="tag"># 图片生成</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/03/使用VAEs生成图片/" rel="next" title="使用VAEs生成图片">
+                <i class="fa fa-chevron-left"></i> 使用VAEs生成图片
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/25/LeetCode-160-Intersection-of-Two-Linked-Lists/" rel="prev" title="[LeetCode]160.Intersection of Two Linked Lists">
+                [LeetCode]160.Intersection of Two Linked Lists <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GAN"><span class="nav-number">1.</span> <span class="nav-text">GAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GAN实现示意图"><span class="nav-number">1.1.</span> <span class="nav-text">GAN实现示意图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-bag-of-tricks"><span class="nav-number">1.2.</span> <span class="nav-text">A bag of tricks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator"><span class="nav-number">1.3.</span> <span class="nav-text">Generator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Discriminator"><span class="nav-number">1.4.</span> <span class="nav-text">Discriminator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对抗网络"><span class="nav-number">1.5.</span> <span class="nav-text">对抗网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练DCGAN"><span class="nav-number">1.6.</span> <span class="nav-text">训练DCGAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.7.</span> <span class="nav-text">小结</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

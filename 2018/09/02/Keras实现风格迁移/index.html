@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="keras,风格迁移,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="风格迁移风格迁移算法经历多次定义和更新，现在应用在许多智能手机APP上。 风格迁移在保留目标图片内容的基础上，将图片风格引用在目标图片上。  风格本质上是指在各种空间尺度上图像中的纹理，颜色和视觉图案;内容是图像的高级宏观结构。 实现风格迁移背后的关键概念与所有深度学习算法的核心相同：定义了一个损失函数来指定想要实现的目标，并最大限度地减少这种损失。 知道自己想要实现的目标：在采用参考图像的样式的">
+<meta name="keywords" content="keras,风格迁移">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Keras实现风格迁移">
+<meta property="og:url" content="http://fja0kl.github.io/2018/09/02/Keras实现风格迁移/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="风格迁移风格迁移算法经历多次定义和更新，现在应用在许多智能手机APP上。 风格迁移在保留目标图片内容的基础上，将图片风格引用在目标图片上。  风格本质上是指在各种空间尺度上图像中的纹理，颜色和视觉图案;内容是图像的高级宏观结构。 实现风格迁移背后的关键概念与所有深度学习算法的核心相同：定义了一个损失函数来指定想要实现的目标，并最大限度地减少这种损失。 知道自己想要实现的目标：在采用参考图像的样式的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://thyrsi.com/t6/365/1535591118x-1566688371.png">
+<meta property="og:image" content="http://thyrsi.com/t6/365/1535597765x1822611263.png">
+<meta property="og:updated_time" content="2018-09-02T09:20:23.614Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Keras实现风格迁移">
+<meta name="twitter:description" content="风格迁移风格迁移算法经历多次定义和更新，现在应用在许多智能手机APP上。 风格迁移在保留目标图片内容的基础上，将图片风格引用在目标图片上。  风格本质上是指在各种空间尺度上图像中的纹理，颜色和视觉图案;内容是图像的高级宏观结构。 实现风格迁移背后的关键概念与所有深度学习算法的核心相同：定义了一个损失函数来指定想要实现的目标，并最大限度地减少这种损失。 知道自己想要实现的目标：在采用参考图像的样式的">
+<meta name="twitter:image" content="http://thyrsi.com/t6/365/1535591118x-1566688371.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/09/02/Keras实现风格迁移/">
+
+
+
+
+
+  <title>Keras实现风格迁移 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/09/02/Keras实现风格迁移/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Keras实现风格迁移</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-02T17:18:40+08:00">
+                2018-09-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-09-02T17:20:23+08:00">
+                2018-09-02
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/DL/" itemprop="url" rel="index">
+                    <span itemprop="name">DL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/02/Keras实现风格迁移/" class="leancloud_visitors" data-flag-title="Keras实现风格迁移">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,859
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="风格迁移"><a href="#风格迁移" class="headerlink" title="风格迁移"></a>风格迁移</h2><p>风格迁移算法经历多次定义和更新，现在应用在许多智能手机APP上。
+风格迁移在保留目标图片内容的基础上，将图片风格引用在目标图片上。
+<img src="http://thyrsi.com/t6/365/1535591118x-1566688371.png" alt="">
+<strong>风格本质上是指在各种空间尺度上图像中的纹理，颜色和视觉图案;内容是图像的高级宏观结构。</strong>
+<strong>实现风格迁移背后的关键概念与所有深度学习算法的核心相同：定义了一个损失函数来指定想要实现的目标，并最大限度地减少这种损失。</strong>
+知道自己想要实现的目标：在采用参考图像的样式的同时保留原始图像的内容。如果我们能够在数学上定义内容和样式，那么最小化的适当损失函数将是以下内容:
+loss = distance(style(reference_image) - style(generated_image)) +
+distance(content(original_image) - content(generated_image))</p>
+<p>distance是一个如L2范数的函数，content计算图片内容表示的函数；style计算图片风格表示的函数。最小化损失函数导致style(generated_image)和引用图片style(reference_image)尽可能接近，而content(generated_image))与内容图片content(original_image)尽可能接近，最终达到风格迁移的目标。</p>
+<h3 id="内容损失函数"><a href="#内容损失函数" class="headerlink" title="内容损失函数"></a>内容损失函数</h3><p>我们已经知道网络模型前几层的激活函数值表示图片的局部信息，高层网络激活值包括全局性、抽象性的特征信息。换言之，<strong>卷积网的不同层的激活值提供了在不同空间尺度上图像内容的分解。</strong>因此，期望通过convnet中上层的表示捕获更全局和抽象的图像内容。
+内容损失函数的另一种选择是在目标图像上计算的预训练的网络中的上层的激活与生成的图像上计算的相同层的激活之间的L2范数。这保证从上层看生成的图像看起来与原始目标图像类似。假设卷积网的上层看到的是输入图像的内容，那么这就是保存图像内容的一种方式。</p>
+<h3 id="风格损失函数"><a href="#风格损失函数" class="headerlink" title="风格损失函数"></a>风格损失函数</h3><p>内容损失函数仅使用单个上层，但是Gatys定义的风格损失函数<strong>使用多个convnet层：尝试捕获由convnet提取的所有空间比例的样式参考图像的外观，而不仅仅是单个比例。</strong>对于风格的损失，Gatys使用<strong>图层激活的Gram矩阵：给定图层的要素图的内积。该内积可以理解为表示层的特征之间的相关性的图。</strong>这些特征相关性捕获特定空间尺度的模式的统计数据，其在经验上对应于在该尺度下找到的纹理的外观。
+因此，<strong>风格损失旨在在风格参考图像和生成的图像之间保持不同层的激活内的类似内部相关性。</strong>反过来，这保证了在不同空间尺度上找到的纹理在样式参考图像和生成的图像中看起来相似。</p>
+<p>可以使用预训练好的网络模型定义损失函数：</p>
+<ul>
+<li><strong>通过在目标内容图像和生成的图像之间保持类似的高级图层激活来保留内容。</strong>卷积网应该“看到”目标图像和生成的图像包含相同的内容；</li>
+<li><strong>通过在低级图层和高级图层的激活中保持类似的相关性来保留样式</strong>。特征相关性捕获纹理：生成的图像和样式参考图像应在<em>不同的空间尺度</em>共享相同的纹理。</li>
+</ul>
+<h3 id="Keras实现"><a href="#Keras实现" class="headerlink" title="Keras实现"></a>Keras实现</h3><p>使用VGG19网络模型实现风格迁移。流程：</p>
+<ol>
+<li>设置一个网络，同时为风格参考图像，目标图像和生成图像计算VGG19图层激活函数值；</li>
+<li>使用在这三个图像上计算的图层激活值来定义前面描述的损失函数，可以将其最小化以实现风格迁移；</li>
+<li>设置梯度下降过程以最小化此损失函数。</li>
+</ol>
+<p>定义风格图片、目标图片路径地址；为了确保两张处理图片尺寸相同(尺寸不同会增加处理难度)，对两张图片进行resize操作，大小为400px。
+<em>定义初始变量</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.preprocessing.image <span class="keyword">import</span> load_img,img_to_array</span><br><span class="line"></span><br><span class="line">target_image_path = <span class="string">'img/protrait.jpg'</span></span><br><span class="line">style_reference_image_path = <span class="string">'img/transfer_style_reference.jpg'</span></span><br><span class="line"></span><br><span class="line">width, height = load_img(target_image_path).size</span><br><span class="line">img_height = <span class="number">400</span></span><br><span class="line">img_width = int(width*img_height/height)</span><br></pre></td></tr></table></figure></p>
+<p>定义辅助函数方便加载、预处理、后期处理VGG19卷积网络接收和产生的图片。
+<em>辅助函数</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> keras.applications <span class="keyword">import</span> vgg19</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">preprocess_image</span><span class="params">(image_path)</span>:</span></span><br><span class="line">	img = load_img(image_path,target_size=(img_height,img_width))</span><br><span class="line">	img = img_to_array(img)</span><br><span class="line">	img = np.expand_dims(img,axis=<span class="number">0</span>)</span><br><span class="line">	img = vgg19.preprocess_input(img)</span><br><span class="line">	<span class="keyword">return</span> img</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deprocess_image</span><span class="params">(x)</span>:</span></span><br><span class="line">	x[:,:,<span class="number">0</span>] += <span class="number">103.939</span><span class="comment">#zero-centering 0中心化：减去均值</span></span><br><span class="line">	x[:,:,<span class="number">1</span>] += <span class="number">116.779</span></span><br><span class="line">	x[:,:,<span class="number">2</span>] += <span class="number">123.68</span></span><br><span class="line">	x = x[:,:,::<span class="number">-1</span>]<span class="comment">#BGR---&gt; RGB</span></span><br><span class="line">	x = np.clip(x,<span class="number">0</span>,<span class="number">255</span>).astype(<span class="string">'uint8'</span>)</span><br><span class="line">	<span class="keyword">return</span> x</span><br></pre></td></tr></table></figure></p>
+<p>设置vgg19网络。以风格图片、目标图片、生成图片的placeholder三张图片的batch作为输入。</p>
+<p><em>加载预训练VGG19模型，应用</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> backend <span class="keyword">as</span> K</span><br><span class="line"></span><br><span class="line">target_image = K.constant(preprocess_image(target_image_path))</span><br><span class="line">style_reference_image=K.constant(preprocess_image(style_reference_image_path))</span><br><span class="line">combination_image = K.placeholder((<span class="number">1</span>,img_height,img_width,<span class="number">3</span>))<span class="comment">#包含生成图片</span></span><br><span class="line">input_tensor = K.concatenate([target_image,style_reference_image,</span><br><span class="line">	combination_image],axis=<span class="number">0</span>)<span class="comment">#形成输入张量</span></span><br><span class="line">model = vgg19.VGG19(input_tensor=input_tensor,weights=<span class="string">'imagenet'</span>,include_top=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Model loaded."</span>)</span><br></pre></td></tr></table></figure></p>
+<p>定义内容损失，确保目标图片和生成图片在VGG19卷积网络的上层网络中相似。
+<em>内容损失</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">content_loss</span><span class="params">(base,combination)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> K.sum(K.square(combination-base))</span><br></pre></td></tr></table></figure></p>
+<p>定义风格损失。使用辅助函数计算Gram矩阵：在原始特征矩阵中找到的相关图。
+<em>风格损失</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gram_matrix</span><span class="params">(x)</span>:</span></span><br><span class="line">	features = K.batch_flatten(K.permute_dimensions(x,(<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>)))</span><br><span class="line">	gram = K.dot(features,K.transpose(features))</span><br><span class="line">	<span class="keyword">return</span> gram</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">style_loss</span><span class="params">(style,combination)</span>:</span></span><br><span class="line">	S = gram_matrix(style)</span><br><span class="line">	C = gram_matrix(combination)</span><br><span class="line">	channels = <span class="number">3</span></span><br><span class="line">	size = img_height*img_width</span><br><span class="line">	<span class="keyword">return</span> K.sum(K.square(S-C)) / (<span class="number">4.</span>*(channels ** <span class="number">2</span>) * (size ** <span class="number">2</span>))</span><br></pre></td></tr></table></figure></p>
+<p>除了这两种损失函数外，加第三种：总变异损失，其对所生成的组合图像的像素进行操作。它鼓励生成的图像中的空间连续性，从而避免过度像素化的结果。可以将其解释为正则化损失。
+<em>变异损失</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">total_variation_loss</span><span class="params">(x)</span>:</span></span><br><span class="line">	a = K.square(</span><br><span class="line">		x[:,:img_height<span class="number">-1</span>,:img_width<span class="number">-1</span>,:]-</span><br><span class="line">		x[:,<span class="number">1</span>:,:img_width<span class="number">-1</span>,:]</span><br><span class="line">	)</span><br><span class="line">	b = K.square(</span><br><span class="line">		x[:,img_height<span class="number">-1</span>,:img_width<span class="number">-1</span>,:] - </span><br><span class="line">		x[:,:img_height<span class="number">-1</span>,<span class="number">1</span>:,:]</span><br><span class="line">	)</span><br><span class="line">	<span class="keyword">return</span> K.sum(K.pow(a+b, <span class="number">1.25</span>))</span><br></pre></td></tr></table></figure></p>
+<p>最小化损失函数是三种损失函数的加权平均。为了计算内容损失，只需要使用一个上层网络–block5_conv2网络层；计算风格损失，需要使用多个网络层：从底层网络到高层网络。最后加上变异损失。</p>
+<p>依赖于使用风格图片和内容图片，可能需要微调content_weight系数(内容损失对全部损失的贡献程度)。大content_weight意味着目标内容在生成图片中更容易识别。
+<em>定义最终损失函数</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">output_dict = dict([(layer.name,layer.output) <span class="keyword">for</span> layer <span class="keyword">in</span> model.layers])</span><br><span class="line">content_layer = <span class="string">'block5_conv2'</span></span><br><span class="line">style_layers = [<span class="string">'block1_conv1'</span>,<span class="string">'block2_conv1'</span>,</span><br><span class="line">	<span class="string">'block3_conv1'</span>,<span class="string">'block4_conv1'</span>,<span class="string">'block5_conv1'</span>]</span><br><span class="line"></span><br><span class="line">total_variation_weight = <span class="number">1e-4</span></span><br><span class="line">style_weight = <span class="number">1.</span></span><br><span class="line">content_weight = <span class="number">0.025</span></span><br><span class="line"></span><br><span class="line">loss = K.variable(<span class="number">0.</span>)<span class="comment">#最终损失值</span></span><br><span class="line">layer_features = outputs_dict[content_layer]</span><br><span class="line">target_image_features = layer_features[<span class="number">0</span>, :, :, :]</span><br><span class="line">combination_features = layer_features[<span class="number">2</span>, :, :, :]</span><br><span class="line">loss+=content_weight*content_loss(target_image_features,combination_features)<span class="comment">#加内容损失</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> layer_name <span class="keyword">in</span> style_layers:<span class="comment">#加风格损失</span></span><br><span class="line">	layer_features = outputs_dict[layer_name]</span><br><span class="line">	style_reference_features = layer_features[<span class="number">1</span>, :, :, :]</span><br><span class="line">	combination_features = layer_features[<span class="number">2</span>, :, :, :]</span><br><span class="line">	sl = style_loss(style_reference_features, combination_features)</span><br><span class="line">	loss += (style_weight / len(style_layers)) * sl</span><br><span class="line"></span><br><span class="line"><span class="comment">#加变异损失，得到最终损失函数值</span></span><br><span class="line">loss += total_variation_weight * total_variation_loss(combination_image)</span><br></pre></td></tr></table></figure></p>
+<p>最后，使用梯度下降算法。Gatys论文中使用L-BFGS算法。L-BFGS算法包含在SciPy包中，在SciPy实现中有两个限制：</p>
+<ul>
+<li>要求的损失函数值、梯度函数值作为两个独立的函数传递；</li>
+<li>必须flat展开向量，而图片数组是3D。</li>
+</ul>
+<p>单独计算损失函数的值和梯度的值是低效的，因为这样做会导致两者之间的大量冗余计算;这个过程几乎是共同计算过程的两倍。要绕过这个，将设置一个名为Evaluator的Python类，它同时计算损失值和梯度值，在第一次调用时返回损失值，并缓存下一次调用的梯度。
+<em>梯度更新</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">grads = K.gradients(loss, combination_image)[<span class="number">0</span>]</span><br><span class="line">fetch_loss_and_grads = K.function([combination_image], [loss, grads])</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Evaluator</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.loss_value = <span class="keyword">None</span></span><br><span class="line">		self.grads_values = <span class="keyword">None</span></span><br><span class="line">		</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">loss</span><span class="params">(self, x)</span>:</span></span><br><span class="line">		<span class="keyword">assert</span> self.loss_value <span class="keyword">is</span> <span class="keyword">None</span></span><br><span class="line">		x = x.reshape((<span class="number">1</span>, img_height, img_width, <span class="number">3</span>))</span><br><span class="line">		outs = fetch_loss_and_grads([x])</span><br><span class="line">		loss_value = outs[<span class="number">0</span>]</span><br><span class="line">		grad_values = outs[<span class="number">1</span>].flatten().astype(<span class="string">'float64'</span>)</span><br><span class="line">		self.loss_value = loss_value</span><br><span class="line">		self.grad_values = grad_values</span><br><span class="line">		<span class="keyword">return</span> self.loss_value</span><br><span class="line">		</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">grads</span><span class="params">(self, x)</span>:</span></span><br><span class="line">		<span class="keyword">assert</span> self.loss_value <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span></span><br><span class="line">		grad_values = np.copy(self.grad_values)</span><br><span class="line">		self.loss_value = <span class="keyword">None</span></span><br><span class="line">		self.grad_values = <span class="keyword">None</span></span><br><span class="line">		<span class="keyword">return</span> grad_values</span><br><span class="line">		</span><br><span class="line">evaluator = Evaluator()</span><br></pre></td></tr></table></figure></p>
+<p>最终，使用SciPy的L-BFGS算法运行梯度下降，每次迭代过程中保存当前生成的图片。
+<em>风格迁移循环</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.optimize <span class="keyword">import</span> fmin_l_bfgs_b</span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imsave</span><br><span class="line"><span class="keyword">import</span> time </span><br><span class="line"></span><br><span class="line">result_prefix = <span class="string">'my_result'</span></span><br><span class="line">iterations = <span class="number">20</span></span><br><span class="line"></span><br><span class="line">x = preprocess_image(target_image_path)<span class="comment">#目标图片路径</span></span><br><span class="line">x = x.flatten()<span class="comment">#展开，应用l-bfgs</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(iterations):</span><br><span class="line">	print(<span class="string">'Start of iteration'</span>, i)</span><br><span class="line">	start_time = time.time()</span><br><span class="line">	<span class="comment">#在生成图片上运行L-BFGS优化；注意传递计算损失和梯度值必须为两个不同函数作为参数</span></span><br><span class="line">	x, min_val, info = fmin_l_bfgs_b(evaluator.loss, x,</span><br><span class="line">			fprime=evaluator.grads,maxfun=<span class="number">20</span>)</span><br><span class="line">	print(<span class="string">'Current loss value:'</span>, min_val)</span><br><span class="line">	img = x.copy().reshape((img_height, img_width, <span class="number">3</span>))</span><br><span class="line">	img = deprocess_image(img)</span><br><span class="line">	fname = result_prefix + <span class="string">'_at_iteration_%d.png'</span> % i</span><br><span class="line">	imsave(fname, img)</span><br><span class="line">	print(<span class="string">'Image saved as'</span>, fname)</span><br><span class="line">	end_time = time.time()</span><br><span class="line">	print(<span class="string">'Iteration %d completed in %ds'</span> % (i, end_time - start_time))</span><br></pre></td></tr></table></figure></p>
+<p>请记住，这种技术所实现的仅仅是<strong>图像重新构造或纹理转移的一种形式。</strong>它<strong>最适用于具有强烈纹理和高度自相似性的样式参考图像，并且内容目标不需要高级别的细节以便可识别</strong>。它通常无法实现相当抽象的功能，例如将一幅肖像的风格转移到另一幅肖像。该算法更接近经典信号处理而不是AI。
+<img src="http://thyrsi.com/t6/365/1535597765x1822611263.png" alt=""></p>
+<p>另外，请注意运行此风格迁移算法很慢。但是，由设置操作的转换非常简单，只要有适当的训练数据，它就可以通过一个小型，快速的前馈卷积网络学习。因此，可以通过首先花费大量计算周期来生成固定样式参考图像的输入输出训练示例，使用概述的方法，然后训练一个简单的convnet来学习这种特定于样式的转换，从而实现快速样式转换。一旦完成，对给定图像进行风格化是即时的：它只是这个小小的一个前向传递。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>风格迁移包括创建新图像，该图像保留目标图像的内容，同时还捕获参考图像的样式；</li>
+<li>内容可以通过卷积网络的高层网络捕获；</li>
+<li>风格通过卷积网络的不同网络层激活函数的内部相关性计算；</li>
+<li>因此，深度学习允许将风格迁移表达为使用由预训练的convnet对定义的损失进行优化的过程。</li>
+</ul>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/12/Deep-Learning-with-Python-神经网络的数学基础/">[Deep-Learning-with-Python]神经网络的数学基础</a></li><li><a href="http://fja0kl.github.io/2018/07/22/Deep-Learning-with-Python-计算机视觉中的深度学习/">[Deep-Learning-with-Python]计算机视觉中的深度学习</a></li><li><a href="http://fja0kl.github.io/2018/08/29/使用LSTM生成尼采风格文章/">使用LSTM生成尼采风格文章</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/keras/" rel="tag"># keras</a>
+          
+            <a href="/tags/风格迁移/" rel="tag"># 风格迁移</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/29/使用LSTM生成尼采风格文章/" rel="next" title="使用LSTM生成尼采风格文章">
+                <i class="fa fa-chevron-left"></i> 使用LSTM生成尼采风格文章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/03/使用VAEs生成图片/" rel="prev" title="使用VAEs生成图片">
+                使用VAEs生成图片 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#风格迁移"><span class="nav-number">1.</span> <span class="nav-text">风格迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内容损失函数"><span class="nav-number">1.1.</span> <span class="nav-text">内容损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#风格损失函数"><span class="nav-number">1.2.</span> <span class="nav-text">风格损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keras实现"><span class="nav-number">1.3.</span> <span class="nav-text">Keras实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.4.</span> <span class="nav-text">小结</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

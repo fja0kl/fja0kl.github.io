@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DL,keras,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="github repos  LSTM生成文本使用循环神经网络生成序列文本数据。循环神经网络可以用来生成音乐、图像作品、语音、对话系统对话等等。 如何生成序列数据？深度学习中最常见的方法是训练一个网络模型(RNN或者CNN)通过之前的tokens预测下一个或者之后的几个token序列。通常在处理文本数据时，tokens通常是单词或字符，任何可以对给定前一个tokens时对下一个令牌的概率进行建模的">
+<meta name="keywords" content="DL,keras">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用LSTM生成尼采风格文章">
+<meta property="og:url" content="http://fja0kl.github.io/2018/08/29/使用LSTM生成尼采风格文章/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="github repos  LSTM生成文本使用循环神经网络生成序列文本数据。循环神经网络可以用来生成音乐、图像作品、语音、对话系统对话等等。 如何生成序列数据？深度学习中最常见的方法是训练一个网络模型(RNN或者CNN)通过之前的tokens预测下一个或者之后的几个token序列。通常在处理文本数据时，tokens通常是单词或字符，任何可以对给定前一个tokens时对下一个令牌的概率进行建模的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://thyrsi.com/t6/364/1535506050x-1404775491.png">
+<meta property="og:image" content="http://thyrsi.com/t6/364/1535508076x1822611365.png">
+<meta property="og:updated_time" content="2018-08-29T13:45:51.297Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用LSTM生成尼采风格文章">
+<meta name="twitter:description" content="github repos  LSTM生成文本使用循环神经网络生成序列文本数据。循环神经网络可以用来生成音乐、图像作品、语音、对话系统对话等等。 如何生成序列数据？深度学习中最常见的方法是训练一个网络模型(RNN或者CNN)通过之前的tokens预测下一个或者之后的几个token序列。通常在处理文本数据时，tokens通常是单词或字符，任何可以对给定前一个tokens时对下一个令牌的概率进行建模的">
+<meta name="twitter:image" content="http://thyrsi.com/t6/364/1535506050x-1404775491.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/08/29/使用LSTM生成尼采风格文章/">
+
+
+
+
+
+  <title>使用LSTM生成尼采风格文章 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/08/29/使用LSTM生成尼采风格文章/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用LSTM生成尼采风格文章</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-29T21:42:58+08:00">
+                2018-08-29
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-29T21:45:51+08:00">
+                2018-08-29
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/DL/" itemprop="url" rel="index">
+                    <span itemprop="name">DL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/29/使用LSTM生成尼采风格文章/" class="leancloud_visitors" data-flag-title="使用LSTM生成尼采风格文章">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,968
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>github <a href="https://github.com/fja0kl/HandsNeuralWorks" target="_blank" rel="noopener">repos</a></p>
+</blockquote>
+<h2 id="LSTM生成文本"><a href="#LSTM生成文本" class="headerlink" title="LSTM生成文本"></a>LSTM生成文本</h2><p>使用循环神经网络生成序列文本数据。循环神经网络可以用来生成音乐、图像作品、语音、对话系统对话等等。</p>
+<h3 id="如何生成序列数据？"><a href="#如何生成序列数据？" class="headerlink" title="如何生成序列数据？"></a>如何生成序列数据？</h3><p>深度学习中最常见的方法是训练一个网络模型(RNN或者CNN)通过之前的tokens预测下一个或者之后的几个token序列。通常在处理文本数据时，tokens通常是单词或字符，任何可以对给定前一个tokens时对下一个令牌的概率进行建模的网络模型称为语言模型。<strong>语言模型能捕捉语言的潜在空间特性：其统计结构特征</strong>。</p>
+<p>一旦你有了这样一个训练有素的语言模型，你就可以从中进行采样（生成新的序列）：你给它一个初始的文本字符串（称为条件数据），让它生成下一个字符或下一个字（你甚至可以一次生成几个tokens），将生成的输出添加回输入数据，并多次重复该过程（见图8.1）。
+<img src="http://thyrsi.com/t6/364/1535506050x-1404775491.png" alt="">
+此循环允许生成任意长度的序列，这些序列反映了训练模型的数据结构：看起来几乎与人类书写句子相似的序列。</p>
+<h3 id="取样策略"><a href="#取样策略" class="headerlink" title="取样策略"></a>取样策略</h3><p><strong>生成文本时，选择下一个字符的方式至关重要。</strong>一种朴素的方法是贪婪采样–总是选择最可能的下一个字符。但是这种方法导致重复的，可预测的字符串看起来不连贯。<strong>一种更有趣的方法会产生更令人惊讶的选择：它通过从下一个字符的概率分布中抽样，在抽样过程中引入随机性。</strong>这称为随机抽样。注意，贪心采样也可以作为概率分布的采样：一个特定字符的概率为1而其他概率为0。</p>
+<p>从模型的softmax输出中概率地采样是巧妙的：它允许在某些时候对不太可能的字符进行采样，产生更有趣的句子，并且有时通过提出在训练数据中未发生的新的，逼真的单词来显示模型创造力。但是这个策略存在一个问题：它<strong>没有提供一种控制采样过程中随机性的方法。</strong></p>
+<p>随机性的重要性。考虑一个极端情况：纯随机抽样，从均匀概率分布中绘制下一个字符，并且每个角色都具有相同的可能性。该方案具有最大随机性;换句话说，该概率分布具有最大熵。当然，它不会产生任何有趣的东西。在另一个极端，贪婪的采样也不会产生任何有趣的东西，并且没有随机性：相应的概率分布具有最小的熵。从“真实”概率分布中抽样(由模型的softmax函数输出的分布)构成这两个极端之间的中间点。但是，可能希望探索许多其他更高或更低熵的中间点。<strong>较少的熵将使生成的序列具有更可预测的结构（因此它们可能看起来更逼真），而更多的熵将导致更令人惊讶和创造性的序列。</strong>
+当从生成模型中抽样时，在生成过程中探索不同量的随机性总是好的。因为我们是生成数据有趣程度的终极判断，所以相互作用是高度主观的，并且不可能事先知道最佳熵点在哪里。
+为了<strong>控制采样过程中的随机性</strong>，我们将引入一个名为softmax temperature的参数，该参数表示<strong>用于采样的概率分布的熵：它表征下一个字符的选择将会出乎意料或可预测的程度。</strong>给定温度值，通过以下列方式对其进行重新加权，从原始概率分布（模型的softmax输出）计算新的概率分布。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reweight_distribution</span><span class="params">(original_distribution, temperature=<span class="number">0.5</span>)</span>:</span></span><br><span class="line">	distribution = np.log(original_distribution) / temperature<span class="comment">#原始分布为1D，和为1；</span></span><br><span class="line">	distribution = np.exp(distribution)</span><br><span class="line">	<span class="keyword">return</span> distribution / np.sum(distribution)</span><br></pre></td></tr></table></figure></p>
+<p>较高的temperature导致较高熵的采样分布，这将产生更多令人惊讶和非结构化的生成数据，而较低的temperature将导致较少的随机性和更可预测的生成数据。
+<img src="http://thyrsi.com/t6/364/1535508076x1822611365.png" alt=""></p>
+<h3 id="实现字符级LSTM文本生成"><a href="#实现字符级LSTM文本生成" class="headerlink" title="实现字符级LSTM文本生成"></a>实现字符级LSTM文本生成</h3><p>用Keras将这些想法付诸实践。第一件事是准备用来学习语言模型的大量文本数据。可以使用任何足够大的文本文件或一组文本文件—维基百科，指环王等等。在这个例子中，你将使用19世纪晚期德国哲学家尼采（Nietzsche）的一些著作（翻译成英文）。因此，将学习的语言模型将特别是尼采的写作风格和选择主题的模型，而不是更通用的英语模型。</p>
+<p><em>准备数据</em>
+下载数据，转换成小写
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">path = keras.utils.get_file(<span class="string">'nietzsche.txt'</span>,origin=<span class="string">'https://s3.amazonaws.com/text-datasets/nietzsche.txt'</span>)</span><br><span class="line"></span><br><span class="line">text = open(path).read().lower()</span><br><span class="line">print(<span class="string">'Corpus length:'</span>,len(text))</span><br></pre></td></tr></table></figure></p>
+<p>之后，将提取长度为maxlen的部分重叠序列，对它们进行one-hot编码，打包成3D numpy数组形式，形状(squences,maxlen,unique_characters).同时，将准备一个包含相应目标的数组y：每个提取序列之后的one-hot编码字符。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">maxlen = <span class="number">60</span><span class="comment">#句子最大长度</span></span><br><span class="line">step = <span class="number">3</span><span class="comment">#每3个字符对句子进行采样</span></span><br><span class="line">sentences = []</span><br><span class="line">next_chars = []<span class="comment">#targets</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(text)-maxlen,step):</span><br><span class="line">	sentences.append(text[i:i+maxlen])</span><br><span class="line">	next_chars.append(text[i+maxlen])</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Number of sequences:'</span>, len(sentences))</span><br><span class="line">chars = sorted(list(set(text)))<span class="comment">#字典</span></span><br><span class="line">print(<span class="string">'Unique characters:'</span>, len(chars))</span><br><span class="line"></span><br><span class="line">char_indices = dict((char, chars.index(char)) <span class="keyword">for</span> char <span class="keyword">in</span> chars)<span class="comment">#字符-id对应关系</span></span><br><span class="line">print(<span class="string">'Vectorization...'</span>)</span><br><span class="line">x = np.zeros((len(sentences), maxlen, len(chars)), dtype=np.bool)</span><br><span class="line">y = np.zeros((len(sentences), len(chars)), dtype=np.bool)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, sentence <span class="keyword">in</span> enumerate(sentences):<span class="comment">#one-hot</span></span><br><span class="line">	<span class="keyword">for</span> t, char <span class="keyword">in</span> enumerate(sentence):</span><br><span class="line">		x[i, t, char_indices[char]] = <span class="number">1</span></span><br><span class="line">		y[i, char_indices[next_chars[i]]] = <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p><em>构建模型</em>
+LSTM+Dense;但是RNN并不是唯一生成序列文本的模型，1D卷积也可以达到相同的效果。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> layers</span><br><span class="line"></span><br><span class="line">model = keras.models.Sequential()</span><br><span class="line">model.add(layers.LSTM(<span class="number">128</span>,input_shape=(maxlen,len(chars))))</span><br><span class="line">model.add(layers.Dense(len(chars),activation=<span class="string">'softmax'</span>))</span><br><span class="line"></span><br><span class="line">optimizer = keras.optimizers.RMSprop(lr=<span class="number">0.01</span>)</span><br><span class="line">model.compile(loss=<span class="string">'categorical_crossentropy'</span>,optimizer=optimizer)</span><br></pre></td></tr></table></figure></p>
+<p><em>语言模型训练、采样</em>
+给定训练有素的模型和种子文本片段，可以通过重复执行以下操作来生成新文本：</p>
+<ol>
+<li>给定到目前为止生成的文本，从模型中绘制下一个字符的概率分布；</li>
+<li>将分布重新调整到某个temperature；</li>
+<li>根据重新加权的分布随机抽取下一个字符；</li>
+<li>在可用文本的末尾添加新字符。</li>
+</ol>
+<p>根据模型预测对下一个字符采样
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sample</span><span class="params">(preds, temperature=<span class="number">1.0</span>)</span>:</span></span><br><span class="line">	preds = np.asarray(preds).astype(<span class="string">'float64'</span>)</span><br><span class="line">	preds = np.log(preds) / temperature</span><br><span class="line">	exp_preds = np.exp(preds)</span><br><span class="line">	preds = exp_preds / np.sum(exp_preds)<span class="comment">#重新加权调整</span></span><br><span class="line">	probas = np.random.multinomial(<span class="number">1</span>, preds, <span class="number">1</span>)</span><br><span class="line">	<span class="keyword">return</span> np.argmax(probas)<span class="comment">#返回概率最大的字符下标</span></span><br></pre></td></tr></table></figure></p>
+<p>最后，以下循环重复训练并生成文本。可以在每个epochs之后使用一系列不同的temperature开始生成文本。这使可以了解生成的文本在模型开始收敛时如何演变，以及temperature对采样策略的影响。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">60</span>):</span><br><span class="line">	print(<span class="string">'epoch'</span>, epoch)</span><br><span class="line">	model.fit(x, y, batch_size=<span class="number">128</span>, epochs=<span class="number">1</span>)</span><br><span class="line">	start_index = random.randint(<span class="number">0</span>, len(text) - maxlen - <span class="number">1</span>)</span><br><span class="line">	generated_text = text[start_index:start_index+maxlen]<span class="comment">#种子文本</span></span><br><span class="line">	print(<span class="string">'--- Generating with seed: "'</span> + generated_text + <span class="string">'"'</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> temperature <span class="keyword">in</span> [<span class="number">0.2</span>, <span class="number">0.5</span>, <span class="number">1.0</span>, <span class="number">1.2</span>]:<span class="comment">#不同temperature生成文本对比</span></span><br><span class="line">		print(<span class="string">'------ temperature:'</span>, temperature)</span><br><span class="line">		sys.stdout.write(generated_text)</span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">400</span>):<span class="comment">#从种子文本开始，生成400个字符</span></span><br><span class="line">			sampled = np.zeros((<span class="number">1</span>, maxlen, len(chars)))<span class="comment">#种子文本one-hot编码</span></span><br><span class="line">			<span class="keyword">for</span> t, char <span class="keyword">in</span> enumerate(generated_text):</span><br><span class="line">				sampled[<span class="number">0</span>, t, char_indices[char]] = <span class="number">1.</span></span><br><span class="line"></span><br><span class="line">			preds = model.predict(sampled, verbose=<span class="number">0</span>)[<span class="number">0</span>]<span class="comment">#下一个字符预测</span></span><br><span class="line">			next_index = sample(preds, temperature)</span><br><span class="line">			next_char = chars[next_index]</span><br><span class="line">			generated_text += next_char<span class="comment">#添加到之前文本中</span></span><br><span class="line">			generated_text = generated_text[<span class="number">1</span>:]<span class="comment">#新的文本数据</span></span><br><span class="line">			sys.stdout.write(next_char)<span class="comment">#预测生成的字符</span></span><br></pre></td></tr></table></figure>
+<p>种子文本‘new faculty, and the jubilation reached its climax when kant.’;
+epochs=20,temperature=0.2，生成文本序列：
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">new faculty, and the jubilation reached its climax when kant and such a man</span><br><span class="line">in the same time the spirit of the surely and the such the such</span><br><span class="line">as a man is the sunligh and subject the present to the superiority of the</span><br><span class="line">special pain the most man and strange the subjection of the</span><br><span class="line">special conscience the special and nature and such men the subjection of the</span><br><span class="line">special men, the most surely the subjection of the special</span><br><span class="line">intellect of the subjection of the same things and</span><br></pre></td></tr></table></figure></p>
+<p>temperature=0.5：
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">new faculty, and the jubilation reached its climax when kant in the eterned</span><br><span class="line">and such man as it's also become himself the condition of the</span><br><span class="line">experience of off the basis the superiory and the special morty of the</span><br><span class="line">strength, in the langus, as which the same time life and "even who</span><br><span class="line">discless the mankind, with a subject and fact all you have to be the stand</span><br><span class="line">and lave no comes a troveration of the man and surely the</span><br><span class="line">conscience the superiority, and when one must be w</span><br></pre></td></tr></table></figure></p>
+<p>epochs=60，模型开始收敛，生成文本看起来更有意义，temperature=0.2：
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cheerfulness, friendliness and kindness of a heart are the sense of the</span><br><span class="line">spirit is a man with the sense of the sense of the world of the</span><br><span class="line">self-end and self-concerning the subjection of the strengthorixes--the</span><br><span class="line">subjection of the subjection of the subjection of the</span><br><span class="line">self-concerning the feelings in the superiority in the subjection of the</span><br><span class="line">subjection of the spirit isn't to be a man of the sense of the</span><br><span class="line">subjection and said to the strength of the sense of the</span><br></pre></td></tr></table></figure></p>
+<p>temperature=0.5:
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cheerfulness, friendliness and kindness of a heart are the part of the soul</span><br><span class="line">who have been the art of the philosophers, and which the one</span><br><span class="line">won't say, which is it the higher the and with religion of the frences.</span><br><span class="line">the life of the spirit among the most continuess of the</span><br><span class="line">strengther of the sense the conscience of men of precisely before enough</span><br><span class="line">presumption, and can mankind, and something the conceptions, the</span><br><span class="line">subjection of the sense and suffering and the</span><br></pre></td></tr></table></figure></p>
+<p>正如所看到的，低temperature值导致极其重复且可预测的文本，但局部结构非常逼真：特别是，所有单词都是真正的英语单词。随着temperature的升高，生成的文本变得更有趣，令人惊讶，甚至创造性;它有时会发明一些听起来有些合理的新词（比如说eterned）。在高temperature下，局部结构开始分解，大多数单词看起来像半随机字符串。毫无疑问，0.5是这个特定设置中文本生成最有趣的temperature值。<strong>始终尝试多种采样策略！学习结构和随机性之间的巧妙平衡是让生成有趣的原因。</strong></p>
+<p>请注意，<strong>通过训练更大的模型，更长的数据，可以获得生成的样本，这些样本看起来比这个更连贯和更真实。当然，除了随机机会之外，不要期望生成任何有意义的文本：您所做的只是从统计模型中抽取数据，其中字符来自哪些字符。</strong>
+语言是一种通信渠道，通信的内容与通信编码的消息的统计结构之间存在区别。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>可以通过训练模型来生成离散序列数据：预先给定前一个tokens生成下一个tokens；</li>
+<li>文本生成模型成为语言模型，基于单词或字符；</li>
+<li><strong>对下一个tokens进行采样需要在遵守模型判断可能性和引入随机性之间取得平衡;</strong></li>
+<li>解决这个问题的一种方法是softmax temperature的概念。始终尝试不同的temperature，找到合适的temperature。</li>
+</ul>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/15/Deep-Learning-with-Python-基于Keras的Reuters新闻分类/">[Deep-Learning-with-Python]基于Keras的Reuters新闻分类</a></li><li><a href="http://fja0kl.github.io/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/">[Deep-Learning-with-Python]神经网络动手学习[上]</a></li><li><a href="http://fja0kl.github.io/2018/07/30/Deep-Learning-with-Python-文本序列中的深度学习/">[Deep-Learning-with-Python]文本序列中的深度学习.md</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
+          
+            <a href="/tags/keras/" rel="tag"># keras</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/30/Deep-Learning-with-Python-文本序列中的深度学习/" rel="next" title="[Deep-Learning-with-Python]文本序列中的深度学习.md">
+                <i class="fa fa-chevron-left"></i> [Deep-Learning-with-Python]文本序列中的深度学习.md
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/02/Keras实现风格迁移/" rel="prev" title="Keras实现风格迁移">
+                Keras实现风格迁移 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM生成文本"><span class="nav-number">1.</span> <span class="nav-text">LSTM生成文本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何生成序列数据？"><span class="nav-number">1.1.</span> <span class="nav-text">如何生成序列数据？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取样策略"><span class="nav-number">1.2.</span> <span class="nav-text">取样策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现字符级LSTM文本生成"><span class="nav-number">1.3.</span> <span class="nav-text">实现字符级LSTM文本生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.4.</span> <span class="nav-text">小结</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

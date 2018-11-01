@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="推荐系统,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是推荐系统information overload信息过载时代： 信息爆炸。 在这个时代,无论是信息消费者还是信息生产者都遇到了很大的挑战:作为信息消费者,如何从大量信息中找到自己感兴趣的信息是一件非常困难的事情;作为信息生产者,如何让自己生产的信息脱颖而出,受到广大用户的关注,也是一件非常困难的事情。推荐系统就是解决这一矛盾的重要工具。 长尾理论long tail： 传统的80/20原则(8">
+<meta name="keywords" content="推荐系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[推荐系统]好的推荐系统">
+<meta property="og:url" content="http://fja0kl.github.io/2018/11/01/推荐系统-好的推荐系统/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="什么是推荐系统information overload信息过载时代： 信息爆炸。 在这个时代,无论是信息消费者还是信息生产者都遇到了很大的挑战:作为信息消费者,如何从大量信息中找到自己感兴趣的信息是一件非常困难的事情;作为信息生产者,如何让自己生产的信息脱颖而出,受到广大用户的关注,也是一件非常困难的事情。推荐系统就是解决这一矛盾的重要工具。 长尾理论long tail： 传统的80/20原则(8">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-01T00:34:58.300Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[推荐系统]好的推荐系统">
+<meta name="twitter:description" content="什么是推荐系统information overload信息过载时代： 信息爆炸。 在这个时代,无论是信息消费者还是信息生产者都遇到了很大的挑战:作为信息消费者,如何从大量信息中找到自己感兴趣的信息是一件非常困难的事情;作为信息生产者,如何让自己生产的信息脱颖而出,受到广大用户的关注,也是一件非常困难的事情。推荐系统就是解决这一矛盾的重要工具。 长尾理论long tail： 传统的80/20原则(8">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/11/01/推荐系统-好的推荐系统/">
+
+
+
+
+
+  <title>[推荐系统]好的推荐系统 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/11/01/推荐系统-好的推荐系统/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[推荐系统]好的推荐系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T08:33:37+08:00">
+                2018-11-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-01T08:34:58+08:00">
+                2018-11-01
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/推荐系统/" itemprop="url" rel="index">
+                    <span itemprop="name">推荐系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/01/推荐系统-好的推荐系统/" class="leancloud_visitors" data-flag-title="[推荐系统]好的推荐系统">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,061
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是推荐系统"><a href="#什么是推荐系统" class="headerlink" title="什么是推荐系统"></a>什么是推荐系统</h2><p>information overload信息过载时代： 信息爆炸。</p>
+<p>在这个时代,无论是信息消费者还是信息生产者都遇到了很大的挑战:作为信息消费者,如何从大量信息中找到自己感兴趣的信息是一件非常困难的事情;作为信息生产者,如何让自己生产的信息脱颖而出,受到广大用户的关注,也是一件非常困难的事情。推荐系统就是解决这一矛盾的重要工具。</p>
+<p><strong>长尾理论long tail</strong>： 传统的80/20原则(80%的销售额来自于20%的热门品牌)在互联网的加入下会受到挑战。互联网条件下,由于货架成本极端低廉,电子商务网站往往能出售比传统零售店更多的商品。虽然这些商品绝大多数都不热门,但与传统零售业相比,这些不热门的商品数量极其庞大,因此这些长尾商品的总销售额将是一个不可小觑的数字,也许会超过热门商品(即主流商品)带来的销售额。</p>
+<p><strong>推荐系统就是自动联系用户和物品的一种工具，它能够在信息过载的环境中帮助用户发现令他们感兴趣的信息，也能将信息推送给对它们感兴趣的用户</strong>。</p>
+<h2 id="个性化推荐系统的应用"><a href="#个性化推荐系统的应用" class="headerlink" title="个性化推荐系统的应用"></a>个性化推荐系统的应用</h2><ol>
+<li>电子商务</li>
+<li>电影和视频网站</li>
+<li>个性化音乐网络电台：豆瓣、网易云音乐私人电台</li>
+<li>社交网络</li>
+<li>个性化阅读</li>
+<li>基于位置的服务</li>
+<li>个性化邮件</li>
+<li>个性化广告</li>
+</ol>
+<h2 id="推荐系统评测"><a href="#推荐系统评测" class="headerlink" title="推荐系统评测"></a>推荐系统评测</h2><p>一个完整的推荐系统一般存在3个参与方：用户、物品提供者和提供推荐系统的网站。</p>
+<p>为了全面评测推荐系统对三方利益的影响，提出了不同的指标，包括准确度、覆盖度、新颖度、惊喜度、信任度、透明度等。这些指标中，有些可以离线计算，有些只有在线才能计算，有些只能通过用户问卷获得。</p>
+<h3 id="推荐系统实验方法"><a href="#推荐系统实验方法" class="headerlink" title="推荐系统实验方法"></a>推荐系统实验方法</h3><p>在推荐系统中主要有3种评测推荐效果的试验方法：离线实验、在线实验和用户调查。</p>
+<p>1.离线实验</p>
+<p>离线实验的方法一般由如下几个步骤构成：</p>
+<ul>
+<li>通过日志系统获得用户行为数据，并按照一定格式生成一个标准的数据集；</li>
+<li>将数据集按照一定的规则分成训练集和测试集；</li>
+<li>在训练集上训练用户兴趣模型，在测试集上进行预测；</li>
+<li>通过事先定义的离线指标评测算法在测试集上的预测结果。</li>
+</ul>
+<p>推荐系统的离线实验都是在数据集上完成的，不需要一个实际的系统来供它实验，只要由一个从实际系统日志中提取的数据集即可。
+<strong>好处：</strong>不需要真实用户参与，可以直接快速地计算出来，从而方便、快速地测试大量不同的算法。
+<strong>缺点：</strong>无法获得很多商业上关注的指标，如点击率、转换率等，而找到和商业指标非常相关的离线指标也是很困难的事情。
+离线实验的优缺点
+|优点|缺点|
+|:–:|:–:|
+|不需要有对实际系统的控制权|无法计算商业上关心的指标|
+|不需要用户参与实验|离线实验的指标和商业指标存在差距|
+|速度快，可以测试大量算法||</p>
+<p>机器学习上的评测指标大部分都是离线指标，只需要训练模型和数据集即可计算。</p>
+<p>2.用户调查</p>
+<p>如果要准确评测一个算法，需要相对比较真实的环境。最好的方法就是讲算法直接上线测试，但在对算法会不会降低用户满意度不大有把握的情况下，上线测试具有较高的风险，所以在上线测试前一般需要做一次称为<strong>用户调查</strong>的测试。</p>
+<p>用户调查需要有一些真实用户，让他们在需要测试的推荐系统上完成一些任务。在他们完成任务时，需要观察和记录他们的行为，并让他们回答一些问题。最后，需要通过分析他们的行为和答案了解测试系统的性能。[最常见的是问卷调查]</p>
+<p>用户调查是推荐系统评测的一个重要工具，很多离线时没有办法评测的与用户主观感受有关的指标都可以通过用户调查获得。
+用户调查也有一些缺点。首先,用户调查成本很高,需要用户花大量时间完成一个个任务,并回答相关的问题。有些时候,还需要花钱雇用测试用户。因此,大多数情况下很难进行大规模的用户调查,而对于参加人数较少的用户调查,得出的很多结论往往没有统计意义。因此,我们<strong>在做用户调查时,一方面要控制成本,另一方面又要保证结果的统计意义</strong>。</p>
+<p>用户调查优点：
+可以获得很多体现用户主观感受的指标，相对在线实验风险很低，出现错误后很容易弥补。
+缺点是：
+招募测试用户代价较大，很难组织大规模的测试用户，因此会使测试结果的统计意义不足。此外，在很多时候设计双盲实验非常困难，而且用户在测试环境下的行为和真实环境下的行为可能有所不同，因而在测试环境下收集的测试指标可能在真实环境下无法重现。</p>
+<p>3.在线实验</p>
+<p>在完成离线实验和必要的用户调查后，可以将推荐系统上线做AB测试，将它和旧的算法进行比较。</p>
+<p><strong>AB测试是一种很常用的在线评测算法的试验方法</strong>。它通过一定的规则将用户随机分成几组，并对不同组的用户采用不同的算法，然后通过统计不同组用户的各种不同的评测指标比较不同算法，比如可以统计不同组用户的点击率，通过点击率比较不同算法的性能。</p>
+<p><strong>AB测试就像是一种对比实验</strong>。</p>
+<p>AB测试的优点是可以公平获得不同算法实际在线时的性能指标,包括商业上关注的指标。AB测试的缺点主要是周期比较长,必须进行长期的实验才能得到可靠的结果。因此一般不会用AB测试测试所有的算法,而只是用它测试那些在离线实验和用户调查中表现很好的算法。其次,一个大型网站的AB测试系统的设计也是一项复杂的工程。</p>
+<p>一般来说，一个新的推荐算法最终上线，需要完成上面所说的3个实验：</p>
+<ul>
+<li>首先，需要通过离线实验证明它在很多离线指标上优于现有的算法；</li>
+<li>然后，需要通过用户调查确定它的用户满意度不低于现有的算法；</li>
+<li>最后，通过在线的AB测试确定它在我们惯性的指标上优于现有的算法。</li>
+</ul>
+<h3 id="评测指标"><a href="#评测指标" class="headerlink" title="评测指标"></a>评测指标</h3><p>1.用户满意度</p>
+<p>用户作为推荐系统的重要参与者，<strong>其满意度是评测推荐系统的最重要指标</strong>。但是用户满意度没有办法离线计算，<strong>只能通过用户调查或者在线实验获得</strong>。
+<strong>用户调查获得用户满意度主要是通过调查问卷的形式</strong>。用户对推荐系统的满意度分为不同的层次。
+<strong>在在线系统中，用户满意度主要通过一些对用户行为的统计得到</strong>。比如在电子商务网站中，用户如果购买了推荐的商品，就表示他们在一定成都上满意。因此，可以利用购买率度量用户的满意度。
+更一般的情况下，可以用点击率、用户停留时间和转化率等指标度量用户的满意度。</p>
+<p>2.预测准确度</p>
+<p><strong>预测准确度度量一个推荐系统或者推荐算法<em>预测用户行为</em>的能力</strong>。这个指标是<strong>最重要的推荐系统离线评测指标</strong>。主要是因为该指标可以通过离线实验计算。
+在计算该指标时需要有一个离线的数据集,该数据集包含用户的历史行为记录。然后,将该数据集通过时间分成训练集和测试集。最后,通过在训练集上建立用户的行为和兴趣模型预测用户在测试集上的行为,并计算预测行为和测试集上实际行为的重合度作为预测准确度。</p>
+<p><strong>评分预测</strong>
+预测用户对物品评分的行为称为评分预测：如果知道了用户对物品的历史评分,就可以从中习得用户的兴趣模型,并预测该用户在将来看到一个他没有评过分的物品时,会给这个物品评多少分。
+评分预测的预测准确度一般通过均方误差RMSE和平均绝对误差MAE计算。</p>
+<p>关于RMSE和MAE这两个指标的优缺点，Netflix认为RMSE加大了对预测不准的用户物品评分的惩罚(平方项的惩罚)，因而对系统的评测更加苛刻。研究表明，如果评分系统是基于整数建立的(即用户给的评分是整数)，那么对预测结果取整可能会降低MAE的误差。</p>
+<p><strong>TopN推荐</strong>
+网站在提供推荐服务时，一般是给用户一个个性化的推荐列表，这种推荐叫TopN推荐。TopN推荐的预测准确率一般通过准确率precision/召回率recall度量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def PrecisionRecall(test, N):</span><br><span class="line">    hit = 0</span><br><span class="line">    n_recall = 0</span><br><span class="line">    n_precision = 0</span><br><span class="line">    for user, items in test.items():</span><br><span class="line">        rank = Recommend(user, N)</span><br><span class="line">        hit += len(rank &amp; items) #重合项</span><br><span class="line">        n_recall += len(items) #数据集长度</span><br><span class="line">        n_precision += N #预测长度</span><br><span class="line">    return [hit / (1.0 * n_recall), hit / (1.0 * n_precision)]</span><br></pre></td></tr></table></figure>
+<p>有的时候，为了全面评测TopN推荐的准确率和召回率，一般会选择不同的推荐列表长度N，计算出一组准确率/召回率，然后画出准确率/召回率曲线。</p>
+<p>3.覆盖率:针对物品</p>
+<p><strong>覆盖率描述一个推荐系统对物品长尾的发掘能力</strong>。覆盖率有不同的定义方法，最简单的定义为推荐系统能够推荐出来的物品站总物品集合的比例。
+<strong>覆盖率是一个内容提供商会关心的指标</strong>。以图书推荐为例，出版社可能会很关心他们的书有没有被推荐给用户。覆盖率为100%的推荐系统可以将每个物品都推荐给至少一个用户[从定义得到]。一个好的推荐系统不仅需要有比较高的用户满意度，也要有较高的覆盖率。</p>
+<p>覆盖率为100%的系统可以有无数的物品流行度分布。<strong>为了更细致地描述推荐系统发掘长尾的能力，需要统计推荐列表中不同物品出现次数的分布</strong>。如果<strong>所有物品都出现在推荐列表中，且出现的次数差不多</strong>，那么推荐系统发掘长尾的能力就很好。
+可以通过研究物品在推荐列表中出现次数的分布描述推荐系统挖掘长尾的能力—-如果这个分布比较平，说明推荐系统的覆盖率比较高；如果分布较陡峭，说明推荐系统的覆盖率较低。
+在信息论和经济学中有两个著名的指标可以用来定义覆盖率[都是越小越好，描述分布的平均程度]。第一个是信息熵：
+$H = -\sum_{i=1}^{n}p(i)logp(i)$
+这里p(i)是物品i的流行度除以所有物品流行度之和。
+第二个指标是基尼指数：
+$G = 1/(n-1) \sum_{j=1}^{n}(2j-n-1)p(i_j)$
+这里，$i_j$是按照物品流行度p()从小到大排序的物品列表中第j个物品。</p>
+<p>4.多样性</p>
+<p>为了满足用户广泛的兴趣，推荐列表需要能够覆盖用户不同的兴趣领域，即推荐结果需要具有多样性。
+<strong>多样性描述了推荐列表中物品两两之间的不相似性</strong>。<em>多样性和相似性是相对的</em>。
+推荐系统的整体多样性可以定义为所有用户推荐列表多样性的平均值。
+不同的物品相似度度量函数s(i,j)可以定义不同的多样性：如果用内容相似度描述物品间的相似度，可以得到内容多样性函数；如果用协同过滤的相似度函数描述物品间相似度，得到协同过滤的多样性函数。</p>
+<p>5.新颖性</p>
+<p><strong>新颖的推荐是指给用户推荐那些他们以前没有听说过的物品</strong>。
+在一个网站中实现新颖性的最简单办法是，把那些用户之前在网站中对其有所行为的物品从推荐列表中过滤掉。比如在一个视频网站中,新颖的推荐不应该给用户推荐那些他们已经看过、打过分或者浏览过的视频。</p>
+<p>6.惊喜度</p>
+<p>惊喜度和新颖性有什么区别是首先需要弄清楚的问题。
+可以举一个例子说明这两种指标的区别。假设一名用户喜欢周星驰的电影,然后我们给他推荐了一部叫做《临歧》的电影(该电影是 1983 年由刘德华、周星驰、梁朝伟合作演出的,很少有人知道这部有周星驰出演的电影),而该用户不知道这部电影,那么可以说这个推荐具有新颖性。但是,这个推荐并没有惊喜度,因为该用户一旦了解了这个电影的演员,就不会觉得特别奇怪。但如果我们给用户推荐张艺谋导演的《红高粱》,假设这名用户没有看过这部电影,那么他看完这部电影后可能会觉得很奇怪,因为这部电影和他的兴趣一点关系也没有,但如果用户看完电影后觉得这部电影很不错,那么就可以说这个推荐是让用户惊喜的。
+<strong>如果推荐结果和用户的历史兴趣不相似,但却让用户觉得满意,那么就可以说推荐结果的惊喜度很高,而推荐的新颖性仅仅取决于用户是否听说过这个推荐结果。</strong></p>
+<p>目前并没有公认的惊喜度指标定义方式，只给出一种定性的度量方式。提高推荐惊喜度需要提高推荐结果的用户满意度,同时降低推荐结果和用户历史兴趣的相似度。</p>
+<p>7.信任度</p>
+<p>如果用户信任推荐系统,那就会增加用户和推荐系统的交互。特别是在电子商务推荐系统中,让用户对推荐结果产生信任是非常重要的。同样的推荐结果,以让用户信任的方式推荐给用户就更能让用户产生购买欲,而以类似广告形式的方法推荐给用户就可能很难让用户产生购买的意愿。</p>
+<p><strong>度量推荐系统的信任度只能通过问卷调查的方式</strong>，询问用户是否信任推荐系统的推荐结果。</p>
+<p>提高推荐系统信任度主要有两种方法。首先需要增加推荐系统的透明度，而增加推荐系统的透明度的主要办法是提供推荐解释。只有让用户了解推荐系统的运行机制,让用户认同推荐系统的运行机制,才会提高用户对推荐系统的信任度。
+其次是考虑用户的社交网络信息，利用用户的好友信息给用户做推荐，并且用好友进行推荐解释。</p>
+<p>8.实时性</p>
+<p>在很多网站中，物品(新闻、微博)具有很强的时效性，所以需要在物品还具有时效性时就推荐给用户。</p>
+<p>推荐系统的实时性包括两个方面、首先，推荐系统需要<strong>实时地更新推荐列表</strong>来满足用户新的行为变化。实时性的第二个方面是推荐系统需要能够<strong>将新加入系统的物品推荐给用户</strong>。这主要考验推荐系统处理物品冷启动的能力。</p>
+<p>9.健壮性</p>
+<p>任何一个能带来利用的算法系统都会被人攻击，最典型的例子就是搜索引擎。<strong>健壮性指标衡量一个推荐系统抗击作弊的能力</strong>。
+推荐系统中最终名的作弊方法就是行为注入攻击。比如豆瓣的电影评分，攻击方法是雇佣水军给电影非常高的评分，评分行为是推荐系统依赖的重要用户行为。</p>
+<p><strong>算法健壮性评测主要利用模拟攻击</strong>。首先,给定一个数据集和一个算法,可以用这个算法给这个数据集中的用户生成推荐列表。然后,用常用的攻击方法向数据集中注入噪声数据,然后利用算法在注入噪声后的数据集上再次给用户生成推荐列表。最后,通过比较攻击前后推荐列表的相似度评测算法的健壮性。<strong>如果攻击后的推荐列表相对于攻击前没有发生大的变化</strong>,就说明算法比较健壮。</p>
+<p>10.商业目标</p>
+<p>很多时候,网站评测推荐系统更加注重网站的商业目标是否达成,而商业目标和网站的盈利模式是息息相关的。</p>
+<p>不同的网站具有不同的商业目标。比如电子商务网站的目标可能是销售额,基于点击广告盈利的网站其商业目标可能是广告点击总数。因此,<strong>设计推荐系统时需要考虑最终的商业目标,而网站使用推荐系统的目的除了满足用户发现内容的需求,也需要利用推荐系统加快实现商业上的指标</strong>。</p>
+<h3 id="评测维度"><a href="#评测维度" class="headerlink" title="评测维度"></a>评测维度</h3><p>增加评测维度的目的了解一个算法在什么情况下性能最好，可以为融合不同推荐算法取得最好的整体性能带来参考。</p>
+<p>一般来说，评测维度分为3种：</p>
+<ul>
+<li>用户维度： 主要包括用户的人口统计学信息、活跃度以及是不是新用户等；</li>
+<li>物品维度： 包括物品的属性信息、流行度、平均分以及是不是新加入的物品等；</li>
+<li>时间维度： 包括季节，是工作日还是周末，是白天还是晚上。</li>
+</ul>
+<p>如果能够在推荐系统评测报告中<strong>包含不同维度下的系统评测指标,就能帮我们全面地了解推荐系统性能</strong>,找到比较弱的算法的优势,发现比较强的算法的缺点。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/推荐系统/" rel="tag"># 推荐系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/30/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是推荐系统"><span class="nav-number">1.</span> <span class="nav-text">什么是推荐系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个性化推荐系统的应用"><span class="nav-number">2.</span> <span class="nav-text">个性化推荐系统的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐系统评测"><span class="nav-number">3.</span> <span class="nav-text">推荐系统评测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推荐系统实验方法"><span class="nav-number">3.1.</span> <span class="nav-text">推荐系统实验方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评测指标"><span class="nav-number">3.2.</span> <span class="nav-text">评测指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评测维度"><span class="nav-number">3.3.</span> <span class="nav-text">评测维度</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DL,keras,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="理解深度学习需要熟悉一些简单的数学概念：Tensors(张量)、Tensor operations 张量操作、differentiation微分、gradient descent 梯度下降等等。 “Hello World”—-MNIST 手写数字识别1234567891011121314151617181920212223242526272829303132333435#coding:utf8im">
+<meta name="keywords" content="DL,keras">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Deep-Learning-with-Python]神经网络的数学基础">
+<meta property="og:url" content="http://fja0kl.github.io/2018/07/12/Deep-Learning-with-Python-神经网络的数学基础/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="理解深度学习需要熟悉一些简单的数学概念：Tensors(张量)、Tensor operations 张量操作、differentiation微分、gradient descent 梯度下降等等。 “Hello World”—-MNIST 手写数字识别1234567891011121314151617181920212223242526272829303132333435#coding:utf8im">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-12T09:27:43.770Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Deep-Learning-with-Python]神经网络的数学基础">
+<meta name="twitter:description" content="理解深度学习需要熟悉一些简单的数学概念：Tensors(张量)、Tensor operations 张量操作、differentiation微分、gradient descent 梯度下降等等。 “Hello World”—-MNIST 手写数字识别1234567891011121314151617181920212223242526272829303132333435#coding:utf8im">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/07/12/Deep-Learning-with-Python-神经网络的数学基础/">
+
+
+
+
+
+  <title>[Deep-Learning-with-Python]神经网络的数学基础 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/07/12/Deep-Learning-with-Python-神经网络的数学基础/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Deep-Learning-with-Python]神经网络的数学基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T17:25:38+08:00">
+                2018-07-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T17:27:43+08:00">
+                2018-07-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/DL/" itemprop="url" rel="index">
+                    <span itemprop="name">DL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/07/12/Deep-Learning-with-Python-神经网络的数学基础/" class="leancloud_visitors" data-flag-title="[Deep-Learning-with-Python]神经网络的数学基础">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,396
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>理解深度学习需要熟悉一些简单的数学概念：Tensors(张量)、Tensor operations 张量操作、differentiation微分、gradient descent 梯度下降等等。</p>
+<h2 id="“Hello-World”—-MNIST-手写数字识别"><a href="#“Hello-World”—-MNIST-手写数字识别" class="headerlink" title="“Hello World”—-MNIST 手写数字识别"></a>“Hello World”—-MNIST 手写数字识别</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf8</span></span><br><span class="line"><span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> to_categorical</span><br><span class="line"><span class="comment"># 加载MNIST数据集</span></span><br><span class="line">(train_images,train_labels),(test_images,test_labels) = mnist.load_data()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义网络架构</span></span><br><span class="line">network = models.Sequential()</span><br><span class="line">network.add(layers.Dense(<span class="number">512</span>,activation=<span class="string">"relu"</span>,input_shape=(<span class="number">28</span>*<span class="number">28</span>,)))</span><br><span class="line">network.add(layers.Dense(<span class="number">10</span>,activation=<span class="string">"softmax"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义网络优化：优化算法、损失函数以及评价指标</span></span><br><span class="line">network.compile(optimizer=<span class="string">'rmsprop'</span>,loss=<span class="string">"categorical_crossentropy"</span>,metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据预处理：images 缩放到[0,1]之间</span></span><br><span class="line">train_images = train_images.reshape(<span class="number">60000</span>,<span class="number">28</span>*<span class="number">28</span>)</span><br><span class="line">train_images = train_images.astype(<span class="string">'float32'</span>) / <span class="number">255</span></span><br><span class="line"></span><br><span class="line">test_images = test_images.reshape(test_images.shape[<span class="number">0</span>],<span class="number">28</span>*<span class="number">28</span>)</span><br><span class="line">test_images = test_images.astype(<span class="string">'float32'</span>) / <span class="number">255</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据预处理：labels：one-hot 编码</span></span><br><span class="line">train_labels = to_categorical(train_labels)</span><br><span class="line">test_labels = to_categorical(test_labels)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型训练</span></span><br><span class="line">network.fit(train_images,train_labels,epochs=<span class="number">5</span>,batch_size=<span class="number">128</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型测试</span></span><br><span class="line">test_loss, test_acc = network.evaluate(test_images,test_labels)</span><br><span class="line">print(<span class="string">'test accuracy:'</span>,test_acc)</span><br><span class="line"><span class="comment"># test accuracy: 0.9727</span></span><br></pre></td></tr></table></figure>
+<p>由上面的程序，我们了解了如何构建网络以及如何进行网络训练来识别手写字体</p>
+<h2 id="神经网络的数据表示"><a href="#神经网络的数据表示" class="headerlink" title="神经网络的数据表示"></a>神经网络的数据表示</h2><p>当下几乎所有的机器学习框架都使用tensors张量作为基本的数据结构。Tensor本质上是一个数据容器，大多数为数值型数据，也就是说tensor是存储数字的容器。矩阵是二维的张量，张量是任意维数的矩阵的推广(tensor的一个维度通常称为一个轴axis，而不是dimension)。</p>
+<p>###Scalars（0D tensors）标量–0维张量
+只包含一个数字的张量tensor叫做标量scaler(或者0D tensor). 在numpy中，一个float32,或float64类型的数字是一个标量。可以通过tensor的ndim属性查看tensor的维度；张量的维度为0，同时维度也称为秩rank。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.array(<span class="number">12</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x</span><br><span class="line">array(<span class="number">12</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.ndim</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="向量-一维张量-1D"><a href="#向量-一维张量-1D" class="headerlink" title="向量(一维张量 1D)"></a>向量(一维张量 1D)</h3><p>一维数组称为向量，或一维张量。一维张量有一个轴axis；
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.array([<span class="number">13</span>, <span class="number">31</span>, <span class="number">7</span>, <span class="number">14</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x</span><br><span class="line">array([<span class="number">13</span>, <span class="number">31</span>, <span class="number">7</span>, <span class="number">14</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.ndim</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p>上述向量有5个条目，因此称为5维向量。5维向量和5维张量并不相同。5维向量指一个轴5个元素。5维张量有5个轴。</p>
+<h3 id="矩阵-二维张量-2D"><a href="#矩阵-二维张量-2D" class="headerlink" title="矩阵(二维张量 2D)"></a>矩阵(二维张量 2D)</h3><p>向量数组为一个矩阵，即二维张量。一个矩阵有二个轴。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.array([[<span class="number">5</span>, <span class="number">78</span>, <span class="number">2</span>, <span class="number">34</span>, <span class="number">0</span>],</span><br><span class="line">[<span class="number">6</span>, <span class="number">79</span>, <span class="number">3</span>, <span class="number">35</span>, <span class="number">1</span>],</span><br><span class="line">[<span class="number">7</span>, <span class="number">80</span>, <span class="number">4</span>, <span class="number">36</span>, <span class="number">2</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.ndim</span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="三维张量以及更高维张量"><a href="#三维张量以及更高维张量" class="headerlink" title="三维张量以及更高维张量"></a>三维张量以及更高维张量</h3><p>矩阵数组称为三维张量，可以看做是数字的立方体。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.array([[[<span class="number">5</span>, <span class="number">78</span>, <span class="number">2</span>, <span class="number">34</span>, <span class="number">0</span>],</span><br><span class="line">[<span class="number">6</span>, <span class="number">79</span>, <span class="number">3</span>, <span class="number">35</span>, <span class="number">1</span>],</span><br><span class="line">[<span class="number">7</span>, <span class="number">80</span>, <span class="number">4</span>, <span class="number">36</span>, <span class="number">2</span>]],</span><br><span class="line">[[<span class="number">5</span>, <span class="number">78</span>, <span class="number">2</span>, <span class="number">34</span>, <span class="number">0</span>],</span><br><span class="line">[<span class="number">6</span>, <span class="number">79</span>, <span class="number">3</span>, <span class="number">35</span>, <span class="number">1</span>],</span><br><span class="line">[<span class="number">7</span>, <span class="number">80</span>, <span class="number">4</span>, <span class="number">36</span>, <span class="number">2</span>]],</span><br><span class="line">[[<span class="number">5</span>, <span class="number">78</span>, <span class="number">2</span>, <span class="number">34</span>, <span class="number">0</span>],</span><br><span class="line">[<span class="number">6</span>, <span class="number">79</span>, <span class="number">3</span>, <span class="number">35</span>, <span class="number">1</span>],</span><br><span class="line">[<span class="number">7</span>, <span class="number">80</span>, <span class="number">4</span>, <span class="number">36</span>, <span class="number">2</span>]]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.ndim</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure></p>
+<p>3维张量数组形成一个4维张量，以此类推。深度学习中，一般操作0D~4D的张量。</p>
+<h3 id="核心属性"><a href="#核心属性" class="headerlink" title="核心属性"></a>核心属性</h3><p>tensor张量由3个重要的属性：</p>
+<ul>
+<li>Number of axes轴的个数(秩)。3D tensor有3个轴。可以通过tensor的ndim属性查看轴的个数。</li>
+<li>Shape形状：数字元组，描述张量各个轴上的维度。张量维度为(),向量维度为(5,),2D张量维度（3,5),3D张量维度(3,3,5).</li>
+<li>Data type数据类型(dtype属性)：张量中数字的数据类型，如float32，uint8，float64等等。</li>
+</ul>
+<h3 id="数据批量data-batches"><a href="#数据批量data-batches" class="headerlink" title="数据批量data batches"></a>数据批量data batches</h3><p>深度学习中数据张量的第一轴(axis 0)通常是样本轴(样本维度)—表示样本量的数目。MNIST数据集中，样本是数字图片。
+此外，深度学习处理数据过程中并不一次性对整个数据集进行处理，通常会将数据集划分成若干个批量batches。比如：MNIST中128的小批量样本：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">batch = train_images[:<span class="number">128</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="生活中遇到的数据张量"><a href="#生活中遇到的数据张量" class="headerlink" title="生活中遇到的数据张量"></a>生活中遇到的数据张量</h3><ul>
+<li>向量型数据vector data–2维张量 ，形状(samples，features)</li>
+<li>时间序列数据或序列型数据–3维张量，形状（samples，timesteps, features）</li>
+<li>图片–4维张量，形状(samples, height, width, channels)或者(samples, channels, height, width)</li>
+<li>视频–5维张量。形状(samples. frames, height, width, channels) 或者(samples, frames, channels, height, width)</li>
+</ul>
+<h2 id="Tensors-操作"><a href="#Tensors-操作" class="headerlink" title="Tensors 操作"></a>Tensors 操作</h2><p>所有的计算机程序最终都简化为二进制输入上的二进制操作(AND, OR, NOR 等)，同时，深度学习网络中所有的转换也可以简化为数据张量上的张量操作，如 加、乘等。</p>
+<h3 id="逐元素操作element-wise-operations"><a href="#逐元素操作element-wise-operations" class="headerlink" title="逐元素操作element-wise operations"></a>逐元素操作element-wise operations</h3><p>relu操作和加法运算是逐元素操作：独立应用于待计算张量中的每个条目。
+比如加法运算的for-loop实现：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">naive_add</span><span class="params">(x, y)</span>:</span></span><br><span class="line">	<span class="keyword">assert</span> len(x.shape) == <span class="number">2</span></span><br><span class="line">	<span class="keyword">assert</span> x.shape == y.shape</span><br><span class="line">	x = x.copy()</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(x.shape[<span class="number">0</span>]):</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(x.shape[<span class="number">1</span>]):</span><br><span class="line">			x[i, j] += y[i, j]</span><br><span class="line">	<span class="keyword">return</span> x</span><br></pre></td></tr></table></figure></p>
+<h3 id="广播broadcasting"><a href="#广播broadcasting" class="headerlink" title="广播broadcasting"></a>广播broadcasting</h3><p>上面实现的naive_add加法运算仅支持两个形状相同的二维张量。如果两个加法运算的张量形状不相同会发生什么？小张量会广播匹配到大张量上。广播由两步组成：</p>
+<ol>
+<li>小张量会添加axes广播轴，以匹配大张量的ndim轴维度。</li>
+<li>小张量在新添加的轴方向上重复以匹配大张量的形状。</li>
+</ol>
+<p>举例来说，张量X形状为(32, 10),张量y形状为(10, ).两个张量相加。首先，添加一个新轴到张量y上，形状变成(1, 10)；然后，在新轴方向上重复y32次，最终张量Y形状为(32,10)，X、Y形状相同，可以进行加法运算。
+但实际过程中并不会创建新的二维张量，影响计算效率。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">naive_add_matrix_and_vector</span><span class="params">(x, y)</span>:</span></span><br><span class="line">	<span class="keyword">assert</span> len(x.shape) == <span class="number">2</span></span><br><span class="line">	<span class="keyword">assert</span> len(y.shape) == <span class="number">1</span></span><br><span class="line">	<span class="keyword">assert</span> x.shape[<span class="number">1</span>] == y.shape[<span class="number">0</span>]</span><br><span class="line">	x = x.copy()</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(x.shape[<span class="number">0</span>]):</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(x.shape[<span class="number">1</span>]):</span><br><span class="line">			x[i, j] += y[j]</span><br><span class="line">	<span class="keyword">return</span> x</span><br></pre></td></tr></table></figure></p>
+<h3 id="张量点积运算-Dot"><a href="#张量点积运算-Dot" class="headerlink" title="张量点积运算 Dot"></a>张量点积运算 Dot</h3><p>dot点积操作最常用、最有用的张量操作。与逐元素操作相反，点积整合输入张量的所有条目。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">naive_vector_dot</span><span class="params">(x, y)</span>:</span></span><br><span class="line">	<span class="keyword">assert</span> len(x.shape) == <span class="number">1</span></span><br><span class="line">	<span class="keyword">assert</span> len(y.shape) == <span class="number">1</span></span><br><span class="line">	<span class="keyword">assert</span> x.shape[<span class="number">0</span>] == y.shape[<span class="number">0</span>]</span><br><span class="line">	z = <span class="number">0.</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(x.shape[<span class="number">0</span>]):</span><br><span class="line">		z += x[i] * y[i]</span><br><span class="line">	<span class="keyword">return</span> z</span><br></pre></td></tr></table></figure></p>
+<h3 id="tensor-reshaping"><a href="#tensor-reshaping" class="headerlink" title="tensor reshaping"></a>tensor reshaping</h3><p>reshape意味着重新排列张量tensor的行和列以满足特定的形状。Reshape之后的tensor与初始tensor包含的系数数目相同。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = np.array([[<span class="number">0.</span>, <span class="number">1.</span>],</span><br><span class="line">[<span class="number">2.</span>, <span class="number">3.</span>],</span><br><span class="line">[<span class="number">4.</span>, <span class="number">5.</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(x.shape)</span><br><span class="line">(<span class="number">3</span>, <span class="number">2</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = x.reshape((<span class="number">6</span>, <span class="number">1</span>))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x</span><br><span class="line">array([[ <span class="number">0.</span>],</span><br><span class="line">[ <span class="number">1.</span>],</span><br><span class="line">[ <span class="number">2.</span>],</span><br><span class="line">[ <span class="number">3.</span>],</span><br><span class="line">[ <span class="number">4.</span>],</span><br><span class="line">[ <span class="number">5.</span>]])</span><br></pre></td></tr></table></figure></p>
+<h2 id="基于梯度的优化算法"><a href="#基于梯度的优化算法" class="headerlink" title="基于梯度的优化算法"></a>基于梯度的优化算法</h2><p>神经网络层对输入进行的数学转换为：
+$output = relu(dot(W, input) + b)$
+张量$W$和张量$b$ 是网络层的参数，被称为网络层的权重系数或者可训练参数。这些权重系数包含着网络从训练数据中学到的信息。
+起始这些权重参数用小的随机数赋值(称为随机初始化)。随后，基于反馈信号逐渐调整权重系数。调整过程称为训练过程。
+训练过程通常需要反复进行：</p>
+<ol>
+<li>获得训练数据X，y的一个batch 批量；</li>
+<li>前向传播得到批量X上的预测值y_pred;</li>
+<li>计算当前批量下的损失值：计算y_pred和y之间的差异度；</li>
+<li>在损失函数减小的方向上更新权重系数。</li>
+</ol>
+<h3 id="随机梯度下降"><a href="#随机梯度下降" class="headerlink" title="随机梯度下降"></a>随机梯度下降</h3><p>一个可微分函数，理论上能够找到它的最小值：最小值点导数为0，所以需要找到所有导数为0的点，然后相互比较找到最小值。
+神经网络中，意味着找到一组权重值，使损失函数最小。
+mini-batch SGD可以描述为以下四步：</p>
+<ol>
+<li>获得训练数据X，y的一个batch 批量；</li>
+<li>前向传播得到批量X上的预测值y_pred;</li>
+<li>计算当前批量下的损失值：计算y_pred和y之间的差异度；</li>
+<li>沿着梯度反方向移动权重系数–例如：$W -= step * gradient$,损失函数也因此减小。
+随机是指每个小批量batch是随机在数据中挑选的。
+小批量随机梯度下降的一种极端情况是随机梯度下降算法—全部数据形成一个批量，计算结果更准确，但效率比较低。</li>
+</ol>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>学习指在训练数据上找到一组权重值使得损失函数最小；</li>
+<li>学习过程：在小批量数据上计算损失函数对应权重系数的梯度值；之后权重系数沿着梯度的反方向移动；</li>
+<li>学习过程的可能性是基于神经网络是一系列张量操作，因此能够使用导数的链式法则计算损失函数对应权重系数的梯度值；</li>
+<li>两个重要的概念：损失函数和优化方法（需要在数据送到网络之前定义）；</li>
+<li>损失函数：在训练过程中最小化的函数，可以用来评估模型的好坏(越小越好，最小为0)；</li>
+<li>优化方法：计算梯度的具体方法，之后更新权重系数；比如有：RMSProp、SGD、Momentum等等。</li>
+</ul>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/15/Deep-Learning-with-Python-基于Keras的Reuters新闻分类/">[Deep-Learning-with-Python]基于Keras的Reuters新闻分类</a></li><li><a href="http://fja0kl.github.io/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/">[Deep-Learning-with-Python]神经网络动手学习[上]</a></li><li><a href="http://fja0kl.github.io/2018/07/30/Deep-Learning-with-Python-文本序列中的深度学习/">[Deep-Learning-with-Python]文本序列中的深度学习.md</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
+          
+            <a href="/tags/keras/" rel="tag"># keras</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/05/数据增强利器-Augmentor/" rel="next" title="数据增强利器--Augmentor">
+                <i class="fa fa-chevron-left"></i> 数据增强利器--Augmentor
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/" rel="prev" title="[Deep-Learning-with-Python]神经网络动手学习[上]">
+                [Deep-Learning-with-Python]神经网络动手学习[上] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#“Hello-World”—-MNIST-手写数字识别"><span class="nav-number">1.</span> <span class="nav-text">“Hello World”—-MNIST 手写数字识别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络的数据表示"><span class="nav-number">2.</span> <span class="nav-text">神经网络的数据表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#向量-一维张量-1D"><span class="nav-number">2.1.</span> <span class="nav-text">向量(一维张量 1D)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵-二维张量-2D"><span class="nav-number">2.2.</span> <span class="nav-text">矩阵(二维张量 2D)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三维张量以及更高维张量"><span class="nav-number">2.3.</span> <span class="nav-text">三维张量以及更高维张量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心属性"><span class="nav-number">2.4.</span> <span class="nav-text">核心属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据批量data-batches"><span class="nav-number">2.5.</span> <span class="nav-text">数据批量data batches</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生活中遇到的数据张量"><span class="nav-number">2.6.</span> <span class="nav-text">生活中遇到的数据张量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensors-操作"><span class="nav-number">3.</span> <span class="nav-text">Tensors 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#逐元素操作element-wise-operations"><span class="nav-number">3.1.</span> <span class="nav-text">逐元素操作element-wise operations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广播broadcasting"><span class="nav-number">3.2.</span> <span class="nav-text">广播broadcasting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量点积运算-Dot"><span class="nav-number">3.3.</span> <span class="nav-text">张量点积运算 Dot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tensor-reshaping"><span class="nav-number">3.4.</span> <span class="nav-text">tensor reshaping</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于梯度的优化算法"><span class="nav-number">4.</span> <span class="nav-text">基于梯度的优化算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">4.1.</span> <span class="nav-text">随机梯度下降</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

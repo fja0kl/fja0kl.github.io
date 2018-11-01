@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Keras,DL,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="神经网络的核心部分  Keras介绍  使用Keras解决简单问题：分类和回归  神经网络剖析神经网络的训练与下列对象相关：  网络层Layers，网络层结合形成神经网络模型； 输入数据以及对应标签； 损失函数，定义用来学习的反馈信号； 优化方法，定义学习过程。 关系图：  网络层堆叠形成网络模型，网络模型由输入数据得到预测值。损失函数比较预测值与实际值，得到损失函数值：用来评估预测结果的好坏">
+<meta name="keywords" content="Keras,DL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Deep-Learning-with-Python]神经网络动手学习[上]">
+<meta property="og:url" content="http://fja0kl.github.io/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="神经网络的核心部分  Keras介绍  使用Keras解决简单问题：分类和回归  神经网络剖析神经网络的训练与下列对象相关：  网络层Layers，网络层结合形成神经网络模型； 输入数据以及对应标签； 损失函数，定义用来学习的反馈信号； 优化方法，定义学习过程。 关系图：  网络层堆叠形成网络模型，网络模型由输入数据得到预测值。损失函数比较预测值与实际值，得到损失函数值：用来评估预测结果的好坏">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chuantu.biz/t6/341/1531396725x-1566688670.png">
+<meta property="og:image" content="http://chuantu.biz/t6/341/1531403850x-1566688670.png">
+<meta property="og:updated_time" content="2018-07-13T00:57:44.419Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Deep-Learning-with-Python]神经网络动手学习[上]">
+<meta name="twitter:description" content="神经网络的核心部分  Keras介绍  使用Keras解决简单问题：分类和回归  神经网络剖析神经网络的训练与下列对象相关：  网络层Layers，网络层结合形成神经网络模型； 输入数据以及对应标签； 损失函数，定义用来学习的反馈信号； 优化方法，定义学习过程。 关系图：  网络层堆叠形成网络模型，网络模型由输入数据得到预测值。损失函数比较预测值与实际值，得到损失函数值：用来评估预测结果的好坏">
+<meta name="twitter:image" content="http://chuantu.biz/t6/341/1531396725x-1566688670.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/">
+
+
+
+
+
+  <title>[Deep-Learning-with-Python]神经网络动手学习[上] | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Deep-Learning-with-Python]神经网络动手学习[上]</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-13T08:56:08+08:00">
+                2018-07-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-13T08:57:44+08:00">
+                2018-07-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/" class="leancloud_visitors" data-flag-title="[Deep-Learning-with-Python]神经网络动手学习[上]">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,980
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li style="list-style: none"><input type="checkbox" checked> 神经网络的核心部分</li>
+<li style="list-style: none"><input type="checkbox" checked> Keras介绍</li>
+<li style="list-style: none"><input type="checkbox"> 使用Keras解决简单问题：分类和回归</li>
+</ul>
+<h2 id="神经网络剖析"><a href="#神经网络剖析" class="headerlink" title="神经网络剖析"></a>神经网络剖析</h2><p>神经网络的训练与下列对象相关：</p>
+<ul>
+<li>网络层Layers，网络层结合形成神经网络模型；</li>
+<li>输入数据以及对应标签；</li>
+<li>损失函数，定义用来学习的反馈信号；</li>
+<li>优化方法，定义学习过程。
+关系图：
+<img src="http://chuantu.biz/t6/341/1531396725x-1566688670.png" alt="">
+网络层堆叠形成网络模型，网络模型由输入数据得到预测值。损失函数比较预测值与实际值，得到损失函数值：用来评估预测结果的好坏；优化方法用损失值来更新网络模型的权重系数。</li>
+</ul>
+<h3 id="网络层：神经网络模型的构建模块"><a href="#网络层：神经网络模型的构建模块" class="headerlink" title="网络层：神经网络模型的构建模块"></a>网络层：神经网络模型的构建模块</h3><p>网络层是神经网络的基本数据结构。一个网络层把一个或多个数据输入张量进行数据处理过程得到一个或多个输出张量。一些网络层是无状态的(没有网络参数)，但大多数网络层是有状态的—网络层的权重系数，这些通过随机梯度下降算法学到的权重张量，形成了网络层的<strong>知识</strong>。
+不同的网络进行的数据处理各不相同，因此需要的数据格式及数据类型也有所差异。比如：2D张量，形状为(samples,features)存储简单的向量信息，通常是全连接层(FC 或 Dense)的输入格式要求；LSTM网络层通常处理3D张量，形状为(samples，timesteps,featuers)的序列数据；2D卷积层通常处理存储在4D张量中的图片数据。</p>
+<p>可以把网络层看做深度学习的乐高积木块，通过积木块我们可以搭建不同的网络模型。在Keras框架中通过把相互兼容的网络层堆叠形成数据处理过程，而网络层的兼容性是指该网络层接收<strong>特定形状的输入张量</strong>同时返回<strong>特东形状的输出张量</strong>。
+例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> layers</span><br><span class="line">layer = layers.Dense(<span class="number">32</span>, input_shape=(<span class="number">784</span>, ))</span><br></pre></td></tr></table></figure>
+<p>定义的网络层只接收2D张量，第一维度为784,；同时网络层输出的第一维度为32。
+在Keras中，不必担心网络的兼容性，因为添加到网络模型中的网络层是动态构建地，匹配接下来连接的网络层。比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> layers</span><br><span class="line"></span><br><span class="line">model = models.Sequential()</span><br><span class="line">model.add(layers.Dense(<span class="number">32</span>, input_shape=(<span class="number">784</span>, )))</span><br><span class="line">model.add(layers.Dense(<span class="number">32</span>))</span><br></pre></td></tr></table></figure>
+<p>第二个Dense层不必定义接收张量的形状，keras能自动定义。</p>
+<h3 id="网络模型：网络层堆叠而成"><a href="#网络模型：网络层堆叠而成" class="headerlink" title="网络模型：网络层堆叠而成"></a>网络模型：网络层堆叠而成</h3><p>一个神经网络模型是网络层的非循环连接而成。最常见的是网络层的线性连接堆叠，讲一个输入张量转换为一个输出张量。
+也存在不同的网络拓扑结构，如：</p>
+<ul>
+<li>二分支网络模型；</li>
+<li>多分支网络模型；</li>
+<li>Inception块.</li>
+</ul>
+<p>网络模型的拓扑结构定义了一个假设空间。通过选择网络模型的拓扑结构，限制了假设空间能进行的张量操作，通过这些张量操作有输出张量得到对应的输出张量；之后寻找这些张量操作中涉及到的权重系数张量。
+<strong>网络模型结构的选择与其说是一门科学不如说是一门艺术</strong>,尽管存在一些可以依赖的经验和原理，但只有不断尝试才能使你成为一个优秀的神经网络缔造者。</p>
+<h3 id="损失函数和优化算法：配置学习过程的关键"><a href="#损失函数和优化算法：配置学习过程的关键" class="headerlink" title="损失函数和优化算法：配置学习过程的关键"></a>损失函数和优化算法：配置学习过程的关键</h3><p>网络模型结构定义完成之后，仍然需要定义两件事：</p>
+<ul>
+<li>损失函数：训练过程中最小化的函数值，一种评估网络模型的表现；</li>
+<li>优化算法：决定基于损失函数如何更新权重系数；有常见的SGD，以及变种SGD算法。</li>
+</ul>
+<p>多输出神经网络模型可能有多个损失函数(一个输出一个损失函数)。但是梯度下降过程必然是基于一个损失函数标量值；所以，对于有多个损失函数的网络模型来说，所有的损失函数值必须<strong>整合(平均化处理)成一个标量值</strong>。</p>
+<p>特定问题需要选择特定的损失函数。对于常见的问题，如：分类、回归、序列预测，有对应的指导-选择正确的损失函数。具体：二分类问题使用对数损失binary crossentropy，多分类问题采用分类交叉熵categorical crossentropy，回归问题使用均方误差，序列学习问题采用Connectionist temporal classification(CTC)损失函数等等。只有在面对真正要解决的科学问题时，才能决定要使用的损失函数类型以及定义。</p>
+<h2 id="Keras-介绍"><a href="#Keras-介绍" class="headerlink" title="Keras 介绍"></a>Keras 介绍</h2><p>Keras是一个Python语言的深度学习框架，提供了快速搞笑的深度学习网络模型定义和训练方法。Keras设计初衷是为了方便科学家能进行快速实验。Keras特征：</p>
+<ul>
+<li>相同代码同时支持CPU、GPU运行；</li>
+<li>用户友好API–网络模型定义、训练方便；</li>
+<li>内置卷积神经网络、循环神经网络等等；</li>
+<li>支持任意的网络架构：多输入、多输出网络模型，网络层共享，模型共享等等。
+Keras支持所有的Python版本，从2.7到3.6(mid-2017).Keras 有200000个用户，从学术科学家和工程师到新手以及大公司的毕业生，还有兴趣爱好者。Google、Netflix、Uber、CERN、Yelp，Square以及上百个创业公司都猜使用Keras框架应用在相应的业务上。Keras也是Kaggle上流行的网络框架。</li>
+</ul>
+<h3 id="Keras，TensorFlow，Theano-和-CNTK"><a href="#Keras，TensorFlow，Theano-和-CNTK" class="headerlink" title="Keras，TensorFlow，Theano 和 CNTK"></a>Keras，TensorFlow，Theano 和 CNTK</h3><p>Keras 是一个模型级别的工具库，提供构建神经网络模型的高级API。Keras并不进行底层的操作比如张量操作和导数计算；相应地，Keras以来与特定的张量库进行这些操作，作为Keras的背后引擎。目前，Keras支持3个背后引擎：TensorFlow、Theano和CNTK。将来，有望支持更多的深度学习框架成为Keras的背后计算引擎。
+<img src="http://chuantu.biz/t6/341/1531403850x-1566688670.png" alt=""></p>
+<h3 id="Keras开发"><a href="#Keras开发" class="headerlink" title="Keras开发"></a>Keras开发</h3><p>Keras工作流大致如下：</p>
+<ol>
+<li>定义训练数据：输入张量和目标张量；</li>
+<li>定义网络层(或网络模型)：由输入张量处理得到输出张量；</li>
+<li>配置训练过程–选择损失函数、优化算法以及监测指标；</li>
+<li>通过调用模型的fit()方法在训练数据上迭代训练。</li>
+</ol>
+<p>模型定义有两种方法：使用Sequential类(使用于网络层的线性堆叠，目前最常见)；以及函数式API(支持任意网络架构，更灵活)。
+方法一：Sequential类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> layers</span><br><span class="line"></span><br><span class="line">model = models.Sequential()</span><br><span class="line">model.add(layers.Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>, input_shape=(<span class="number">784</span>,)))</span><br><span class="line">model.add(layers.Dense(<span class="number">10</span>, activation=<span class="string">'softmax'</span>))</span><br></pre></td></tr></table></figure>
+<p>方法二： 函数式API</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">input_tensor = layers.Input(shape=(<span class="number">784</span>,))</span><br><span class="line">x = layers.Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>)(input_tensor)</span><br><span class="line">output_tensor = layers.Dense(<span class="number">10</span>, activation=<span class="string">'softmax'</span>)(x)</span><br><span class="line"></span><br><span class="line">model = models.Model(inputs=input_tensor, outputs=output_tensor)</span><br></pre></td></tr></table></figure>
+<p>一旦模型架构定义完成，不必区分到底网络模型是怎么定义的，之后的处理步骤没有差别。
+学习过程在编译过程中配置：定义优化算法、损失函数和监测指标。比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> optimizers</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=optimizer.RMSProp(lr=<span class="number">0.001</span>),loss=<span class="string">'mse'</span>,metrics=[<span class="string">'accuracy'</span>])</span><br></pre></td></tr></table></figure>
+<p>最后，通过fit()方法将numpy数组形式的输入数据(以及对应标签)输入到网络模型中进行模型的学习过程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.fit(input_tensor, target_tensor, batch_size=<span class="number">128</span>, epochs=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/15/Deep-Learning-with-Python-基于Keras的Reuters新闻分类/">[Deep-Learning-with-Python]基于Keras的Reuters新闻分类</a></li><li><a href="http://fja0kl.github.io/2018/07/30/Deep-Learning-with-Python-文本序列中的深度学习/">[Deep-Learning-with-Python]文本序列中的深度学习.md</a></li><li><a href="http://fja0kl.github.io/2018/07/15/基于Keras的房价预测/">[Deep-Leraning-with-Python]基于Keras的房价预测</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Keras/" rel="tag"># Keras</a>
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/12/Deep-Learning-with-Python-神经网络的数学基础/" rel="next" title="[Deep-Learning-with-Python]神经网络的数学基础">
+                <i class="fa fa-chevron-left"></i> [Deep-Learning-with-Python]神经网络的数学基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/13/基于Keras的imdb数据集电影评论情感二分类/" rel="prev" title="基于Keras的imdb数据集电影评论情感二分类">
+                基于Keras的imdb数据集电影评论情感二分类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络剖析"><span class="nav-number">1.</span> <span class="nav-text">神经网络剖析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络层：神经网络模型的构建模块"><span class="nav-number">1.1.</span> <span class="nav-text">网络层：神经网络模型的构建模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络模型：网络层堆叠而成"><span class="nav-number">1.2.</span> <span class="nav-text">网络模型：网络层堆叠而成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数和优化算法：配置学习过程的关键"><span class="nav-number">1.3.</span> <span class="nav-text">损失函数和优化算法：配置学习过程的关键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keras-介绍"><span class="nav-number">2.</span> <span class="nav-text">Keras 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keras，TensorFlow，Theano-和-CNTK"><span class="nav-number">2.1.</span> <span class="nav-text">Keras，TensorFlow，Theano 和 CNTK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keras开发"><span class="nav-number">2.2.</span> <span class="nav-text">Keras开发</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DL,python,手写实现神经网络,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="使用python手写实现单层神经网络[本质上学习logistic 回归的系数]。单层：有参数的一层；输入不算网络层。  网络用途或者说应用场景：使用单层神经网络来识别一张图片是否是猫咪。 网络架构单层神经网络:  X(input)—&amp;gt; Output($\hat{y}$)  处理过程：  X –&amp;gt; linear —&amp;gt; sigmoid —&amp;gt; $\hat{y}$  数学表示训练">
+<meta name="keywords" content="DL,python,手写实现神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手写实现单层神经网络">
+<meta property="og:url" content="http://fja0kl.github.io/2018/05/29/手写实现单层神经网络/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="使用python手写实现单层神经网络[本质上学习logistic 回归的系数]。单层：有参数的一层；输入不算网络层。  网络用途或者说应用场景：使用单层神经网络来识别一张图片是否是猫咪。 网络架构单层神经网络:  X(input)—&amp;gt; Output($\hat{y}$)  处理过程：  X –&amp;gt; linear —&amp;gt; sigmoid —&amp;gt; $\hat{y}$  数学表示训练">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chuantu.biz/t6/321/1527581310x-1404792580.png">
+<meta property="og:image" content="http://chuantu.biz/t6/321/1527600045x-1404792580.png">
+<meta property="og:updated_time" content="2018-05-29T13:49:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手写实现单层神经网络">
+<meta name="twitter:description" content="使用python手写实现单层神经网络[本质上学习logistic 回归的系数]。单层：有参数的一层；输入不算网络层。  网络用途或者说应用场景：使用单层神经网络来识别一张图片是否是猫咪。 网络架构单层神经网络:  X(input)—&amp;gt; Output($\hat{y}$)  处理过程：  X –&amp;gt; linear —&amp;gt; sigmoid —&amp;gt; $\hat{y}$  数学表示训练">
+<meta name="twitter:image" content="http://chuantu.biz/t6/321/1527581310x-1404792580.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/05/29/手写实现单层神经网络/">
+
+
+
+
+
+  <title>手写实现单层神经网络 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/05/29/手写实现单层神经网络/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">手写实现单层神经网络</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-29T21:44:52+08:00">
+                2018-05-29
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-05-29T21:49:02+08:00">
+                2018-05-29
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/DL/" itemprop="url" rel="index">
+                    <span itemprop="name">DL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/29/手写实现单层神经网络/" class="leancloud_visitors" data-flag-title="手写实现单层神经网络">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,749
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>使用python手写实现单层神经网络[本质上学习logistic 回归的系数]。单层：有参数的一层；输入不算网络层。</p>
+</blockquote>
+<h2 id="网络用途"><a href="#网络用途" class="headerlink" title="网络用途"></a>网络用途</h2><p>或者说应用场景：使用单层神经网络来识别一张图片是否是<strong>猫咪</strong>。</p>
+<h2 id="网络架构"><a href="#网络架构" class="headerlink" title="网络架构"></a>网络架构</h2><p>单层神经网络:</p>
+<ul>
+<li>X(input)—&gt; Output($\hat{y}$)</li>
+</ul>
+<p>处理过程：</p>
+<ul>
+<li>X –&gt; linear —&gt; sigmoid —&gt; $\hat{y}$</li>
+</ul>
+<h3 id="数学表示"><a href="#数学表示" class="headerlink" title="数学表示"></a>数学表示</h3><p>训练集: $X = [x^{(1)},x^{(2)},…,x^{(i)},….,x^{(m)}]$  ;对应标签:$Y=[y^{(1)},y^{(2)},…,y^{(i)},…,y^{(m)}]$ ;</p>
+<p>对于训练集中的每张照片$x^{(i)}$ 的处理过程：</p>
+<p>$z^{(i)} = w^Tx^{(i)}+b$</p>
+<p>$\hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})$</p>
+<p>$L(a^{(i)},y^{(i)}) = -y^{(i)}log(a^{(i)})-(1-y^{(i)})log(1-a^{(i)})$ </p>
+<p>成本函数：</p>
+<p>$J = \frac{1}{m} \sum_{i=1}^{m} L(a^{(i)},y^{(i)})$</p>
+<p>最后通过反向传播算法，计算参数$W$ 和 $b$ 。</p>
+<h2 id="模型定义"><a href="#模型定义" class="headerlink" title="模型定义"></a>模型定义</h2><h3 id="模型定义步骤"><a href="#模型定义步骤" class="headerlink" title="模型定义步骤"></a>模型定义步骤</h3><ol>
+<li>定义模型结构（如输入向量的特征数目） </li>
+<li>初始化模型参数； </li>
+<li>循环：<ul>
+<li>前向传播，计算loss；</li>
+<li>反向传播，计算梯度；</li>
+<li>梯度下降，更新参数；</li>
+</ul>
+</li>
+</ol>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><h4 id="辅助函数"><a href="#辅助函数" class="headerlink" title="辅助函数"></a>辅助函数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    激活函数</span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    z -- 标量或者是numpy array类型</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Return:</span></span><br><span class="line"><span class="string">    s -- sigmoid(z)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    s = <span class="number">1</span>/(<span class="number">1</span>+np.exp(-z))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> s</span><br></pre></td></tr></table></figure>
+<h4 id="参数初始化"><a href="#参数初始化" class="headerlink" title="参数初始化"></a>参数初始化</h4><p>权重系数$W$和$b$ 全都初始化为0.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_with_zeros</span><span class="params">(dim)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    网络参数w 和 b 的初始化；</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Argument:</span></span><br><span class="line"><span class="string">    dim -- 表示权重系数w的维度[这里表示输入层的数据维度]---单层网络；</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">    w -- 初始化向量 shape (dim, 1)</span></span><br><span class="line"><span class="string">    b -- 初始化标量 </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    w = np.zeros((dim, <span class="number">1</span>))<span class="comment">#dim表示输入层X的维度，1表示本层只有一个神经元</span></span><br><span class="line">    b = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> w, b</span><br></pre></td></tr></table></figure>
+<h4 id="前向传播和反向传播"><a href="#前向传播和反向传播" class="headerlink" title="前向传播和反向传播"></a>前向传播和反向传播</h4><p>由于网络为单层神经网络，前向传播过程和反向传播过程比较简单，所以整合到一起。直接计算出相应的成本函数和相应的系数梯度。</p>
+<h5 id="前向传播过程"><a href="#前向传播过程" class="headerlink" title="前向传播过程"></a>前向传播过程</h5><p>训练集: $$X = [x^{(1)},x^{(2)},…,x^{(i)},….,x^{(m)}]$$ ;对应标签:$$Y=[y^{(1)},y^{(2)},…,y^{(i)},…,y^{(m)}] $$;</p>
+<p>对于训练集中的每张照片$x^{(i)}$ 的处理过程：</p>
+<p>$z^{(i)} = w^Tx^{(i)}+b$</p>
+<p>$\hat{y}^{(i)} = a^{(i)} = sigmoid(z^{(i)})$</p>
+<p>$L(a^{(i)},y^{(i)}) = -y^{(i)}log(a^{(i)})-(1-y^{(i)})log(1-a^{(i)})$</p>
+<p>成本函数：$J = \frac{1}{m} \sum_{i=1}^{m} L(a^{(i)},y^{(i)})$</p>
+<h5 id="反向传播过程"><a href="#反向传播过程" class="headerlink" title="反向传播过程"></a>反向传播过程</h5><p>假设输入数据维度为2；权重系数维度是2.</p>
+<p>反向传播的计算图:</p>
+<p><img src="http://chuantu.biz/t6/321/1527581310x-1404792580.png" alt=""></p>
+<p>以输入维度为2，权重系数w为2维，举例：</p>
+<p><img src="http://chuantu.biz/t6/321/1527600045x-1404792580.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">propagate</span><span class="params">(w, b, X, Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实现前向传播和反向传播过程</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    w -- 权重系数，numpy array，size (num_px * num_px * 3, 1)</span></span><br><span class="line"><span class="string">    b -- 偏置，标量</span></span><br><span class="line"><span class="string">    X -- 输入的测试数据，shape (num_px * num_px * 3, 样本数m)</span></span><br><span class="line"><span class="string">    Y -- 测试数据的标签向量 ( 0 不是猫, 1 猫) ，size (1, m) </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Return:</span></span><br><span class="line"><span class="string">    cost -- logistic 回归的成本函数值</span></span><br><span class="line"><span class="string">    dw -- 成本函数关于参数w的梯度值</span></span><br><span class="line"><span class="string">    db -- 成本函数关于参数w的梯度值</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    m = X.shape[<span class="number">1</span>] <span class="comment"># 获取样本数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 前向传播过程</span></span><br><span class="line">    Z = np.dot(w.T, X) + b</span><br><span class="line">    A = sigmoid(Z) <span class="comment">#计算激活函数</span></span><br><span class="line">    cost = <span class="number">-1</span> / m * np.sum(Y * np.log(A) + (<span class="number">1</span> - Y) * np.log(<span class="number">1</span> - A))  <span class="comment"># 计算成本函数</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 反向传播过程计算梯度</span></span><br><span class="line">    dw = <span class="number">1</span> / m * np.dot(X, (A - Y).T) <span class="comment"># 向量</span></span><br><span class="line">    db = <span class="number">1</span> / m * np.sum(A - Y)</span><br><span class="line">    <span class="keyword">assert</span>(dw.shape == w.shape)</span><br><span class="line">    <span class="keyword">assert</span>(db.dtype == float)</span><br><span class="line">    cost = np.squeeze(cost) <span class="comment"># 成本函数</span></span><br><span class="line">    <span class="keyword">assert</span>(cost.shape == ())</span><br><span class="line">    </span><br><span class="line">    grads = &#123;<span class="string">"dw"</span>: dw,</span><br><span class="line">             <span class="string">"db"</span>: db&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> grads, cost</span><br></pre></td></tr></table></figure>
+<h4 id="参数优化"><a href="#参数优化" class="headerlink" title="参数优化"></a>参数优化</h4><p>参数更新过程–使用梯度下降算法；</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">optimize</span><span class="params">(w,b,X,y,num_iters,learning_rate,print_cost=True)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数优化过程</span></span><br><span class="line"><span class="string">    :param w: 系数矩阵</span></span><br><span class="line"><span class="string">    :param b: 偏置</span></span><br><span class="line"><span class="string">    :param X: 测试集</span></span><br><span class="line"><span class="string">    :param y: 测试集标签</span></span><br><span class="line"><span class="string">    :param num_iters: 迭代次数</span></span><br><span class="line"><span class="string">    :param learning_rate: 学习率</span></span><br><span class="line"><span class="string">    :param print_cost: 是否打印输出cost变化;每100次打印输出一次</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    - params: 更新后的参数</span></span><br><span class="line"><span class="string">    - grads: 梯度计算值</span></span><br><span class="line"><span class="string">    - costs：cost变化过程；每100次为一个记录值</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    costs = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num_iters):</span><br><span class="line">        grads, cost = propagate(w, b, X, y)</span><br><span class="line">        dw = grads[<span class="string">'dw'</span>]</span><br><span class="line">        db = grads[<span class="string">'db'</span>]</span><br><span class="line">        <span class="comment">#参数更新</span></span><br><span class="line">        w = w - learning_rate * dw</span><br><span class="line">        b = b - learning_rate * db</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span>:<span class="comment">#添加到costs</span></span><br><span class="line">            costs.append(cost)</span><br><span class="line">        <span class="keyword">if</span> print_cost <span class="keyword">and</span> i % <span class="number">100</span> == <span class="number">0</span>: <span class="comment"># 打印输出</span></span><br><span class="line">            print(<span class="string">"Cost after iteration &#123;&#125;:&#123;&#125;"</span>.format(i, cost))</span><br><span class="line"></span><br><span class="line">        params = &#123;<span class="string">'w'</span>: w,</span><br><span class="line">                  <span class="string">'b'</span>: b&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> params, grads, costs</span><br></pre></td></tr></table></figure>
+<h4 id="模型预测"><a href="#模型预测" class="headerlink" title="模型预测"></a>模型预测</h4><p>输入测试集，输出测试标签.</p>
+<p>运算过程：做一次前向传播，得到输出；再对输出和threshold阈值作比较，得出类别标签。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(w,b,X)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    给定一张图片预测分类标签</span></span><br><span class="line"><span class="string">    :param w: 训练后的权重w参数 (n_px * n_px * 3, 1)</span></span><br><span class="line"><span class="string">    :param b: 训练后的偏置b参数</span></span><br><span class="line"><span class="string">    :param X: 测试图片 (n_px * n_px * 3, m)</span></span><br><span class="line"><span class="string">    :return: 分类标签yHat</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    m = X.shape[<span class="number">1</span>]</span><br><span class="line">    yHat = np.zeros((<span class="number">1</span>, m))</span><br><span class="line">    <span class="keyword">assert</span> (w.shape == (X.shape[<span class="number">0</span>], <span class="number">1</span>))</span><br><span class="line">    yHat = sigmoid(np.dot(w.T, X) + b) <span class="comment"># 前向传播过程</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 确定预测的分类标签 threshold为0.5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">        <span class="keyword">if</span> yHat[<span class="number">0</span>, i] &gt; <span class="number">0.5</span>:</span><br><span class="line">            yHat[<span class="number">0</span>, i] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            yHat[<span class="number">0</span>, i] = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> yHat</span><br></pre></td></tr></table></figure>
+<h3 id="函数整合"><a href="#函数整合" class="headerlink" title="函数整合"></a>函数整合</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model</span><span class="params">(X_train, y_train, X_test, y_test, num_iters=<span class="number">2000</span>, learning_rate=<span class="number">0.05</span>, print_cost=True)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    将所有的函数整合到一起形成一个完整的模型</span></span><br><span class="line"><span class="string">    :param X_train: 训练集 (n_px*n_px*3, m)</span></span><br><span class="line"><span class="string">    :param y_train: 训练集标签 (1, m)</span></span><br><span class="line"><span class="string">    :param X_test: 测试集 (n_px*n_px*3, n)</span></span><br><span class="line"><span class="string">    :param y_test: 测试集标签 (1, n)</span></span><br><span class="line"><span class="string">    :param num_iters: 迭代次数</span></span><br><span class="line"><span class="string">    :param learning_rate: 学习率</span></span><br><span class="line"><span class="string">    :param print_cost: 是否打印输出cost成本函数值</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    - d: 模型信息字典</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    w, b = initialize_with_zeros(X_train.shape[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    params, grads, costs = optimize(w, b, X_train, y_train, num_iters, learning_rate, print_cost)</span><br><span class="line"></span><br><span class="line">    w = params[<span class="string">'w'</span>]</span><br><span class="line">    b = params[<span class="string">'b'</span>]</span><br><span class="line"></span><br><span class="line">    yHat_train = predict(w, b, X_train)</span><br><span class="line">    yHat_test = predict(w, b, X_test)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"Accuracy on Training set:&#123;:.2f&#125;%"</span>.format(<span class="number">100</span>*np.mean(y_train == yHat_train)))</span><br><span class="line">    print(<span class="string">"Accuracy on Test set:&#123;:.2f&#125;%"</span>.format(<span class="number">100</span>*np.mean(y_test == yHat_test)))</span><br><span class="line"></span><br><span class="line">    d = &#123;</span><br><span class="line">        <span class="string">'costs'</span>: costs,</span><br><span class="line">        <span class="string">'yHat_train'</span>: yHat_train,</span><br><span class="line">        <span class="string">'yHat_test'</span>: yHat_test,</span><br><span class="line">        <span class="string">'w'</span>: w,</span><br><span class="line">        <span class="string">'b'</span>: b,</span><br><span class="line">        <span class="string">'learning_rate'</span>: learning_rate,</span><br><span class="line">        <span class="string">'num_iters'</span>: num_iters</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>
+<p>测试：500次迭代、学习率为0.001；</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d = model(X_train,y_train,X_test,y_test,num_iters=<span class="number">500</span>,learning_rate=<span class="number">0.001</span>)</span><br></pre></td></tr></table></figure>
+<p>输出结果变化：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Cost after iteration <span class="number">0</span>:<span class="number">0.6931471805599453</span></span><br><span class="line">Cost after iteration <span class="number">100</span>:<span class="number">0.5912894260003537</span></span><br><span class="line">Cost after iteration <span class="number">200</span>:<span class="number">0.5557961107127088</span></span><br><span class="line">Cost after iteration <span class="number">300</span>:<span class="number">0.5289765131562365</span></span><br><span class="line">Cost after iteration <span class="number">400</span>:<span class="number">0.5068812917435517</span></span><br><span class="line">Accuracy on Training set:<span class="number">77.51</span>%</span><br><span class="line">Accuracy on Test set:<span class="number">56.00</span>%</span><br></pre></td></tr></table></figure>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ol>
+<li>向量化运算能大大提高运算效率；编码实现时最好不要使用for-loop 循环；</li>
+<li>理解网络运算过程时，画一个运算图很很大程度上帮助理解；</li>
+<li>编码实现时，注意变量的shape变化是否正确！</li>
+</ol>
+<p>完整代码：<a href="https://github.com/fja0kl/HandsNeuralWorks/tree/master/LogisticRegressionWithDN" target="_blank" rel="noopener">&gt;&gt;点我</a></p>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/15/Deep-Learning-with-Python-基于Keras的Reuters新闻分类/">[Deep-Learning-with-Python]基于Keras的Reuters新闻分类</a></li><li><a href="http://fja0kl.github.io/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/">[Deep-Learning-with-Python]神经网络动手学习[上]</a></li><li><a href="http://fja0kl.github.io/2018/07/30/Deep-Learning-with-Python-文本序列中的深度学习/">[Deep-Learning-with-Python]文本序列中的深度学习.md</a></li><li><a href="http://www.davidfnck.com/python/python-tutorial-01-install.html/">Python 安装指南</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/手写实现神经网络/" rel="tag"># 手写实现神经网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/28/numpy-array和matrix乘法比较/" rel="next" title="numpy array和matrix乘法比较">
+                <i class="fa fa-chevron-left"></i> numpy array和matrix乘法比较
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/01/手把手实现多层神经网络/" rel="prev" title="手把手实现多层神经网络">
+                手把手实现多层神经网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络用途"><span class="nav-number">1.</span> <span class="nav-text">网络用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络架构"><span class="nav-number">2.</span> <span class="nav-text">网络架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数学表示"><span class="nav-number">2.1.</span> <span class="nav-text">数学表示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型定义"><span class="nav-number">3.</span> <span class="nav-text">模型定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型定义步骤"><span class="nav-number">3.1.</span> <span class="nav-text">模型定义步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">3.2.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#辅助函数"><span class="nav-number">3.2.1.</span> <span class="nav-text">辅助函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数初始化"><span class="nav-number">3.2.2.</span> <span class="nav-text">参数初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前向传播和反向传播"><span class="nav-number">3.2.3.</span> <span class="nav-text">前向传播和反向传播</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#前向传播过程"><span class="nav-number">3.2.3.1.</span> <span class="nav-text">前向传播过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反向传播过程"><span class="nav-number">3.2.3.2.</span> <span class="nav-text">反向传播过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数优化"><span class="nav-number">3.2.4.</span> <span class="nav-text">参数优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型预测"><span class="nav-number">3.2.5.</span> <span class="nav-text">模型预测</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数整合"><span class="nav-number">3.3.</span> <span class="nav-text">函数整合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DL,VAEs,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="变分自动编码器生成图片从隐图像空间进行采样以创建全新的图像或编辑现有图像是目前创作AI最受欢迎和最成功的应用方式。 图像隐空间取样图像生成的关键思想是开发表示的低维潜在空间（自然是矢量空间），其中任何点都可以映射到逼真的图像上。 能够实现该映射的模块，将潜在点作为输入并输出图像（像素网格），被称为生成器（在GAN的情况下）或解码器（在VAE的情况下）。一旦开发出这样的潜在空间，可以有意或无意地从中">
+<meta name="keywords" content="DL,VAEs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用VAEs生成图片">
+<meta property="og:url" content="http://fja0kl.github.io/2018/09/03/使用VAEs生成图片/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="变分自动编码器生成图片从隐图像空间进行采样以创建全新的图像或编辑现有图像是目前创作AI最受欢迎和最成功的应用方式。 图像隐空间取样图像生成的关键思想是开发表示的低维潜在空间（自然是矢量空间），其中任何点都可以映射到逼真的图像上。 能够实现该映射的模块，将潜在点作为输入并输出图像（像素网格），被称为生成器（在GAN的情况下）或解码器（在VAE的情况下）。一旦开发出这样的潜在空间，可以有意或无意地从中">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://thyrsi.com/t6/365/1535683191x-1376440138.png">
+<meta property="og:image" content="http://thyrsi.com/t6/365/1535683544x-1566688526.png">
+<meta property="og:image" content="http://thyrsi.com/t6/365/1535684616x-1566688526.png">
+<meta property="og:image" content="http://thyrsi.com/t6/365/1535685098x1822611431.png">
+<meta property="og:image" content="http://thyrsi.com/t6/365/1535701144x1822611359.png">
+<meta property="og:updated_time" content="2018-09-03T13:41:39.840Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用VAEs生成图片">
+<meta name="twitter:description" content="变分自动编码器生成图片从隐图像空间进行采样以创建全新的图像或编辑现有图像是目前创作AI最受欢迎和最成功的应用方式。 图像隐空间取样图像生成的关键思想是开发表示的低维潜在空间（自然是矢量空间），其中任何点都可以映射到逼真的图像上。 能够实现该映射的模块，将潜在点作为输入并输出图像（像素网格），被称为生成器（在GAN的情况下）或解码器（在VAE的情况下）。一旦开发出这样的潜在空间，可以有意或无意地从中">
+<meta name="twitter:image" content="http://thyrsi.com/t6/365/1535683191x-1376440138.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/09/03/使用VAEs生成图片/">
+
+
+
+
+
+  <title>使用VAEs生成图片 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/09/03/使用VAEs生成图片/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用VAEs生成图片</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-03T21:40:42+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-09-03T21:41:39+08:00">
+                2018-09-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/DL/" itemprop="url" rel="index">
+                    <span itemprop="name">DL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/03/使用VAEs生成图片/" class="leancloud_visitors" data-flag-title="使用VAEs生成图片">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,752
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="变分自动编码器生成图片"><a href="#变分自动编码器生成图片" class="headerlink" title="变分自动编码器生成图片"></a>变分自动编码器生成图片</h2><p>从隐图像空间进行采样以创建全新的图像或编辑现有图像是目前创作AI最受欢迎和最成功的应用方式。</p>
+<h3 id="图像隐空间取样"><a href="#图像隐空间取样" class="headerlink" title="图像隐空间取样"></a><strong>图像隐空间取样</strong></h3><p><strong>图像生成的关键思想是开发表示的低维潜在空间（自然是矢量空间），其中任何点都可以映射到逼真的图像上。</strong> 能够实现该映射的模块，将潜在点作为输入并输出图像（像素网格），被称为生成器（在GAN的情况下）或解码器（在VAE的情况下）。一旦开发出这样的潜在空间，可以有意或无意地从中采样点，并通过将它们映射到图像空间，生成以前从未见过的图像。</p>
+<p><img src="http://thyrsi.com/t6/365/1535683191x-1376440138.png" alt=""></p>
+<p><strong>GAN和VAE是用于学习图像表示的潜在空间的两种不同策略，每种都具有其自身的特征。</strong>VAE非常适合学习<strong>结构良好的潜在空间</strong>，其中特定方向编码数据能产生有意义的变化轴。GAN生成的图像可能非常逼真，但它们来自潜在的空间可能<strong>没有那么多的结构和连续性</strong>。
+<img src="http://thyrsi.com/t6/365/1535683544x-1566688526.png" alt=""></p>
+<h3 id="图片编辑的概念向量"><a href="#图片编辑的概念向量" class="headerlink" title="图片编辑的概念向量"></a>图片编辑的概念向量</h3><p><strong>给定潜在的表示空间或嵌入空间，空间中的某些方向可以编码原始数据中有趣的变化轴。</strong>例如，在面部图像的潜在空间中，可能存在微笑矢量s，使得如果潜在点z是某个面部的嵌入表示，则潜在点z+s是同一面部的嵌入表示，面带微笑。一旦确定了这样的矢量，就可以通过将图像投影到潜在空间中来编辑图像，以有意义的方式移动它们的表示，然后将它们解码回图像空间。</p>
+<h3 id="变分自动编码器"><a href="#变分自动编码器" class="headerlink" title="变分自动编码器"></a>变分自动编码器</h3><p><strong>变分自动编码器，是一种生成模型，特别适用于通过概念向量进行图像编辑的任务。</strong>它们是自动编码器的现代版本 - 一种旨在将输入编码到低维潜在空间然后将其解码回来的网络 - 将来自深度学习的想法与贝叶斯推理混合在一起.
+<strong>经典图像自动编码器通过编码器模块拍摄图像，将其映射到潜在的矢量空间，然后通过解码器模块将其解码回与原始图像具有相同尺寸的输出。然后通过使用与输入图像相同的图像作为目标数据来训练，这意味着自动编码器学习重建原始输入。通过对代码（编码器的输出）施加各种约束，可以使自动编码器学习或多或少有趣的数据潜在表示。最常见的是，将限制代码为低维和稀疏（大多数为零），在这种情况下，编码器可以将输入数据压缩为更少的信息位。</strong></p>
+<p><img src="http://thyrsi.com/t6/365/1535684616x-1566688526.png" alt=""></p>
+<p><strong>在实践中，这种经典的自动编码器不会导致特别有用或结构良好的潜在空间,也不太擅长数据压缩。由于这些原因，他们已经基本上不再流行。</strong>然而，<strong>VAE用统计方法增强了自动编码器，迫使他们学习连续的，高度结构化的潜在空间。它们已成为图像生成的强大工具</strong>。</p>
+<p><strong>VAE不是将其输入图像压缩为潜在空间中的固定代码，而是将图像转换为统计分布的参数：均值和方差。从本质上讲，这意味着假设输入图像是由统计过程生成的，并且此过程的随机性应在编码和解码期间用于计算。然后，VAE使用均值和方差参数随机采样分布的一个元素，并将该元素解码回原始输入。该过程的随机性提高了鲁棒性并迫使潜在空间在任何地方编码有意义的表示：在潜在空间中采样的每个点被解码为有效输出</strong>。
+<img src="http://thyrsi.com/t6/365/1535685098x1822611431.png" alt=""></p>
+<p>数学描述，VAE工作过程：</p>
+<ol>
+<li>编码器模块将输入样本input_img转换为表示的隐空间的z_mean和z_log_variance两个参数；</li>
+<li>通过z=z_mean + exp(z_log_variance)*epsilon 从<strong>假定生成输入图像的潜在正态分布</strong>中随机采样点z，其中epsilon是小值的随机张量; </li>
+<li>解码器模块将隐空间中的z点映射回原始输入图像。</li>
+</ol>
+<p>因为epsilon是随机的，所以该过程<strong>确保接近编码input_img（z-mean）的潜在位置</strong>的每个点都可以被解码为类似于input_img的东西，从而迫使潜在空间持续有意义。潜在空间中的任何两个闭合点将解码为高度相似的图像。<strong>连续性与潜在空间的低维度相结合，迫使潜在空间中的每个方向编码有意义的数据变化轴，使得潜在空间非常结构化，因此非常适合通过概念向量进行操纵</strong>。</p>
+<p><strong>VAE的参数通过两个损失函数进行训练：强制解码样本与初始输入匹配的重建损失函数，以及有助于学习良好的隐空间并减少过度拟合训练数据的正则化损失函数。</strong>让我们快速了解一下VAE的Keras实现。原理上，它看起来像这样：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">z_mean,z_log_variance = encoder(input_img)<span class="comment">#输入编码成均值、方法参数</span></span><br><span class="line"></span><br><span class="line">z = z_mean + exp(z_log_variance)*epsilon<span class="comment">#隐空间通过epsilon取样</span></span><br><span class="line"></span><br><span class="line">reconstructed_img = decoder(z)<span class="comment">#取样点生成新图片</span></span><br><span class="line"></span><br><span class="line">model = Model(input_img,reconstructed_img)<span class="comment">#实例化模型：输入图片映射到新建图片上，之后训练</span></span><br></pre></td></tr></table></figure></p>
+<p>模型定义后，使用重建损失函数和正则损失训练模型。
+使用一个简单的convnet将输入图片映射到隐空间的概率分布上，得到两个向量z_mean,z_log_var。</p>
+<p><em>VAE Encoder网络</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> backend <span class="keyword">as</span> K</span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">img_shape = (<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>)</span><br><span class="line">batch_size = <span class="number">16</span></span><br><span class="line">latent_dim = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">input_img = keras.Input(shape=img_shape)</span><br><span class="line">x = layers.Conv2D(<span class="number">32</span>,<span class="number">3</span>,padding=<span class="string">'same'</span>,activation=<span class="string">'relu'</span>)(input_img)</span><br><span class="line">x = layers.Conv2D(<span class="number">64</span>,<span class="number">3</span>,padding=<span class="string">'same'</span>,activation=<span class="string">'relu'</span>,stride=(<span class="number">2</span>,<span class="number">2</span>))(x)</span><br><span class="line">x = layers.Conv2D(<span class="number">64</span>,<span class="number">3</span>,padding=<span class="string">'same'</span>,activation=<span class="string">'relu'</span>)(x)</span><br><span class="line">x = layers.Conv2D(<span class="number">64</span>,<span class="number">3</span>,padding=<span class="string">'same'</span>,activation=<span class="string">'relu'</span>)(x)</span><br><span class="line">shape_before_flattening = K.int_shape(x)</span><br><span class="line"></span><br><span class="line">x = layers.Flatten()(x)</span><br><span class="line">x = layers.Dense(<span class="number">32</span>,activation=<span class="string">'relu'</span>)(x)</span><br><span class="line"><span class="comment">#输入图片最终 编码成 两个参数</span></span><br><span class="line">z_mean = layers.Dense(latent_dim)(x)</span><br><span class="line">z_log_var = layers.Dense(latent_dim)(x)</span><br></pre></td></tr></table></figure></p>
+<p>之后使用输入图片的假设空间分布特征z_mean和z_log_var得到隐空间取样点z。在这里，将一些任意代码（构建在Keras后端基元之上）包装到Lambda层中。<em>在Keras中，一切都需要是一个层，因此不属于内置层的代码应该包装在Lambda（或自定义层）中.</em></p>
+<p><em>隐空间取样函数</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sampling</span><span class="params">(args)</span>:</span></span><br><span class="line">	z_mean,z_log_var = args</span><br><span class="line">	epsilon=K.random_normal(shape=(K.shape(z_mean)[<span class="number">0</span>],</span><br><span class="line">			latent_dim),mean=<span class="number">0.</span>,stddev=<span class="number">1.</span>)</span><br><span class="line">	<span class="keyword">return</span> z_mean + K.exp(z_log_var)*epsilon</span><br><span class="line"></span><br><span class="line">z = layers.Lambda(sampling)([z_mean,z_log_var])</span><br></pre></td></tr></table></figure></p>
+<p>解码器部分实现。将向量z reshape到图片尺寸，最后经过几个卷积层得到最终的图片输出。
+<em>VAE decoder网络：隐变量空间到图片</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">decoder_input = layers.Input(K.int_shape(z)[<span class="number">1</span>:])<span class="comment">#输入z向量</span></span><br><span class="line"></span><br><span class="line">x = layers.Dense(np.prod(shape_before_flattening[<span class="number">1</span>:]),activation=<span class="string">'relu'</span>)(decoder_input)</span><br><span class="line">x = layers.Reshape(shape_before_flattening[<span class="number">1</span>:])(x)</span><br><span class="line">x = layers.Conv2DTranspose(<span class="number">32</span>,<span class="number">3</span>,padding=<span class="string">'same'</span>,activation=<span class="string">'relu'</span>,strides=(<span class="number">2</span>,<span class="number">2</span>))(x)</span><br><span class="line">x = layers.Conv2D(<span class="number">1</span>,<span class="number">3</span>,padding=<span class="string">'same'</span>,activation=<span class="string">'sigmoid'</span>)(x)</span><br><span class="line"></span><br><span class="line">decoder = Model(decoder_input, x)<span class="comment">#实例化模型，模型将输入decoder_input转换成图片</span></span><br><span class="line">z_decoded = decoder(z)<span class="comment">#输入z，得到最终转换后的输出图片</span></span><br></pre></td></tr></table></figure></p>
+<p>VAE的双重损失函数不符合传统形式损失函数（输入，目标）的预期。因此，将通过编写内部使用内置add_loss图层方法来创建任意损失的自定义图层来设置损失函数。
+<em>定义图层计算损失函数</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomVariationalLayer</span><span class="params">(keras.layers.Layer)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">vae_loss</span><span class="params">(self, x, z_decoded)</span>:</span></span><br><span class="line">		x = K.flatten(x)</span><br><span class="line">		z_decoded = K.flatten(z_decoded)</span><br><span class="line">		xent_loss = keras.metrics.binary_crossentropy(x, z_decoded)<span class="comment">#重构损失</span></span><br><span class="line">		kl_loss = <span class="number">-5e-4</span> * K.mean(<span class="number">1</span>+z_log_var-K.square(z_mean)- 	</span><br><span class="line">			K.exp(z_log_var), axis=<span class="number">-1</span>)<span class="comment">#encoder损失</span></span><br><span class="line">		<span class="keyword">return</span> K.mean(xent_loss + kl_loss)</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(self,inputs)</span>:</span></span><br><span class="line">		x = inputs[<span class="number">0</span>]</span><br><span class="line">		z_decoded = inputs[<span class="number">1</span>]</span><br><span class="line">		loss = self.vae_loss(x,z_decoded)</span><br><span class="line">		self.add_loss(loss,inputs=inputs)</span><br><span class="line">		<span class="keyword">return</span> x</span><br><span class="line">	</span><br><span class="line">y = CustomVariationalLayer()([input_img, z_decoded])</span><br></pre></td></tr></table></figure></p>
+<p>最后，实例化模型并训练。<strong>由于损失函数是在自定义层中处理的，因此不会在编译时指定外部损失（loss=None），这反过来意味着不会在训练期间传递目标数据（如所见，只能将x_train传递给模型在fit函数中）。</strong>
+<em>VAE训练</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"></span><br><span class="line">vae = Model(input_img,y)<span class="comment">#通过定义输入和输出 Model模型</span></span><br><span class="line">vae.compile(optimizer=<span class="string">'rmsprop'</span>, loss=<span class="keyword">None</span>)</span><br><span class="line">vae.summary()</span><br><span class="line">(x_train, _), (x_test, y_test) = mnist.load_data()</span><br><span class="line">x_train = x_train.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line">x_train = x_train.reshape(x_train.shape + (<span class="number">1</span>,))</span><br><span class="line">x_test = x_test.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line">x_test = x_test.reshape(x_test.shape + (<span class="number">1</span>,))</span><br><span class="line">vae.fit(x=x_train, y=<span class="keyword">None</span>,shuffle=<span class="keyword">True</span>,epochs=<span class="number">10</span>,batch_size=batch_size,</span><br><span class="line">	validation_data=(x_test, <span class="keyword">None</span>))</span><br></pre></td></tr></table></figure></p>
+<p>模型训练完成后，可以使用decoder模块将任意隐变量空间点转换生成图片。
+<em>2D隐变量空间点取样，生成图片</em>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> norm</span><br><span class="line"></span><br><span class="line">n = <span class="number">15</span><span class="comment">#15*15 225个数字图片</span></span><br><span class="line">digit_size = <span class="number">28</span></span><br><span class="line">figure = np.zeros((digit_size*n,digit_sie*n))<span class="comment">#最终图片</span></span><br><span class="line">grid_x = norm.ppf(np.linspace(<span class="number">0.05</span>,<span class="number">0.95</span>,n))<span class="comment">#假设隐变量空间符合高斯分布</span></span><br><span class="line">grid_y = norm.ppf(np.linspace(<span class="number">0.05</span>,<span class="number">0.95</span>,n))<span class="comment">#ppf随机取样</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i,yi <span class="keyword">in</span> enumerate(grid_x):</span><br><span class="line">	<span class="keyword">for</span> j, xi <span class="keyword">in</span> enumerate(grid_y):</span><br><span class="line">		z_sample = np.array([[xi, yi]])</span><br><span class="line">		<span class="comment">#重复z_sample多次，形成一个完整的batch</span></span><br><span class="line">		z_sample = np.tile(z_sample, batch_size).reshape(batch_size, <span class="number">2</span>)</span><br><span class="line">		x_decoded = decoder.predict(z_sample, batch_size=batch_size)</span><br><span class="line">		digit=x_decoded[<span class="number">0</span>].reshape(digit_size, digit_size)<span class="comment">#28*28*1-&gt;28*28</span></span><br><span class="line">		figure[i*digit_size:(i+<span class="number">1</span>)*digit_size,j*digit_size:(j+<span class="number">1</span>)*digit_size] = digit</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>, <span class="number">10</span>))</span><br><span class="line">plt.imshow(figure, cmap=<span class="string">'Greys_r'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://thyrsi.com/t6/365/1535701144x1822611359.png" alt=""></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li><strong>深度学习的图像生成是通过学习捕获有关图像数据集的统计信息的潜在空间来完成的。通过对潜在空间中的点进行采样和解码，可以生成前所未见的图像。有两个主要工具：VAE和GAN</strong>。</li>
+<li><strong>VAE导致高度结构化，连续的潜在表征</strong>。出于这个原因，它们适用于在潜在空间中进行各种图像编辑：面部交换，将皱眉脸变成笑脸，等等。它们也可以很好地用于基于潜在空间的动画，例如沿着潜在空间的横截面动画制作动画，显示起始图像以连续的方式慢慢变形为不同的图像。</li>
+<li><strong>GAN可以生成逼真的单帧图像，但可能不会引入具有坚固结构和高连续性的潜在空间。</strong></li>
+</ul>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/15/Deep-Learning-with-Python-基于Keras的Reuters新闻分类/">[Deep-Learning-with-Python]基于Keras的Reuters新闻分类</a></li><li><a href="http://fja0kl.github.io/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/">[Deep-Learning-with-Python]神经网络动手学习[上]</a></li><li><a href="http://fja0kl.github.io/2018/07/30/Deep-Learning-with-Python-文本序列中的深度学习/">[Deep-Learning-with-Python]文本序列中的深度学习.md</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DL/" rel="tag"># DL</a>
+          
+            <a href="/tags/VAEs/" rel="tag"># VAEs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/02/Keras实现风格迁移/" rel="next" title="Keras实现风格迁移">
+                <i class="fa fa-chevron-left"></i> Keras实现风格迁移
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/07/GAN图片生成/" rel="prev" title="GAN图片生成">
+                GAN图片生成 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#变分自动编码器生成图片"><span class="nav-number">1.</span> <span class="nav-text">变分自动编码器生成图片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像隐空间取样"><span class="nav-number">1.1.</span> <span class="nav-text">图像隐空间取样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图片编辑的概念向量"><span class="nav-number">1.2.</span> <span class="nav-text">图片编辑的概念向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变分自动编码器"><span class="nav-number">1.3.</span> <span class="nav-text">变分自动编码器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.4.</span> <span class="nav-text">小结</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
