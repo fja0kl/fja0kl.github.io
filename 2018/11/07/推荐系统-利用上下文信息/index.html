@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="推荐系统,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="上下文包括用户访问推荐系统的时间、地点、心情等，对于提高推荐系统的性能是非常重要的。准确了解用户的上下文信息,并将该信息应用于推荐算法是设计好的推荐系统的关键步骤。 时间上下文信息上下文信息中最重要的时间上下文信息。 时间效应简介时间是一种重要的上下文信息，对用户兴趣有着深入而广泛的影响。一般认为，时间信息对用户兴趣的影响表现在以下几个方面.  用户兴趣是变化的 这里提到的用户兴趣变化是因为用户自">
+<meta name="keywords" content="推荐系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[推荐系统]利用上下文信息">
+<meta property="og:url" content="http://fja0kl.github.io/2018/11/07/推荐系统-利用上下文信息/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="上下文包括用户访问推荐系统的时间、地点、心情等，对于提高推荐系统的性能是非常重要的。准确了解用户的上下文信息,并将该信息应用于推荐算法是设计好的推荐系统的关键步骤。 时间上下文信息上下文信息中最重要的时间上下文信息。 时间效应简介时间是一种重要的上下文信息，对用户兴趣有着深入而广泛的影响。一般认为，时间信息对用户兴趣的影响表现在以下几个方面.  用户兴趣是变化的 这里提到的用户兴趣变化是因为用户自">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://thyrsi.com/t6/409/1541474408x-1566688526.png">
+<meta property="og:image" content="http://thyrsi.com/t6/409/1541474511x1822611383.png">
+<meta property="og:image" content="http://thyrsi.com/t6/409/1541474734x1822611383.png">
+<meta property="og:image" content="http://thyrsi.com/t6/409/1541475264x1822611263.png">
+<meta property="og:image" content="http://thyrsi.com/t6/409/1541475356x1822611263.png">
+<meta property="og:image" content="http://thyrsi.com/t6/409/1541475480x1822611263.png">
+<meta property="og:image" content="http://thyrsi.com/t6/409/1541475599x1822611263.png">
+<meta property="og:image" content="http://thyrsi.com/t6/409/1541487662x1822611263.png">
+<meta property="og:updated_time" content="2018-11-07T02:12:22.426Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[推荐系统]利用上下文信息">
+<meta name="twitter:description" content="上下文包括用户访问推荐系统的时间、地点、心情等，对于提高推荐系统的性能是非常重要的。准确了解用户的上下文信息,并将该信息应用于推荐算法是设计好的推荐系统的关键步骤。 时间上下文信息上下文信息中最重要的时间上下文信息。 时间效应简介时间是一种重要的上下文信息，对用户兴趣有着深入而广泛的影响。一般认为，时间信息对用户兴趣的影响表现在以下几个方面.  用户兴趣是变化的 这里提到的用户兴趣变化是因为用户自">
+<meta name="twitter:image" content="http://thyrsi.com/t6/409/1541474408x-1566688526.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/11/07/推荐系统-利用上下文信息/">
+
+
+
+
+
+  <title>[推荐系统]利用上下文信息 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/11/07/推荐系统-利用上下文信息/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[推荐系统]利用上下文信息</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-07T10:10:55+08:00">
+                2018-11-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-07T10:12:22+08:00">
+                2018-11-07
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/推荐系统/" itemprop="url" rel="index">
+                    <span itemprop="name">推荐系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/07/推荐系统-利用上下文信息/" class="leancloud_visitors" data-flag-title="[推荐系统]利用上下文信息">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,223
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上下文包括用户访问推荐系统的时间、地点、心情等，对于提高推荐系统的性能是非常重要的。<strong>准确了解用户的上下文信息,并将该信息应用于推荐算法是设计好的推荐系统的关键步骤</strong>。</p>
+<h2 id="时间上下文信息"><a href="#时间上下文信息" class="headerlink" title="时间上下文信息"></a>时间上下文信息</h2><p>上下文信息中最重要的时间上下文信息。</p>
+<h3 id="时间效应简介"><a href="#时间效应简介" class="headerlink" title="时间效应简介"></a>时间效应简介</h3><p>时间是一种重要的上下文信息，对用户兴趣有着深入而广泛的影响。一般认为，时间信息对用户兴趣的影响表现在以下几个方面.</p>
+<ul>
+<li>用户兴趣是变化的 这里提到的用户兴趣变化是因为用户自身原因发生的变化，年龄、工作等。如果要准确预测用户现在的兴趣，就应该关注用户最近的行为，因为用户最近的行为最能体现他现在的兴趣。</li>
+<li>物品也是有生命周期的 一部电影刚上映可能被很多人关注，上映不久后就被人们淡忘了。当我们决定在某个时刻给某个用户推荐某个物品时，需要考虑该物品在该时刻是否已经过时了。不同系统的物品具有不同的生命周期。</li>
+<li>季节效应 季节效应主要反应了时间本身对用户兴趣的影响。比如夏天吃冰淇淋、冬天吃火锅，夏天穿T恤等。大部分用户是遵循这个规律的。</li>
+</ul>
+<h3 id="系统时间特性的分析"><a href="#系统时间特性的分析" class="headerlink" title="系统时间特性的分析"></a>系统时间特性的分析</h3><p><strong>在给定时间信息后,推荐系统从一个静态系统变成了一个时变的系统,而用户行为数据也变成了时间序列</strong>。<em>研究一个时变系统,需要首先研究这个系统的时间特性</em>。包含时间信息的用户行为数据集由一系列三元组构成，其中每个三元组(u,i,t)代表了用户u在时刻t对物品i产生过行为。统计如下信息研究系统的时间特性。</p>
+<ul>
+<li>数据集每天独立用户数的增长情况： 有些网站处理快速增长期，它们每天的独立用户数都在线性(指数)增加；有些网站处于平稳期，每天的独立用户数比较平稳；还有处于衰落期，每天的用户都在流失。在3种不同的系统中用户行为是不一样的，因此首先需要确定系统的增长情况。</li>
+<li>系统的物品变化情况： 如新闻网站，每天都会出现大量新的新闻，每条热门的喜你为其时间周期不会太长</li>
+<li>用户访问情况： 有些网站用户来一次就永远不来了,有些网站用户每周来一次,而有些网站用户每天都来。为了度量这些特性,我们可以统计用户的平均活跃天数,同时也可以统计相隔T天来系统的用户的重合度。</li>
+</ul>
+<h3 id="推荐系统的实时性"><a href="#推荐系统的实时性" class="headerlink" title="推荐系统的实时性"></a>推荐系统的实时性</h3><p><strong>用户兴趣是不断变化的，其变化体现在用户不断增加的新行为中</strong>。一个实时的推荐系统需要能够实时相应用户新的行为，让推荐列表不断变化，从而满足用户不断变化的兴趣。但并不是所有用户行为都会导致推荐系统的实时变化，只有显性反馈行为会导致推荐列表的变化。</p>
+<p>实现推荐系统的实时性除了对用户行为的存取有实时性要求，还要求推荐算法本身具有实时性，而推荐算法本身的实时性意味着：</p>
+<ul>
+<li>实时推荐系统不能每天都给所有用户离线计算推荐结果，然后在线展示昨天计算出来的结果。所以，<strong>要求在每个用户访问推荐系统时，都根据用户<em>这个时间前</em>的行为实时计算推荐列表</strong>。</li>
+<li>推荐算法<strong>需要平衡考虑用户的近期行为和长期行为</strong>，即要让推荐列表反应出用户近期行为所体现的兴趣变化，又不能让推荐列表完全受用户近期行为的影响，<strong>要保证推荐列表对用户兴趣预测的延续性</strong>[不能骤变]。</li>
+</ul>
+<h3 id="推荐算法的时间多样性"><a href="#推荐算法的时间多样性" class="headerlink" title="推荐算法的时间多样性"></a>推荐算法的时间多样性</h3><p><strong>推荐系统每天推荐结果的变化程度被定义为推荐系统的时间多样性</strong>。时间多样性高的推荐系统中用户会经常看到不同的推荐结果。</p>
+<p>提高推荐结果的时间多样性需要分两部解决。第一步是从推荐系统的实时性角度分析。第二，即使是实时推荐系统，由于使用的算法不同，也具有不同的时间多样性。</p>
+<p>如果用户没有行为，如何保证给用户的推荐结果具有一定的时间多样性？解决方法有：</p>
+<ul>
+<li>在生成推荐结果时加入一定的随机性。</li>
+<li>记录用户每天看到的推荐结果，然后在每天给用户进行推荐时，对他前几天看到过很多次的推荐结果记性适当降权。</li>
+<li>每天给用户使用不同的推荐算法。可以设计很多推荐算法，比如协同过滤算法、内容过滤算法等，然后在每天用户访问推荐系统时随机挑选一种算法给他进行推荐。</li>
+</ul>
+<p><strong>时间多样性也不是绝对的</strong>。<strong>推荐系统需要首先保证推荐的精度,在此基础上<em>适当地考虑时间多样性</em></strong>。在实际应用中需要通过多次的实验才能知道什么程度的时间多样性对系统是最好的。</p>
+<h3 id="时间上下文推荐算法"><a href="#时间上下文推荐算法" class="headerlink" title="时间上下文推荐算法"></a>时间上下文推荐算法</h3><p>时间信息建模有多种方法。</p>
+<p>1.最近最热门</p>
+<p>在没有时间信息的数据集中,我们可以给用户推荐历史上最热门的物品。那么在获得用户行为的时间信息后,最简单的非个性化推荐算法就是给用户推荐最近最热门的物品了。给定时间T，物品i最近的流行度$n_i(T)$可以定义为：
+$n_i(T) = \sum_{(u,i,t)\in Train, t&lt;T}\frac{1}{1+\alpha(T-t)}$</p>
+<p>其中，alpha是时间衰减参数。随着时间的增长，流行度热门程度降低。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def RecentPopularity(records, alpha, T):</span><br><span class="line">    ret = dict()</span><br><span class="line">    for user, item, tm in records:</span><br><span class="line">        if tm &gt;= T:</span><br><span class="line">            continue</span><br><span class="line">        addToDict(ret, item, 1/(1.0+alpha*(T-tm)))</span><br><span class="line">    return ret</span><br></pre></td></tr></table></figure>
+<p>2.时间上下文相关的ItemCF算法</p>
+<p>基于物品的个性化推荐算法是商用推荐系统中应用最广泛的，该算法有两个核心：</p>
+<ul>
+<li>利用用户行为离线计算物品之间的相似度；</li>
+<li>根据用户的历史行为和物品相似度矩阵，给用户做在线个性化推荐。</li>
+</ul>
+<p>时间信息在上面两个核心部分中都有重要的应用，体现在两种时间效应上。</p>
+<ul>
+<li>物品相似度 <strong>用户在相隔很短的时间内喜欢的物品具有更高相似度</strong>。以电影推荐为例,用户今天看的电影和用户昨天看的电影其相似度在统计意义上应该大于用户今天看的电影和用户一年前看的电影的相似度。</li>
+<li>在线推荐 <strong>用户近期行为相比用户很久之前的行为，更能体现用户现在的兴趣</strong>。因此在预测用户现在的兴趣时，应该加重用户近期行为的比重，优先给用户推荐那些和他近期喜欢的物品相似的物品。</li>
+</ul>
+<p>之前ItemCF算法计算物品之间相似度公式：
+<img src="http://thyrsi.com/t6/409/1541474408x-1566688526.png" alt="物品相似度"></p>
+<p>在得到时间信息(用户对物品产生行为的时间)后，可以在公式中加上时间因素，变为：
+<img src="http://thyrsi.com/t6/409/1541474511x1822611383.png" alt="时间+物品相似度"></p>
+<p>引入和时间相关的衰减项$f(|t_{ui}-t_{uj}|)$，其中tui是用户u对物品i产生行为的时间。f函数的含义是用户对物品i和物品j产生行为的时间越远，则$f(|t_{ui}-t_{uj}|)$越小。</p>
+<p>除了考虑时间信息对相关表的影响，也应该考虑时间信息对预测公式的影响。一般来说，用户现在的行为应该和用户最近的行为关心更大。因此可以修正预测公式：
+<img src="http://thyrsi.com/t6/409/1541474734x1822611383.png" alt="预测公式修正"></p>
+<p>其中，t0是当前时间。公式表明，tuj越靠近t0,和物品j相似的物品就会在用户u的推荐列表中获得越高的排名。beta是时间衰减参数。</p>
+<p>3.时间上下文相关的UserCF算法</p>
+<p>UserCF算法也可以利用时间信息提高预测的准确性。UserCF算法思想是：给用户推荐和他兴趣相似的其他用户喜欢的物品。可以在两个方面利用时间信息对UserCF改进：</p>
+<ul>
+<li>用户兴趣相似度 两个用户兴趣相似是因为他们喜欢相同的物品,或者对相同的物品产生过行为。但是,<strong>如果两个用户同时喜欢相同的物品,那么这两个用户应该有更大的兴趣相似度</strong>。</li>
+<li>相似兴趣用户的最近行为 在找到和当前用户u兴趣相似的一组用户后,<strong>这组用户最近的兴趣显然相比这组用户很久之前的兴趣更加接近用户u今天的兴趣</strong>。也就是说,我们<strong>应该给用户推荐和他兴趣相似的用户最近喜欢的物品</strong>。</li>
+</ul>
+<p>UserCF计算用户u和用户v的兴趣相似度公式：
+<img src="http://thyrsi.com/t6/409/1541475264x1822611263.png" alt="兴趣相似度公式">
+其中，N(u)是用户u喜欢的物品集合，N(v)是用户v喜欢的物品集合。加上时间信息后，公式变为：
+<img src="http://thyrsi.com/t6/409/1541475356x1822611263.png" alt="时间+兴趣相似度"></p>
+<p>对用户u和用户v共同喜欢的物品i增加一个时间衰减因子。用户u和用户v对物品i产生行为的时间越远，这两个用户的兴趣相似度就越小。</p>
+<p>原UserCF预测用户对物品的兴趣公式：
+<img src="http://thyrsi.com/t6/409/1541475480x1822611263.png" alt="预测公式"></p>
+<p>S(u,K)包含和用户u兴趣最接近的K个用户。如果用户v对物品i产生过行为，rvi = 1,否则为rvi = 0.</p>
+<p>加上时间因素后，公式变为：
+<img src="http://thyrsi.com/t6/409/1541475599x1822611263.png" alt="时间+预测公式"></p>
+<p>产生行为的时间离当前时间越远，相似度越小。</p>
+<h2 id="地点上下文信息"><a href="#地点上下文信息" class="headerlink" title="地点上下文信息"></a>地点上下文信息</h2><p>除了时间，地点作为一种重要的空间特征，也是一种重要的上下文信息。不同地区的用户兴趣有所不同，用户到了不同的地方，兴趣也会有所变化。</p>
+<h3 id="基于位置的推荐算法"><a href="#基于位置的推荐算法" class="headerlink" title="基于位置的推荐算法"></a>基于位置的推荐算法</h3><p>用户兴趣和地点相关的两种特征：</p>
+<ul>
+<li>兴趣本地化 不同地方的用户兴趣存在着很大的区别。不同国家和地区用户的兴趣存在移动的差异性。</li>
+<li>活动本地化 一个用户往往在附近的地区活动。在基于位置的推荐中需要考虑推荐地点和用户当前地点的距离，不能给用户推荐太原的地方。</li>
+</ul>
+<p>可以从3种数据形式来分析地点上下文的影响：</p>
+<ul>
+<li>(用户, 用户位置, 物品, 评分)：某个位置的用户对物品的评分；</li>
+<li>(用户, 物品, 物品位置, 评分)：用户对某个位置的物品的评分；</li>
+<li>(用户, 用户位置, 物品, 物品位置, 评分)：某个位置的用户对某个位置的物品的评分结果。</li>
+</ul>
+<p>对于第一种，将数据集根据用户的位置划分成很多子集，可以把用户按地理位置做树状划分，对每一级树节点生成推荐列表，最终对各级推荐结果加权（金字塔模型）。金字塔的深度影响了推荐系统的性能,因而深度是这个算法的一个重要指标。</p>
+<p><img src="http://thyrsi.com/t6/409/1541487662x1822611263.png" alt="基于位置信息推荐"></p>
+<p>对于第二种，可以先计算忽略物品位置的 (p(u,i)) ，然后减去物品位置对用户的代价。
+$RecScore(u,i) = P(u,i) - TravelPenalty(u,i)$
+P(u,i)用户u对物品i的兴趣，TravelPenalty(u,i)表示<strong>物品i的位置对用户u的代价</strong>。<strong>计算TravelPenalty(u,i)的基本思想是对于物品i与用户u之前评分的所有物品的位置计算距离的平均值(或最小值)</strong>.</p>
+<p>实验表明，考虑了用户位置的算法要优于ItemCF算法。</p>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/11/06/推荐系统-利用用户标签数据/">[推荐系统]利用用户标签数据</a></li><li><a href="http://fja0kl.github.io/2018/11/04/推荐系统-推荐系统冷启动问题/">[推荐系统]推荐系统冷启动问题</a></li><li><a href="http://fja0kl.github.io/2018/11/01/推荐系统-好的推荐系统/">[推荐系统]好的推荐系统</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/推荐系统/" rel="tag"># 推荐系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/06/推荐系统-利用用户标签数据/" rel="next" title="[推荐系统]利用用户标签数据">
+                <i class="fa fa-chevron-left"></i> [推荐系统]利用用户标签数据
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#时间上下文信息"><span class="nav-number">1.</span> <span class="nav-text">时间上下文信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时间效应简介"><span class="nav-number">1.1.</span> <span class="nav-text">时间效应简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统时间特性的分析"><span class="nav-number">1.2.</span> <span class="nav-text">系统时间特性的分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推荐系统的实时性"><span class="nav-number">1.3.</span> <span class="nav-text">推荐系统的实时性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推荐算法的时间多样性"><span class="nav-number">1.4.</span> <span class="nav-text">推荐算法的时间多样性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间上下文推荐算法"><span class="nav-number">1.5.</span> <span class="nav-text">时间上下文推荐算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地点上下文信息"><span class="nav-number">2.</span> <span class="nav-text">地点上下文信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于位置的推荐算法"><span class="nav-number">2.1.</span> <span class="nav-text">基于位置的推荐算法</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
