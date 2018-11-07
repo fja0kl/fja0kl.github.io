@@ -330,6 +330,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/01/推荐系统-好的推荐系统/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/01/推荐系统-好的推荐系统/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -359,7 +369,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5,111
+                  5,110
                 </span>
               
 
@@ -514,7 +524,7 @@ $G = 1/(n-1) \sum_{j=1}^{n}(2j-n-1)p(i_j)$
 <li>时间维度： 包括季节，是工作日还是周末，是白天还是晚上。</li>
 </ul>
 <p>如果能够在推荐系统评测报告中<strong>包含不同维度下的系统评测指标,就能帮我们全面地了解推荐系统性能</strong>,找到比较弱的算法的优势,发现比较强的算法的缺点。</p>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/11/07/推荐系统-利用上下文信息/">[推荐系统]利用上下文信息</a></li><li><a href="http://fja0kl.github.io/2018/11/06/推荐系统-利用用户标签数据/">[推荐系统]利用用户标签数据</a></li><li><a href="http://fja0kl.github.io/2018/11/04/推荐系统-推荐系统冷启动问题/">[推荐系统]推荐系统冷启动问题</a></li></ul></div>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/11/07/推荐系统-利用上下文信息/">[推荐系统]利用上下文信息</a></li><li><a href="http://fja0kl.github.io/2018/11/07/推荐系统-利用社交网络数据/">[推荐系统]利用社交网络数据</a></li><li><a href="http://fja0kl.github.io/2018/11/06/推荐系统-利用用户标签数据/">[推荐系统]利用用户标签数据</a></li></ul></div>
       
     </div>
     
@@ -585,6 +595,9 @@ $G = 1/(n-1) \sum_{j=1}^{n}(2j-n-1)p(i_j)$
 
           
 
+  
+    <div class="comments" id="comments">
+    </div>
   
 
 
@@ -898,6 +911,28 @@ $G = 1/(n-1) \sum_{j=1}^{n}(2j-n-1)p(i_j)$
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz',
+        appKey: 'Nw8hvihjOt1jGKfvVpix3P5V',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 

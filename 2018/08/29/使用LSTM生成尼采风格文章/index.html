@@ -333,6 +333,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/29/使用LSTM生成尼采风格文章/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/29/使用LSTM生成尼采风格文章/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -362,7 +372,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,963
+                  2,959
                 </span>
               
 
@@ -454,7 +464,7 @@ epochs=20,temperature=0.2，生成文本序列：
 <li><strong>对下一个tokens进行采样需要在遵守模型判断可能性和引入随机性之间取得平衡;</strong></li>
 <li>解决这个问题的一种方法是softmax temperature的概念。始终尝试不同的temperature，找到合适的temperature。</li>
 </ul>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/15/Deep-Learning-with-Python-基于Keras的Reuters新闻分类/">[Deep-Learning-with-Python]基于Keras的Reuters新闻分类</a></li><li><a href="http://fja0kl.github.io/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/">[Deep-Learning-with-Python]神经网络动手学习[上]</a></li><li><a href="http://fja0kl.github.io/2018/05/29/手写实现单层神经网络/">手写实现单层神经网络</a></li></ul></div>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/15/Deep-Learning-with-Python-基于Keras的Reuters新闻分类/">[Deep-Learning-with-Python]基于Keras的Reuters新闻分类</a></li><li><a href="http://fja0kl.github.io/2018/07/13/Deep-Learning-with-Python-神经网络动手学习-上/">[Deep-Learning-with-Python]神经网络动手学习[上]</a></li><li><a href="http://fja0kl.github.io/2018/05/24/指数加权平均/">指数加权平均</a></li></ul></div>
       
     </div>
     
@@ -527,6 +537,9 @@ epochs=20,temperature=0.2，生成文本序列：
 
           
 
+  
+    <div class="comments" id="comments">
+    </div>
   
 
 
@@ -840,6 +853,28 @@ epochs=20,temperature=0.2，生成文本序列：
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz',
+        appKey: 'Nw8hvihjOt1jGKfvVpix3P5V',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 

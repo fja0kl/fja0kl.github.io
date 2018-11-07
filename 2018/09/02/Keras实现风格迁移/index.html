@@ -333,6 +333,16 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/02/Keras实现风格迁移/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/09/02/Keras实现风格迁移/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -465,7 +475,7 @@ distance(content(original_image) - content(generated_image))</p>
 <li>风格通过卷积网络的不同网络层激活函数的内部相关性计算；</li>
 <li>因此，深度学习允许将风格迁移表达为使用由预训练的convnet对定义的损失进行优化的过程。</li>
 </ul>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/12/Deep-Learning-with-Python-神经网络的数学基础/">[Deep-Learning-with-Python]神经网络的数学基础</a></li><li><a href="http://fja0kl.github.io/2018/07/13/基于Keras的imdb数据集电影评论情感二分类/">基于Keras的imdb数据集电影评论情感二分类</a></li><li><a href="http://fja0kl.github.io/2018/08/29/使用LSTM生成尼采风格文章/">使用LSTM生成尼采风格文章</a></li></ul></div>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/12/Deep-Learning-with-Python-神经网络的数学基础/">[Deep-Learning-with-Python]神经网络的数学基础</a></li><li><a href="http://fja0kl.github.io/2018/08/29/使用LSTM生成尼采风格文章/">使用LSTM生成尼采风格文章</a></li><li><a href="http://fja0kl.github.io/2018/07/13/基于Keras的imdb数据集电影评论情感二分类/">基于Keras的imdb数据集电影评论情感二分类</a></li></ul></div>
       
     </div>
     
@@ -538,6 +548,9 @@ distance(content(original_image) - content(generated_image))</p>
 
           
 
+  
+    <div class="comments" id="comments">
+    </div>
   
 
 
@@ -851,6 +864,28 @@ distance(content(original_image) - content(generated_image))</p>
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz',
+        appKey: 'Nw8hvihjOt1jGKfvVpix3P5V',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
