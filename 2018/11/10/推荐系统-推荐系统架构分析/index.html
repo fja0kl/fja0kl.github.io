@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="推荐系统,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="首先介绍推荐系统的外围架构,然后介绍推荐系统的架构,并对架构中每个模块的设计进行深入讨论. 外围架构主要讨论推荐系统是如何和网站的其他系统接口的.  一般来说,每个网站都会有一个UI系统,UI系统负责给用户展示网页并和用户交互.网站会通过日志系统将用户在UI上的各种各样的行为记录到用户行为日志中.日志可能存储在内存缓存李,也可能存储在数据库中,也可能春初在文件系统中. 推荐系统通过分析用户的行为日">
+<meta name="keywords" content="推荐系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[推荐系统]推荐系统架构分析">
+<meta property="og:url" content="http://fja0kl.github.io/2018/11/10/推荐系统-推荐系统架构分析/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="首先介绍推荐系统的外围架构,然后介绍推荐系统的架构,并对架构中每个模块的设计进行深入讨论. 外围架构主要讨论推荐系统是如何和网站的其他系统接口的.  一般来说,每个网站都会有一个UI系统,UI系统负责给用户展示网页并和用户交互.网站会通过日志系统将用户在UI上的各种各样的行为记录到用户行为日志中.日志可能存储在内存缓存李,也可能存储在数据库中,也可能春初在文件系统中. 推荐系统通过分析用户的行为日">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.superbed.cn/pic/5be6859c9dc6d65f170ae3ad">
+<meta property="og:image" content="https://files.catbox.moe/pmtkce.png">
+<meta property="og:image" content="https://www.superbed.cn/pic/5be68c069dc6d666cf28531b">
+<meta property="og:image" content="https://www.superbed.cn/pic/5be68f639dc6d666cf28531e">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/005YhI8igy1fx30zq5xh8j30wb0kvtbh">
+<meta property="og:updated_time" content="2018-11-10T09:14:16.127Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[推荐系统]推荐系统架构分析">
+<meta name="twitter:description" content="首先介绍推荐系统的外围架构,然后介绍推荐系统的架构,并对架构中每个模块的设计进行深入讨论. 外围架构主要讨论推荐系统是如何和网站的其他系统接口的.  一般来说,每个网站都会有一个UI系统,UI系统负责给用户展示网页并和用户交互.网站会通过日志系统将用户在UI上的各种各样的行为记录到用户行为日志中.日志可能存储在内存缓存李,也可能存储在数据库中,也可能春初在文件系统中. 推荐系统通过分析用户的行为日">
+<meta name="twitter:image" content="https://www.superbed.cn/pic/5be6859c9dc6d65f170ae3ad">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/11/10/推荐系统-推荐系统架构分析/">
+
+
+
+
+
+  <title>[推荐系统]推荐系统架构分析 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/11/10/推荐系统-推荐系统架构分析/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[推荐系统]推荐系统架构分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-10T17:13:18+08:00">
+                2018-11-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-10T17:14:16+08:00">
+                2018-11-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/推荐系统/" itemprop="url" rel="index">
+                    <span itemprop="name">推荐系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/10/推荐系统-推荐系统架构分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/10/推荐系统-推荐系统架构分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/11/10/推荐系统-推荐系统架构分析/" class="leancloud_visitors" data-flag-title="[推荐系统]推荐系统架构分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>首先介绍推荐系统的外围架构,然后介绍推荐系统的架构,并对架构中每个模块的设计进行深入讨论.</p>
+<h2 id="外围架构"><a href="#外围架构" class="headerlink" title="外围架构"></a>外围架构</h2><p>主要讨论推荐系统是如何和网站的其他系统接口的.</p>
+<p><img src="https://www.superbed.cn/pic/5be6859c9dc6d65f170ae3ad" alt="推荐系统和其他系统之间的关系"></p>
+<p>一般来说,每个网站都会有一个UI系统,UI系统负责给用户展示网页并和用户交互.网站会通过日志系统将用户在UI上的各种各样的行为记录到用户行为日志中.日志可能存储在内存缓存李,也可能存储在数据库中,也可能春初在文件系统中. 推荐系统通过分析用户的行为日志,给用户生成推荐列表,最终展示到网站的页面上.</p>
+<p>从图中可以看到,推荐系统要发挥强大的作用,除了推荐系统本身,主要还依赖于两个条件—界面展示和用户行为数据.目前流行的推荐系统界面,都有一些共性:</p>
+<ul>
+<li>通过一定方式展示物品,主要包括物品的标题/缩略图和介绍等;</li>
+<li>很多推荐界面都提供了推荐理由,理由可以增加用户对推荐结果的信任度;</li>
+<li>推荐界面还需要提供一些按钮让用户对推荐结果进行反馈,这样才能让推荐算法不断改善用户的个性化推荐体验.</li>
+</ul>
+<h3 id="数据收集和存储"><a href="#数据收集和存储" class="headerlink" title="数据收集和存储"></a>数据收集和存储</h3><p>个性化推荐算法依赖于用户行为数据,而在任何一个网站中都存在各种各样的用户行为数据.如何存取这些数据就是推荐系统需要解决的首要问题.</p>
+<p><strong>按照数据的规模和是否需要实时存取,不同的行为数据将被存储在不同的媒介中</strong>.一般来说,需要实时存取的数据存储在数据库和缓存中,而大规模的非实时地存取数据存储在分布式文件系统(如HDFS)中.</p>
+<p>数据能否实时存取在推荐系统中非常重要,因为<strong>推荐系统的实时性主要依赖于能否实时拿到用户的新行为</strong>.只有快速达到大量用户的新行为,推荐系统才能够实时地适应用户当前的需求,给用户进行实时推荐.</p>
+<h2 id="推荐系统架构"><a href="#推荐系统架构" class="headerlink" title="推荐系统架构"></a>推荐系统架构</h2><p>推荐系统是联系用户和物品的媒介,而推荐系统联系用户和物品的方式主要有3种.</p>
+<p><img src="https://files.catbox.moe/pmtkce.png" alt="3种联系用户和物品的推荐系统"></p>
+<p>本质上,喜欢物品以及和与用户有相似兴趣的好友也可以看成一种特征,这样就可以统一为一种基于特征的推荐系统架构.</p>
+<p><img src="https://www.superbed.cn/pic/5be68c069dc6d666cf28531b" alt="基于特征的推荐系统架构"></p>
+<p>当新用户到来之后,推荐系统需要为用户生成特征,然后对每个特征找到和特征相关的物品,从而最终生成用户的推荐列表.因而,<strong>推荐系统的核心任务就被拆分成两部分,一个是如何为给定用户生成特征,另一个是如何根据特征找到物品</strong>.
+用户的特征种类非常多,主要包括一下几类:</p>
+<ul>
+<li>人口统计学特征 包括用户的年龄,性别,国籍和民族等用户在注册时提供的信息.</li>
+<li>用户的行为特征 包括用户浏览过什么物品,收藏过什么物品,给什么物品打过评分等用户行为相关的特征.同时,用户行为从时间上也可以分为用户近期的行为和长期的行为.</li>
+<li>用户的话题特征 可以根据用户的历史行为利用话题模型将电视剧和电影聚合成不同的话题,并且计算出每个用户对什么话题感兴趣.</li>
+</ul>
+<p>推荐系统的推荐任务也有很多种:</p>
+<ul>
+<li>将最新加入的物品推荐给用户;</li>
+<li>将商业上需要宣传的物品推荐给用户;</li>
+<li>给用户推荐不同种类的物品,比如亚马逊会推荐图书,音像,电子产品和服装等.</li>
+<li>给用户混合推荐,有时需要将图书和音像放到一个推荐列表中展示给用户;</li>
+<li>对于不同的产品推荐不同新颖度的物品.比如在首页展示比较热门的推荐结果,在推荐系统页面给用户展示长尾中的物品;</li>
+<li>考虑到用户访问推荐系统的上下文.</li>
+</ul>
+<p>如果将上面提到的各种特征和任务都在一个系统中统筹安排,那么系统将会非常复杂,而且很难通过配置文件方便地配置不同特征和任务的权重. 因此,<strong>推荐系统需要由多个推荐引擎组成,每个推荐引擎负责一类特征和一种任务,而推荐系统的任务只是将推荐引擎的结果按照一定权重或者优先级合并,排序然后返回</strong>.</p>
+<p><img src="https://www.superbed.cn/pic/5be68f639dc6d666cf28531e" alt="推荐系统的架构图"></p>
+<p>这样做还有两个好处:</p>
+<ul>
+<li><strong>可以方便地增加/删除引擎,控制不同引擎对推荐结果的影响</strong>.对于绝大多数需求,只需要通过不同的引擎组合实现.</li>
+<li>可以实现推荐引擎级别的用户反馈. 每个推荐引擎其实代表了一种推荐策略,不同的用户坑你喜欢不同的推荐策略.可以将每一种策略都设计成一个推荐引擎,然后通过分析用户对推荐结果的反馈了解用户比较喜欢哪些引擎推荐出来的结果,从而对不同的用户给出不同的引擎组成权重.</li>
+</ul>
+<p>将推荐系统拆分成不同的推荐引擎后,<strong>如何设计一个推荐引擎变成了推荐系统的核心部分</strong>.</p>
+<h2 id="推荐引擎的架构"><a href="#推荐引擎的架构" class="headerlink" title="推荐引擎的架构"></a>推荐引擎的架构</h2><p>推荐引擎使用一种或几种用户特征,按照一种推荐策略生成一种类型物品的推荐列表。</p>
+<p><img src="https://ww1.sinaimg.cn/large/005YhI8igy1fx30zq5xh8j30wb0kvtbh" alt="推荐引擎的架构图"></p>
+<p>推荐引擎架构主要包括3部分.</p>
+<ul>
+<li>该部分负责从数据库或缓存中拿到用户行为数据,通过分析不同行为,生成当前用户的特征向量.<strong>该模块的输出是用户特征向量</strong>.</li>
+<li>该部分负责*<em>将用户的特征向量</em>通过特征-物品相关矩阵*转换为初始推荐物品列表;</li>
+<li>该部分负责<strong>对初始的推荐列表进行过滤,排名等处理</strong>,从而生成最终的推荐爱按结果.</li>
+</ul>
+<h3 id="生成用户特征向量"><a href="#生成用户特征向量" class="headerlink" title="生成用户特征向量"></a>生成用户特征向量</h3><p>一般来说,用户的特征包括两种,一种是用户的注册信息中可以提取出来的,主要包括用户的人口统计学特征.另一种特征主要是从用户的行为中计算出来的.</p>
+<p>一个特征向量由特征以及特征的权重组成.在利用用户行为计算特征向量时需要考虑:</p>
+<ul>
+<li>用户行为的种类 不同的用户行为对物品的权重产生不同的影响,大多数时间不能确定哪些行为更加重要,一般的标准是用户付出代价越大的行为权重越高.比如购买行为比浏览行为更加重要,代价更高.</li>
+<li>用户行为产生的时间 一般而言,近期行为比很久之前的行为相比,近期行为更加重要.</li>
+<li>用户行为的次数 <strong>用户对同一个物品的同一种行为发生的次数反映了用户对物品的兴趣,行为次数越多的物品对应的特征权重越高</strong>.比如,对一首歌歌曲的单曲循环播放.</li>
+<li>物品的热门程度 如果用户对一个不热门的物品产生了行为,能说明用户的个性需求. 推荐引擎在生成用户特征时会加重不热门物品对应的特征的权重.</li>
+</ul>
+<h3 id="特征-物品相关推荐"><a href="#特征-物品相关推荐" class="headerlink" title="特征-物品相关推荐"></a>特征-物品相关推荐</h3><p>在得到用户的特征向量后,可以根据离线的相关表得到初始的物品推荐列表.离线相关表可以存储在MySQL中.
+对每个特征,可以在相关表中存储和它最相关的N的物品的ID.在线使用的特征-物品相关表一般都不止一张. <strong>对于一个推荐引擎可以在配置文件中<em>配置很多相关表以及它们的权重</em>,而在线服务在启动时会<em>将这些相关表按照配置的权重相加</em>,然后将最终的相关表保存在内存中,而在给用户进行推荐时,用的已经是加权后的相关表了</strong>。</p>
+<p>特征-物品相关推荐模块还可以接受一个候选物品集合.<strong>候选物品集合的目的是保证推荐结果只包含候选物品集合中的物品</strong>.它的<strong>应用场合一般是产品需求希望将某些类型的电视剧推荐给用户</strong>。比如有些产品要求给用户推荐最近一周加入的新物品,那么候选物品集合就包括最近一周新加的物品。</p>
+<p>特征—物品相关推荐模块除了给用户返回物品推荐列表,还需要给推荐列表中的每个推荐结果产生一个解释列表,表明这个物品是因为哪些特征推荐出来的。</p>
+<h3 id="过滤模块"><a href="#过滤模块" class="headerlink" title="过滤模块"></a>过滤模块</h3><p>按照产品需求对结果进行过滤,过滤掉那些不符合要求的物品.一般来说,会过滤掉以下物品:</p>
+<ul>
+<li>用户已经产生过行为物品 保证推荐结果的新颖性</li>
+<li>候选物品以外的物品 候选物品集合一般有两个来源,一个是产品需求,另一个是用户自己的选择.</li>
+<li>某些质量很差的物品 这种过滤一般以用户的历史评分为依据,比如过滤掉平均分在2分一下的物品.</li>
+</ul>
+<h3 id="排名模块"><a href="#排名模块" class="headerlink" title="排名模块"></a>排名模块</h3><p>经过过滤后的推荐结果直接展示给用户一般也没有问题,但如果对它们进行一些排名,则可以更好地提升用户满意度,一般排名模块需要包括很多不同的子模块.</p>
+<h4 id="新颖性排名"><a href="#新颖性排名" class="headerlink" title="新颖性排名"></a>新颖性排名</h4><p><strong>新颖性排名模块的目的是给用户尽量推荐他们不知道的、长尾中的物品</strong>。虽然前面的过滤模块已经过滤掉了用户曾经有过行为的物品,保证了一定程度的新颖性,但用户可能已经在别的途径知道这个物品了。
+要准确了解用户是否已经知道某个物品是非常困难的,只能通过某种近似的方式知道,比如对推荐结果中热门的物品进行降权.比如使用如下公式:
+$p_{ui} = \frac{p_{ui}}{log(1+\alpha * popularity(i))}$</p>
+<p>但要实现推荐结果的新颖性,仅仅在最后对热门物品进行降权是不够的,应在推荐引擎的各个部分考虑新颖性问题.</p>
+<h4 id="多样性"><a href="#多样性" class="headerlink" title="多样性"></a>多样性</h4><p>增加多样性可以让推荐结果覆盖尽可能多的用户兴趣。但是提高多样性并不是时时刻刻都很好。
+第一种提高多样性的方法是将推荐结果按照某种物品的内容属性分成几类,然后在每个类中都选择该类中排名最高的物品集合组成最终推荐列表.方法的优点是比较简单直观,缺点是选择什么样的内容属性进行分类对结果影响很大,计算选择了某种类别,但物品是否属于某个种类是编辑确定的,并不一定能得到用户的公认.
+第二种提高推荐结果多样性的方法是控制不同推荐结果的推荐理由出现的次数.要提高推荐结果的多样性,就需要让推荐结果尽量来自不同的特征,具有不同的推荐理由,而不是所有的推荐结果都对应一个理由。</p>
+<h4 id="时间多样性"><a href="#时间多样性" class="headerlink" title="时间多样性"></a>时间多样性</h4><p>时间多样性主要是为了保证用户不要每天来推荐系统都看到同样的推荐结果。提高推荐系统的时间多样性主要从两个地方着手.首先要保证推荐系统的实时性,在用户有新行为时实时调整推荐结果以满足用户最近的需求;另一个方面是要在用户没有新行为时,也要保证推荐结果每天都有变化.要实现这一点:</p>
+<ul>
+<li>记录用户每次登陆推荐系统看到的推荐结果;</li>
+<li>将这些结果发回日志系统.这种数据不需要实时存储,只要保证小于一天的延时;</li>
+<li>在用户登录时拿到用户昨天及之前看过的推荐结果列表,从当前推荐结果中将用户已经看到的推荐结果降权.</li>
+</ul>
+<h4 id="用户反馈"><a href="#用户反馈" class="headerlink" title="用户反馈"></a>用户反馈</h4><p>排名模块最重要的部分就是用户反馈模块。<strong>用户反馈模块主要通过分析用户之前和推荐结果的交互日志,预测用户会对什么样的推荐结果比较感兴趣</strong>。</p>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/11/06/推荐系统-利用用户标签数据/">[推荐系统]利用用户标签数据</a></li><li><a href="http://fja0kl.github.io/2018/11/07/推荐系统-利用社交网络数据/">[推荐系统]利用社交网络数据</a></li><li><a href="http://fja0kl.github.io/2018/11/04/推荐系统-推荐系统冷启动问题/">[推荐系统]推荐系统冷启动问题</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/推荐系统/" rel="tag"># 推荐系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/07/推荐系统-利用社交网络数据/" rel="next" title="[推荐系统]利用社交网络数据">
+                <i class="fa fa-chevron-left"></i> [推荐系统]利用社交网络数据
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#外围架构"><span class="nav-number">1.</span> <span class="nav-text">外围架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据收集和存储"><span class="nav-number">1.1.</span> <span class="nav-text">数据收集和存储</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐系统架构"><span class="nav-number">2.</span> <span class="nav-text">推荐系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐引擎的架构"><span class="nav-number">3.</span> <span class="nav-text">推荐引擎的架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成用户特征向量"><span class="nav-number">3.1.</span> <span class="nav-text">生成用户特征向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征-物品相关推荐"><span class="nav-number">3.2.</span> <span class="nav-text">特征-物品相关推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过滤模块"><span class="nav-number">3.3.</span> <span class="nav-text">过滤模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排名模块"><span class="nav-number">3.4.</span> <span class="nav-text">排名模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新颖性排名"><span class="nav-number">3.4.1.</span> <span class="nav-text">新颖性排名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多样性"><span class="nav-number">3.4.2.</span> <span class="nav-text">多样性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时间多样性"><span class="nav-number">3.4.3.</span> <span class="nav-text">时间多样性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户反馈"><span class="nav-number">3.4.4.</span> <span class="nav-text">用户反馈</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz',
+        appKey: 'Nw8hvihjOt1jGKfvVpix3P5V',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
