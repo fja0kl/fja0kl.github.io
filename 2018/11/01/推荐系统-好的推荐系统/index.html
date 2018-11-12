@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
 <meta property="og:description" content="什么是推荐系统information overload信息过载时代： 信息爆炸。 在这个时代,无论是信息消费者还是信息生产者都遇到了很大的挑战:作为信息消费者,如何从大量信息中找到自己感兴趣的信息是一件非常困难的事情;作为信息生产者,如何让自己生产的信息脱颖而出,受到广大用户的关注,也是一件非常困难的事情。推荐系统就是解决这一矛盾的重要工具。 长尾理论long tail： 传统的80/20原则(8">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-01T00:34:58.300Z">
+<meta property="og:updated_time" content="2018-11-12T01:12:54.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[推荐系统]好的推荐系统">
 <meta name="twitter:description" content="什么是推荐系统information overload信息过载时代： 信息爆炸。 在这个时代,无论是信息消费者还是信息生产者都遇到了很大的挑战:作为信息消费者,如何从大量信息中找到自己感兴趣的信息是一件非常困难的事情;作为信息生产者,如何让自己生产的信息脱颖而出,受到广大用户的关注,也是一件非常困难的事情。推荐系统就是解决这一矛盾的重要工具。 长尾理论long tail： 传统的80/20原则(8">
@@ -298,8 +298,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-11-01T08:34:58+08:00">
-                2018-11-01
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-12T09:12:54+08:00">
+                2018-11-12
               </time>
             
           </span>
@@ -400,15 +400,31 @@
 <li>在训练集上训练用户兴趣模型，在测试集上进行预测；</li>
 <li>通过事先定义的离线指标评测算法在测试集上的预测结果。</li>
 </ul>
-<p>推荐系统的离线实验都是在数据集上完成的，不需要一个实际的系统来供它实验，只要由一个从实际系统日志中提取的数据集即可。
-<strong>好处：</strong>不需要真实用户参与，可以直接快速地计算出来，从而方便、快速地测试大量不同的算法。
-<strong>缺点：</strong>无法获得很多商业上关注的指标，如点击率、转换率等，而找到和商业指标非常相关的离线指标也是很困难的事情。
-离线实验的优缺点
-|优点|缺点|
-|:–:|:–:|
-|不需要有对实际系统的控制权|无法计算商业上关心的指标|
-|不需要用户参与实验|离线实验的指标和商业指标存在差距|
-|速度快，可以测试大量算法||</p>
+<p>推荐系统的离线实验都是在数据集上完成的，不需要一个实际的系统来供它实验，只要由一个从实际系统日志中提取的数据集即可。</p>
+<p><strong>好处：</strong>不需要真实用户参与，可以直接快速地计算出来，从而方便、快速地测试大量不同的算法。</p>
+<p><strong>缺点：</strong>无法获得很多商业上关注的指标，如点击率、转换率等，而找到和商业指标非常相关的离线指标也是很困难的事情。</p>
+<p>离线实验的优缺点</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">优点</th>
+<th style="text-align:center">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">不需要有对实际系统的控制权</td>
+<td style="text-align:center">无法计算商业上关心的指标</td>
+</tr>
+<tr>
+<td style="text-align:center">不需要用户参与实验</td>
+<td style="text-align:center">离线实验的指标和商业指标存在差距</td>
+</tr>
+<tr>
+<td style="text-align:center">速度快，可以测试大量算法</td>
+</tr>
+</tbody>
+</table>
 <p>机器学习上的评测指标大部分都是离线指标，只需要训练模型和数据集即可计算。</p>
 <p>2.用户调查</p>
 <p>如果要准确评测一个算法，需要相对比较真实的环境。最好的方法就是讲算法直接上线测试，但在对算法会不会降低用户满意度不大有把握的情况下，上线测试具有较高的风险，所以在上线测试前一般需要做一次称为<strong>用户调查</strong>的测试。</p>
