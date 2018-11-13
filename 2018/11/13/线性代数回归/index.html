@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="博客, fja0kl, Hexo, DL">
+  <meta name="keywords" content="线性代数,">
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="fja0kl&#39;s Blog">
-<meta property="og:url" content="http://fja0kl.github.io/tags/DL/page/2/index.html">
+<meta name="description" content="梯度下降的结果依赖于初始值的情况—-局部最优. The Trace of Matrix 矩阵的迹矩阵的迹等于主对角线元素之和. $tr(A)=tr(A) = \sum_{i=1}^{n}A_{ii}$ 矩阵迹的几个特征: 1.For $A \in R^{n x n}$, trA = $trA^T$ $(A^T){ij} = A{ji}$. When i=j, $(A^T){ii} = A{ii}$">
+<meta name="keywords" content="线性代数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性代数回归">
+<meta property="og:url" content="http://fja0kl.github.io/2018/11/13/线性代数回归/index.html">
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="梯度下降的结果依赖于初始值的情况—-局部最优. The Trace of Matrix 矩阵的迹矩阵的迹等于主对角线元素之和. $tr(A)=tr(A) = \sum_{i=1}^{n}A_{ii}$ 矩阵迹的几个特征: 1.For $A \in R^{n x n}$, trA = $trA^T$ $(A^T){ij} = A{ji}$. When i=j, $(A^T){ii} = A{ii}$">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-13T00:37:07.290Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="fja0kl&#39;s Blog">
+<meta name="twitter:title" content="线性代数回归">
+<meta name="twitter:description" content="梯度下降的结果依赖于初始值的情况—-局部最优. The Trace of Matrix 矩阵的迹矩阵的迹等于主对角线元素之和. $tr(A)=tr(A) = \sum_{i=1}^{n}A_{ii}$ 矩阵迹的几个特征: 1.For $A \in R^{n x n}$, trA = $trA^T$ $(A^T){ij} = A{ji}$. When i=j, $(A^T){ii} = A{ii}$">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://fja0kl.github.io/tags/DL/page/2/">
+  <link rel="canonical" href="http://fja0kl.github.io/2018/11/13/线性代数回归/">
 
 
 
 
 
-  <title>标签: DL | fja0kl's Blog</title>
+  <title>线性代数回归 | fja0kl's Blog</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -234,134 +239,237 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>DL<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/11/13/线性代数回归/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/07/05/数据增强利器-Augmentor/" itemprop="url">
-              
-                <span itemprop="name">数据增强利器--Augmentor</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">线性代数回归</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-07-05T21:39:56+08:00" content="2018-07-05">
-          07-05
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-13T08:36:09+08:00">
+                2018-11-13
+              </time>
+            
 
-    </header>
-  </article>
+            
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-13T08:37:07+08:00">
+                2018-11-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Math/" itemprop="url" rel="index">
+                    <span itemprop="name">Math</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/13/线性代数回归/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/13/线性代数回归/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/11/13/线性代数回归/" class="leancloud_visitors" data-flag-title="线性代数回归">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/01/手把手实现多层神经网络/" itemprop="url">
-              
-                <span itemprop="name">手把手实现多层神经网络</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-06-01T09:04:14+08:00" content="2018-06-01">
-          06-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/29/手写实现单层神经网络/" itemprop="url">
-              
-                <span itemprop="name">手写实现单层神经网络</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-29T21:44:52+08:00" content="2018-05-29">
-          05-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/24/指数加权平均/" itemprop="url">
-              
-                <span itemprop="name">指数加权平均</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-24T08:11:46+08:00" content="2018-05-24">
-          05-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+        <p>梯度下降的结果依赖于初始值的情况—-局部最优.</p>
+<h1 id="The-Trace-of-Matrix-矩阵的迹"><a href="#The-Trace-of-Matrix-矩阵的迹" class="headerlink" title="The Trace of Matrix 矩阵的迹"></a>The Trace of Matrix 矩阵的迹</h1><p>矩阵的迹等于主对角线元素之和.</p>
+<p>$tr(A)=tr(A) = \sum_{i=1}^{n}A_{ii}$</p>
+<p>矩阵迹的几个特征:</p>
+<p>1.For $A \in R^{n x n}$, trA = $trA^T$</p>
+<p>$(A^T)<em>{ij} = A</em>{ji}$.
+When i=j, $(A^T)<em>{ii} = A</em>{ii}$
+矩阵和矩阵的转置主对角线元素相等,所以,它们的迹也相等.</p>
+<p>2.For $A,B \in R^{n x n}$, tr(A+B) = trA + trB</p>
+<p>方阵A加B的迹等于方阵A,B迹之和[和的迹等于迹的和].</p>
+<p>$tr(A+B) = \sum_{i=1}^{n}(A_{ii})+B_{ii} = \sum_{i=1}^{n}A_{ii} + \sum_{i=1}^{n}B_{ii}=trA+trB$</p>
+<p>3.For $A\inR^{n x n}$,$t\in R$, tr(tA) = t trA.</p>
+<p>实数倍的矩阵的迹等于矩阵迹的实数倍.</p>
+<p>$tr(tA) =\sum_{i=1}^{n}tA_{ii}=t\sum_{i=1}^{n}A_{ii}=t trA$.</p>
+<p>4.For A,B such that AB is square, trAB = trBA</p>
+<p>当AB是方阵时,AB的迹等于BA的迹.</p>
+<p>$trAB = \sum_{i=1}^{n}(AB)<em>{ii}=\sum</em>{i=1}^{n}a_i^Tb_i=\sum_{i=1}^{n}b_i^Ta_i=\sum_{i=1}^{n}(AB)_{ii}=trBA$</p>
+<p>5.For A,B,C such that ABC is square, trABC=trCAB=trBCA, and so on for the product of more matrices.</p>
+<p>当矩阵ABC是方阵时,ABC的迹等于CAB的迹等于BCA的迹[ABC,后面的矩阵一次往第一个位置放],对于更多的矩阵乘积[只要乘积结果是方阵]也成立.</p>
+<p>根据第4条,将AB看做矩阵A,C看做矩阵B,那么依据规律4,可以得到tr(AB)C=trC(AB).也就是说trABC=trCAB.同理,tr(CA)B=trB(CA).</p>
+<h1 id="The-Rank-of-Matrix"><a href="#The-Rank-of-Matrix" class="headerlink" title="The Rank of Matrix"></a>The Rank of Matrix</h1><p>在线性代数中，一个矩阵A的列秩是A的线性独立的纵列的极大数目。类似地，行秩是A的线性独立的横行的极大数目。</p>
+<p>矩阵的列秩和行秩总是相等的，因此它们可以简单地称作矩阵A的秩。通常表示为r(A)，rk(A)或rank A。</p>
+<p>几个常见规律:</p>
+<p>1.For $A\inR^{m x n}$, rank(A) &lt;= min(m,n). If rank(A) = min(m,n), then A is said to be <strong>full rank</strong></p>
+<p>矩阵A的秩小于等于矩阵行数和列数的最小值.如果矩阵的秩等于行和列的最小值,称矩阵A为满秩矩阵.</p>
+<p>2.For $A\in R^{m x n}$, $rank(A) = rank(A^T)$</p>
+<p>矩阵A的秩等于A转置矩阵的秩.</p>
+<p>3.For $A\in R^{m x n}$, $B\in R^{n x p}$, rank(AB) &lt;= min(rank(A), rank(B))</p>
+<p>矩阵AB的秩小于等于矩阵A的秩和矩阵B的秩的最小值.</p>
+<p>4.For $A,B \in R^{m x n}$, rank(A+B) &lt;= rank(A) + rank(B)</p>
+<p>矩阵A,B和的秩小于等于A,B矩阵秩的和.</p>
+<h1 id="Orthogonal-Matrices-正交矩阵"><a href="#Orthogonal-Matrices-正交矩阵" class="headerlink" title="Orthogonal Matrices 正交矩阵"></a>Orthogonal Matrices 正交矩阵</h1><p>Two vectors $x,y \in R^{n}$ are orthogonal if $x^Ty=0$.两个向量内积为0时,称两个向量正交.
+A vector $x \in R^n$ is normalized if $||x||_2 = 1$$. 当向量的l2范数为0时,称向量为单位向量.</p>
+<p>正交矩阵是<strong>一个方阵，其元素为实数，而且行与列皆为正交的单位向量</strong>，使得<strong>该矩阵的转置矩阵为其逆矩阵</strong>.
+$UU^T = U^TU=E$</p>
+<h1 id="The-Determinant-行列式"><a href="#The-Determinant-行列式" class="headerlink" title="The Determinant 行列式"></a>The Determinant 行列式</h1><p>The <strong>determinant</strong> of a square matrix $A\in R^{n x n}$, is a function det: $R^{n x n} \to R$, and is denoted |A| or detA.  </p>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://iamwxy.com/2018/07/17/线性代数-乘法、逆矩阵、LU分解/">线性代数 | 一些基本概念</a></li></ul></div>
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/线性代数/" rel="tag"># 线性代数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/10/推荐系统-评分预测/" rel="next" title="[推荐系统]评分预测">
+                <i class="fa fa-chevron-left"></i> [推荐系统]评分预测
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/tags/DL/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/tags/DL/">1</a><span class="page-number current">2</span>
-  </nav>
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -369,6 +477,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -391,8 +506,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -454,6 +578,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Trace-of-Matrix-矩阵的迹"><span class="nav-number">1.</span> <span class="nav-text">The Trace of Matrix 矩阵的迹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Rank-of-Matrix"><span class="nav-number">2.</span> <span class="nav-text">The Rank of Matrix</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Orthogonal-Matrices-正交矩阵"><span class="nav-number">3.</span> <span class="nav-text">Orthogonal Matrices 正交矩阵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Determinant-行列式"><span class="nav-number">4.</span> <span class="nav-text">The Determinant 行列式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -612,6 +752,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
