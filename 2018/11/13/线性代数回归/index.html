@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
 <meta property="og:description" content="梯度下降的结果依赖于初始值的情况—-局部最优. The Trace of Matrix 矩阵的迹矩阵的迹等于主对角线元素之和. $tr(A)=tr(A) = \sum_{i=1}^{n}A_{ii}$ 矩阵迹的几个特征: 1.For $A \in R^{n x n}$, trA = $trA^T$ $(A^T){ij} = A{ji}$. When i=j, $(A^T){ii} = A{ii}$">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-13T00:37:07.290Z">
+<meta property="og:updated_time" content="2018-11-13T02:26:45.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线性代数回归">
 <meta name="twitter:description" content="梯度下降的结果依赖于初始值的情况—-局部最优. The Trace of Matrix 矩阵的迹矩阵的迹等于主对角线元素之和. $tr(A)=tr(A) = \sum_{i=1}^{n}A_{ii}$ 矩阵迹的几个特征: 1.For $A \in R^{n x n}$, trA = $trA^T$ $(A^T){ij} = A{ji}$. When i=j, $(A^T){ii} = A{ii}$">
@@ -298,7 +298,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-11-13T08:37:07+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-13T10:26:45+08:00">
                 2018-11-13
               </time>
             
@@ -386,23 +386,23 @@ When i=j, $(A^T)<em>{ii} = A</em>{ii}$
 <p>2.For $A,B \in R^{n x n}$, tr(A+B) = trA + trB</p>
 <p>方阵A加B的迹等于方阵A,B迹之和[和的迹等于迹的和].</p>
 <p>$tr(A+B) = \sum_{i=1}^{n}(A_{ii})+B_{ii} = \sum_{i=1}^{n}A_{ii} + \sum_{i=1}^{n}B_{ii}=trA+trB$</p>
-<p>3.For $A\inR^{n x n}$,$t\in R$, tr(tA) = t trA.</p>
+<p>3.For $A \in R^{n x n}$,$t\in R$, tr(tA) = t trA.</p>
 <p>实数倍的矩阵的迹等于矩阵迹的实数倍.</p>
 <p>$tr(tA) =\sum_{i=1}^{n}tA_{ii}=t\sum_{i=1}^{n}A_{ii}=t trA$.</p>
 <p>4.For A,B such that AB is square, trAB = trBA</p>
 <p>当AB是方阵时,AB的迹等于BA的迹.</p>
-<p>$trAB = \sum_{i=1}^{n}(AB)<em>{ii}=\sum</em>{i=1}^{n}a_i^Tb_i=\sum_{i=1}^{n}b_i^Ta_i=\sum_{i=1}^{n}(AB)_{ii}=trBA$</p>
+<p>$trAB=\sum_{i=1}^{n}{AB}<em>{ii}=\sum</em>{i=1}^{n}a_i^T b_i=\sum_{i=1}^{n}b_i^T a_i=\sum_{i=1}^{n}{AB}_{ii}=trBA$</p>
 <p>5.For A,B,C such that ABC is square, trABC=trCAB=trBCA, and so on for the product of more matrices.</p>
 <p>当矩阵ABC是方阵时,ABC的迹等于CAB的迹等于BCA的迹[ABC,后面的矩阵一次往第一个位置放],对于更多的矩阵乘积[只要乘积结果是方阵]也成立.</p>
 <p>根据第4条,将AB看做矩阵A,C看做矩阵B,那么依据规律4,可以得到tr(AB)C=trC(AB).也就是说trABC=trCAB.同理,tr(CA)B=trB(CA).</p>
 <h1 id="The-Rank-of-Matrix"><a href="#The-Rank-of-Matrix" class="headerlink" title="The Rank of Matrix"></a>The Rank of Matrix</h1><p>在线性代数中，一个矩阵A的列秩是A的线性独立的纵列的极大数目。类似地，行秩是A的线性独立的横行的极大数目。</p>
 <p>矩阵的列秩和行秩总是相等的，因此它们可以简单地称作矩阵A的秩。通常表示为r(A)，rk(A)或rank A。</p>
 <p>几个常见规律:</p>
-<p>1.For $A\inR^{m x n}$, rank(A) &lt;= min(m,n). If rank(A) = min(m,n), then A is said to be <strong>full rank</strong></p>
+<p>1.For $A \in R^{m x n}$, rank(A) &lt;= min(m,n). If rank(A) = min(m,n), then A is said to be <strong>full rank</strong></p>
 <p>矩阵A的秩小于等于矩阵行数和列数的最小值.如果矩阵的秩等于行和列的最小值,称矩阵A为满秩矩阵.</p>
-<p>2.For $A\in R^{m x n}$, $rank(A) = rank(A^T)$</p>
+<p>2.For $A \in R^{m x n}$, $rank(A) = rank(A^T)$</p>
 <p>矩阵A的秩等于A转置矩阵的秩.</p>
-<p>3.For $A\in R^{m x n}$, $B\in R^{n x p}$, rank(AB) &lt;= min(rank(A), rank(B))</p>
+<p>3.For $A \in R^{m x n}$, $B\in R^{n x p}$, rank(AB) &lt;= min(rank(A), rank(B))</p>
 <p>矩阵AB的秩小于等于矩阵A的秩和矩阵B的秩的最小值.</p>
 <p>4.For $A,B \in R^{m x n}$, rank(A+B) &lt;= rank(A) + rank(B)</p>
 <p>矩阵A,B和的秩小于等于A,B矩阵秩的和.</p>
