@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="线性代数,矩阵求导,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="入门实例单变量线性函数: $f(x) = ax$ (1) 偏导数定义: $\frac{\partial f}{\partial x} = a$ (2) 扩展到多元变量,可以得到: $f(x)=\sum_{i}a_ix_i=a^Tx$  (3) 其中,$a=[a_1,a_2,…,a_n]^T$,$x=[x_1,x_2,…,x_n]^T$.两个都是列向量.可以直接计算偏导数: $\frac{\part">
+<meta name="keywords" content="线性代数,矩阵求导">
+<meta property="og:type" content="article">
+<meta property="og:title" content="矩阵微分:推导与应用">
+<meta property="og:url" content="http://fja0kl.github.io/2018/11/14/矩阵微分-推导与应用/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="入门实例单变量线性函数: $f(x) = ax$ (1) 偏导数定义: $\frac{\partial f}{\partial x} = a$ (2) 扩展到多元变量,可以得到: $f(x)=\sum_{i}a_ix_i=a^Tx$  (3) 其中,$a=[a_1,a_2,…,a_n]^T$,$x=[x_1,x_2,…,x_n]^T$.两个都是列向量.可以直接计算偏导数: $\frac{\part">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.superbed.cn/pic/5beb93549dc6d6bf0f3b70bc">
+<meta property="og:image" content="https://www.superbed.cn/pic/5bebccc99dc6d6bf0f3b71d3">
+<meta property="og:image" content="https://www.superbed.cn/pic/5bec14b39dc6d6bf0f3b728d">
+<meta property="og:updated_time" content="2018-11-14T12:46:34.965Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="矩阵微分:推导与应用">
+<meta name="twitter:description" content="入门实例单变量线性函数: $f(x) = ax$ (1) 偏导数定义: $\frac{\partial f}{\partial x} = a$ (2) 扩展到多元变量,可以得到: $f(x)=\sum_{i}a_ix_i=a^Tx$  (3) 其中,$a=[a_1,a_2,…,a_n]^T$,$x=[x_1,x_2,…,x_n]^T$.两个都是列向量.可以直接计算偏导数: $\frac{\part">
+<meta name="twitter:image" content="https://www.superbed.cn/pic/5beb93549dc6d6bf0f3b70bc">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/11/14/矩阵微分-推导与应用/">
+
+
+
+
+
+  <title>矩阵微分:推导与应用 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/11/14/矩阵微分-推导与应用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">矩阵微分:推导与应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-14T20:38:50+08:00">
+                2018-11-14
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-14T20:46:34+08:00">
+                2018-11-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/线性代数/" itemprop="url" rel="index">
+                    <span itemprop="name">线性代数</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/14/矩阵微分-推导与应用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/14/矩阵微分-推导与应用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/11/14/矩阵微分-推导与应用/" class="leancloud_visitors" data-flag-title="矩阵微分:推导与应用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="入门实例"><a href="#入门实例" class="headerlink" title="入门实例"></a>入门实例</h1><p>单变量线性函数:
+$f(x) = ax$ (1)</p>
+<p>偏导数定义:
+$\frac{\partial f}{\partial x} = a$ (2)</p>
+<p>扩展到多元变量,可以得到:
+$f(x)=\sum_{i}a_ix_i=a^Tx$  (3)</p>
+<p>其中,$a=[a_1,a_2,…,a_n]^T$,$x=[x_1,x_2,…,x_n]^T$.两个都是列向量.可以直接计算偏导数:
+$\frac{\partial f}{\partial x_k}=\frac{\sum_{i}a_ix_i}{x_k}=a_k$    (4)</p>
+<p>其中,k=1,2,…,n. 可以将n个偏导数组合在一起形成新的表达方法:</p>
+<p>$\frac{\partial f}{\partial x} = \begin{array}{c} \frac{f}{x_1}\ \frac{f}{x_2}\ .\ .\ .\ \frac{f}{x_n}\end{array}=\begin{array}{c} a_1\ a_2\ .\ .\ .\ a_n = a$    (5)</p>
+<p>等式5和等式2有类似之处,除了x变量从标量变成了向量.</p>
+<h1 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h1><h2 id="元素组织"><a href="#元素组织" class="headerlink" title="元素组织"></a>元素组织</h2><p>矩阵微分和普通微分都适用于基础的微分规则.通过更好的元素组织和证明性属性,可以在真实问题中简化推导过程.</p>
+<p><strong>定义一</strong>: 对于一个实数值函数f(x),$\frac{f}{x}$大小尺寸和矩阵x的大小尺寸相同.
+<img src="https://www.superbed.cn/pic/5beb93549dc6d6bf0f3b70bc" alt="公式6"></p>
+<p>$\frac{\partial f}{\partial x}<em>{ij}=\frac{f}{x</em>{ij}}$</p>
+<p>在等式2中,x是1x1的矩阵,结果$\frac{\partial f}{\partial x}=a$也是1x1的矩阵.在等式5中,x是一个列向量(n x 1矩阵),$\frac{\partial f}{\partial x}=a$也拥有和x相同的尺寸(nx1矩阵)</p>
+<p><strong>例1</strong>: 通过定义,可以得到:
+$\frac{\partial f}{\partial x^T}=(\frac{\partial f}{\partial x})^T=a^T$</p>
+<h2 id="内积处理"><a href="#内积处理" class="headerlink" title="内积处理"></a>内积处理</h2><p><strong>定理1</strong>. 一个多变量的实值函数$f(x)=a^Tx$,可以得到$\frac{\partial f}{\partial x}=a$. [默认向量都是列向量,x是列向量,结果和x尺寸相同].</p>
+<p>因为,$a^Tx$是一个标量,所以也可以用在矩阵的迹上[因为实数的迹等于实数本身 tr(a)=a]</p>
+<p><strong>推论</strong>: 一个多变量的实值函数$f(x)=tr(a^Tx)$,那么,$\frac{\partial f}{\partial x}=a$.
+因为,实数本身相等于一个1x1的矩阵,矩阵的迹等于矩阵主对角线元素之和.$tr(a^Tx)=a^Tx$.所以,两个结果相同.</p>
+<h2 id="迹的特征"><a href="#迹的特征" class="headerlink" title="迹的特征"></a>迹的特征</h2><p><strong>定义二</strong>: 方阵的迹等于主对角线元素之和,$TrA=\sum_{i}A_{ii}$</p>
+<p><strong>例二</strong>: 根据定义1,2,可以得到:$\frac{\partial tr(A)}{\partial A} = I$.[I是单位矩阵]
+因为矩阵的迹只有矩阵的主对角线元素.</p>
+<p><strong>定理3</strong>: 矩阵的迹满足以下特征:</p>
+<ul>
+<li>Tr(A+B) = TrA + TrB</li>
+<li>Tr(cA) = cTr(A)</li>
+<li>Tr(AB) = Tr(BA)</li>
+<li>Tr(A1A2…An) = Tr(AnA1…An-1)</li>
+<li>$Tr(A^TB)=\sum_{i}\sum_{j}A_{ij}B_{ij}$</li>
+<li>$Tr(A) = Tr(A^T)$</li>
+</ul>
+<p>特征1和特征2表明了矩阵迹的线性特性;特征3表明矩阵迹运算中矩阵乘法具有交换性;特征4是特征3的扩展,表明了迹运算中矩阵的循环性;特征5表明了使用矩阵内积运算求矩阵迹的方法.</p>
+<h2 id="一般性内积Deal-with-Generalized-Inner-Product"><a href="#一般性内积Deal-with-Generalized-Inner-Product" class="headerlink" title="一般性内积Deal with Generalized Inner Product"></a>一般性内积Deal with Generalized Inner Product</h2><p><strong>定理4</strong>: 多变量实值函数$f(x)=Tr(A^Tx)$,它的偏导数为:$\frac{\partial f}{\partial x}=A$ (A,x可以是矩阵).</p>
+<p>证明:根据迹运算的特征5,可以得到:
+$f(x)=Tr(A^Tx)=\sum_{i}\sum_{j}A_{ij}x_{ij}$
+$\frac{\partial f}{\partial x_{ij}}=\frac{\partial \sum_i\sum_jA_{ij}x_{ij}}{\partial x_{ij}}=A_{ij}$</p>
+<p>然后将各个元素的偏导数组成成矩阵形式,可以得到结果矩阵A.证毕.</p>
+<p><strong>例3</strong>. 对于向量a,x以及函数$f(x)=a^Tx$,</p>
+<p>$\frac{\partial f}{\partial x^T}=\frac{\partial (a^Tx)}{\partial x^T}=\frac{\partial Tr(a^Tx)}{\partial x^T}=\frac{\partial Tr(xa^T)}{\partial x^T}=\frac{\partial Tr(ax^T)}{\partial x^T}=a^T$</p>
+<p>上面这个例子充分说明了矩阵偏导数问题求解的处理方法.</p>
+<h2 id="定义矩阵微分-Define-Matrix-Differential"><a href="#定义矩阵微分-Define-Matrix-Differential" class="headerlink" title="定义矩阵微分 Define Matrix Differential"></a>定义矩阵微分 Define Matrix Differential</h2><p><strong>定义3</strong>. 矩阵微分:</p>
+<p><img src="https://www.superbed.cn/pic/5bebccc99dc6d6bf0f3b71d3" alt="矩阵微分定义"></p>
+<p><strong>定理5</strong>. dTr(A)=Tr(dA).</p>
+<p>证明:</p>
+<p>$LHS=d(\sum_iA_{ii})=\sum_idA_{ii}$</p>
+<p>$RHS=Tr(dA)=\sum_idA_{ii}=LHS$</p>
+<p>矩阵微分已经定义好了,下面将矩阵导数和矩阵微分联系起来.实值标量微分和导数之间的联系:</p>
+<p>$df=\frac{\partial f}{\partial x}dx$</p>
+<p>目前为止,求导和微分处理的都是实值函数f以及矩阵变量x.$\frac{\partial f}{\partial x}$和dx都是矩阵形式.为了将上面等式成立,需要将右半部分运算结果是一个标量,处理方法是进行矩阵迹运算.</p>
+<p><strong>定理6</strong>. 对于实值函数f,以及任意大小的矩阵x,</p>
+<p>$df = tr[(\frac{\partial f}{\partial x})^T dx]$</p>
+<p>证明:</p>
+<p>$LHS(Left-hand side)=df$</p>
+<p>根据定义,</p>
+<p>$LHS=\sum_{ij}\frac{\partial f}{\partial x_{ij}}dx_{ij}$.</p>
+<p>$RHS=tr(\frac{\partial f}{\partial x}^T dx)=\sum_{ij}\frac{\partial f}{\partial x_{ij}}<em>{ij}(dx)</em>{ij}=\sum_{ij}\frac{\partial f}{\partial x_{ij}}<em>{ij}dx</em>{ij}=\sum_{ij}\frac{\partial f}{\partial x_{ij}}<em>{ij}dx</em>{ij}$</p>
+<p>定理6是矩阵微分和矩阵导数之间联系的桥梁.</p>
+<h2 id="矩阵微分性质"><a href="#矩阵微分性质" class="headerlink" title="矩阵微分性质"></a>矩阵微分性质</h2><p><strong>定理7</strong>. 矩阵微分:</p>
+<ul>
+<li>d(cA) = cdA</li>
+<li>d(A+B) = dA + dB</li>
+<li>d(AB) = dA B + AdB</li>
+</ul>
+<p>证明.
+由矩阵微分的定义,性质1和性质2可以得到.详细证明性质3.对于运算结果的每个元素,如果LHS中的每个元素都和RHS中对应位置的元素相等,那么LHS=RHS,性质成立.对于矩阵中的第(ij)个元素:</p>
+<p>$LHS_{ij} = d(\sum_kA_{ik}B_{kj})=\sum_kd(A_{ik}B_{kj})=\sum_k(dA_{ik}B_{kj} + A_{ik}dB_{kj})$</p>
+<p>$RHS_{ij}=(dAB)<em>{ij}+(AdB)</em>{ij}=\sum_kdA_{ik}B_{kj} + \sum_kA_{ik}dB_{kj} = LHS_{ij}$</p>
+<p><strong>例4</strong>. 给定函数$f(x)=x^TAx$, 其中,A是方阵,x是列向量,可以得到:</p>
+<p>$df=d(x^TAx)=dTr(x^TAx)=Tr[d(x^TAx)]=Tr[d(x^T)Ax+x^Td(Ax)]=Tr[d(x^T)Ax+x^TAdx+x^TdAx]=Tr[d(x^T)Ax+x^TAdx]=Tr[d(x^T)Ax]+Tr[x^TAdx]=Tr[x^TA^Tdx]+Tr[x^TAdx]=Tr[x^TA^Tx+x^TAdx]=Tr[(x^TA^T+x^TA)dx]$</p>
+<p>所以,
+$\frac{\partial f}{\partial x}=(x^TA^T + x^TA)^T=Ax+A^Tx$</p>
+<p>当A是对称矩阵时,可以简化成:
+$\frac{\partial f}{\partial x}=2Ax$</p>
+<p>如果A是单位矩阵I,那么:
+$\frac{\partial (x^Tx)}{\partial x}=2x$</p>
+<p><strong>例5</strong>. 对于非奇异方阵X,$XX^{-1}=I$.两边同时做微分运算:
+$0=dI=d(XX^{-1})=Xd(X^{-1})+dXX^{-1}$.
+那么,
+$d(X^{-1})=-X^{-1}dXX^{-1}$.</p>
+<h2 id="Schema-of-Handling-Scalar-Function实值函数处理方法"><a href="#Schema-of-Handling-Scalar-Function实值函数处理方法" class="headerlink" title="Schema of Handling Scalar Function实值函数处理方法"></a>Schema of Handling Scalar Function实值函数处理方法</h2><p>1.df=dTr[f]=Tr[df]</p>
+<p>2.df=Tr[A^Tx]</p>
+<p>3.$\frac{\partial f}{\partial x}=A$</p>
+<p>其中,矩阵微分和矩阵迹的性质扮演者积极重要的角色.</p>
+<h2 id="Determinant-行列式"><a href="#Determinant-行列式" class="headerlink" title="Determinant 行列式"></a>Determinant 行列式</h2><p><strong>定理8</strong>. 方阵A:</p>
+<ul>
+<li>$M_{ij}$是方阵A移除第i行第j列后(n-1)x(n-1)方阵的行列式值;</li>
+<li>第ij个余子式$C_{ij}=(-1)^{i+j}M_{ij}$.</li>
+<li>行列式A按照第i行展开,$det(A)=\sum_{j}A_{ij}C_{ij}$.</li>
+<li>A的伴随矩阵定义为: $adj(A)<em>{ij}=(-1)^{i+j}M</em>{ji}=C_{ji}$. $adj(A)=C^T$.</li>
+<li>对于非奇异矩阵A, $A^{-1}=\frac{adj(A)}{det(A)}=\frac{C^T}{det(A)}$.</li>
+</ul>
+<p>行列式的导数.行列式是一个标量函数,上面介绍的定理都符合.将行列式A用第i行展开,可以得到:
+$\frac{\partial det(A)}{\partial A_{ij}}=\frac{\partial(\sum_jA_{ij}C_{ij})}{\partial A_{ij}}=C_{ij}$</p>
+<p>将各个元素组合,可以得到:
+$\frac{\partial det(A)}{\partial A}=C=adj(A)^T$</p>
+<p>如果A是非奇异矩阵,
+$\frac{\partial det(A)}{\partial A}=adj(A)^T=(det(A)A^{-1})^{T}=det(A)(A^{-1}^T)$.</p>
+<p>利用定理6,可以得到微分:
+$ddet(A)=Tr[(\frac{\partial det(A)}{\partial A}=)^{T}dA]=Tr[(det(A)(A^{-1})^T)^TdA]=Tr[det(A)A^{-1}dA]$</p>
+<p>在实际问题中,对数行列式更常见:
+$\frac{\partial lndet(A)}{\partial A}=\frac{1}{det(A)} \frac{\partial det(A)}{\partial A}=(A^{-1})^T$</p>
+<p>微分形式:
+$d lndet(A)=Tr[A^{-1}dA]$</p>
+<h2 id="向量函数和向量变量-Vector-Function-and-Vector-Variable"><a href="#向量函数和向量变量-Vector-Function-and-Vector-Variable" class="headerlink" title="向量函数和向量变量 Vector Function and Vector Variable"></a>向量函数和向量变量 Vector Function and Vector Variable</h2><p>在矩阵微分中存在一个令人烦恼的现象:当需要查找资料时,总是存在两种不同的资料,其中一种运算结果是另一种的转制.网上的资料并不一致,容易造成误导.</p>
+<p>Wikipedia上Hessian矩阵[海森矩阵]和Jacobian矩阵[雅各比矩阵]定义如下:</p>
+<p><img src="https://www.superbed.cn/pic/5bec14b39dc6d6bf0f3b728d" alt="Hessian,Jacobian矩阵定义"></p>
+<p>关于二阶导数:</p>
+<ul>
+<li>缩写$\frac{\partial^2f}{\partial x_2 \partial x_1}$,意思是$\frac{\partial}{\partial x_2}(\frac{\partial f}{\partial x_1})$ [先对x1求导,再对x2求导,和我们的常规正好相反]</li>
+<li>Hessian矩阵可以看做先计算$\frac{\partial f}{\partial x}$,然后将$\frac{\partial f}{\partial x}$看做一个函数,计算向量到向量的导数.</li>
+</ul>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/11/13/线性代数回归/">线性代数回归</a></li><li><a href="http://iamwxy.com/2018/07/17/线性代数-乘法、逆矩阵、LU分解/">线性代数 | 一些基本概念</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/线性代数/" rel="tag"># 线性代数</a>
+          
+            <a href="/tags/矩阵求导/" rel="tag"># 矩阵求导</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/13/线性代数回归/" rel="next" title="线性代数回归">
+                <i class="fa fa-chevron-left"></i> 线性代数回归
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#入门实例"><span class="nav-number">1.</span> <span class="nav-text">入门实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推导"><span class="nav-number">2.</span> <span class="nav-text">推导</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#元素组织"><span class="nav-number">2.1.</span> <span class="nav-text">元素组织</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内积处理"><span class="nav-number">2.2.</span> <span class="nav-text">内积处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迹的特征"><span class="nav-number">2.3.</span> <span class="nav-text">迹的特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般性内积Deal-with-Generalized-Inner-Product"><span class="nav-number">2.4.</span> <span class="nav-text">一般性内积Deal with Generalized Inner Product</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义矩阵微分-Define-Matrix-Differential"><span class="nav-number">2.5.</span> <span class="nav-text">定义矩阵微分 Define Matrix Differential</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵微分性质"><span class="nav-number">2.6.</span> <span class="nav-text">矩阵微分性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schema-of-Handling-Scalar-Function实值函数处理方法"><span class="nav-number">2.7.</span> <span class="nav-text">Schema of Handling Scalar Function实值函数处理方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Determinant-行列式"><span class="nav-number">2.8.</span> <span class="nav-text">Determinant 行列式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向量函数和向量变量-Vector-Function-and-Vector-Variable"><span class="nav-number">2.9.</span> <span class="nav-text">向量函数和向量变量 Vector Function and Vector Variable</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz',
+        appKey: 'Nw8hvihjOt1jGKfvVpix3P5V',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
