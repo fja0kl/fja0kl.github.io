@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="博客, fja0kl, Hexo, DL">
+  <meta name="keywords" content="线性代数,矩阵迹求导,">
 
 
 
@@ -79,13 +79,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="fja0kl&#39;s Blog">
-<meta property="og:url" content="http://fja0kl.github.io/archives/2018/page/2/index.html">
+<meta name="description" content="$\bigtriangledown trABA^TC = CAB + C^TAB^T$. 证明过程:  Notes: (uv)’ = uv’ + u’v. 公式适合于所有的积运算(包括:矩阵). 推荐文章（由hexo文章推荐插件驱动）线性代数回归矩阵微分:推导与应用线性代数 | 一些基本概念">
+<meta name="keywords" content="线性代数,矩阵迹求导">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个矩阵迹求导公式的证明">
+<meta property="og:url" content="http://fja0kl.github.io/2018/11/15/一个矩阵迹求导公式的证明/index.html">
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="$\bigtriangledown trABA^TC = CAB + C^TAB^T$. 证明过程:  Notes: (uv)’ = uv’ + u’v. 公式适合于所有的积运算(包括:矩阵). 推荐文章（由hexo文章推荐插件驱动）线性代数回归矩阵微分:推导与应用线性代数 | 一些基本概念">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.superbed.cn/pic/5becd0609dc6d61ad66ee25c">
+<meta property="og:updated_time" content="2018-11-15T01:53:12.913Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="fja0kl&#39;s Blog">
+<meta name="twitter:title" content="一个矩阵迹求导公式的证明">
+<meta name="twitter:description" content="$\bigtriangledown trABA^TC = CAB + C^TAB^T$. 证明过程:  Notes: (uv)’ = uv’ + u’v. 公式适合于所有的积运算(包括:矩阵). 推荐文章（由hexo文章推荐插件驱动）线性代数回归矩阵微分:推导与应用线性代数 | 一些基本概念">
+<meta name="twitter:image" content="https://www.superbed.cn/pic/5becd0609dc6d61ad66ee25c">
 
 
 
@@ -115,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://fja0kl.github.io/archives/2018/page/2/">
+  <link rel="canonical" href="http://fja0kl.github.io/2018/11/15/一个矩阵迹求导公式的证明/">
 
 
 
 
 
-  <title>归档 | fja0kl's Blog</title>
+  <title>一个矩阵迹求导公式的证明 | fja0kl's Blog</title>
   
 
 
@@ -140,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -234,390 +241,208 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 32 篇日志。 继续努力。
-      </span>
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/11/15/一个矩阵迹求导公式的证明/">
 
-      
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">一个矩阵迹求导公式的证明</h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-15T09:52:23+08:00">
+                2018-11-15
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-15T09:53:12+08:00">
+                2018-11-15
+              </time>
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/01/推荐系统-好的推荐系统/" itemprop="url">
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-                <span itemprop="name">[推荐系统]好的推荐系统</span>
+                <span class="post-meta-item-text">分类于</span>
               
-            </a>
-        
-      </h2>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/线性代数/" itemprop="url" rel="index">
+                    <span itemprop="name">线性代数</span>
+                  </a>
+                </span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-01T08:33:37+08:00" content="2018-11-01">
-          11-01
-        </time>
-      </div>
+                
+                
+              
+            </span>
+          
 
-    </header>
-  </article>
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/15/一个矩阵迹求导公式的证明/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/15/一个矩阵迹求导公式的证明/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
+          
+          
+             <span id="/2018/11/15/一个矩阵迹求导公式的证明/" class="leancloud_visitors" data-flag-title="一个矩阵迹求导公式的证明">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/30/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-30T16:33:29+08:00" content="2018-10-30">
-          10-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/13/数据可视化-Pandas单变量画图/" itemprop="url">
-              
-                <span itemprop="name">[数据可视化]Pandas单变量画图</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-13T11:37:33+08:00" content="2018-10-13">
-          10-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/25/LeetCode-160-Intersection-of-Two-Linked-Lists/" itemprop="url">
-              
-                <span itemprop="name">[LeetCode]160.Intersection of Two Linked Lists</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-25T16:05:58+08:00" content="2018-09-25">
-          09-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        <p>$\bigtriangledown trABA^TC = CAB + C^TAB^T$.</p>
+<p>证明过程:</p>
+<p><img src="https://www.superbed.cn/pic/5becd0609dc6d61ad66ee25c" alt="证明过程"></p>
+<p><strong>Notes</strong>:
+(uv)’ = uv’ + u’v. 公式适合于所有的积运算(包括:矩阵).</p>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/11/13/线性代数回归/">线性代数回归</a></li><li><a href="http://fja0kl.github.io/2018/11/14/矩阵微分-推导与应用/">矩阵微分:推导与应用</a></li><li><a href="http://iamwxy.com/2018/07/17/线性代数-乘法、逆矩阵、LU分解/">线性代数 | 一些基本概念</a></li></ul></div>
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/07/GAN图片生成/" itemprop="url">
-              
-                <span itemprop="name">GAN图片生成</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-07T21:19:09+08:00" content="2018-09-07">
-          09-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/03/使用VAEs生成图片/" itemprop="url">
-              
-                <span itemprop="name">使用VAEs生成图片</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-03T21:40:42+08:00" content="2018-09-03">
-          09-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/02/Keras实现风格迁移/" itemprop="url">
-              
-                <span itemprop="name">Keras实现风格迁移</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-02T17:18:40+08:00" content="2018-09-02">
-          09-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/29/使用LSTM生成尼采风格文章/" itemprop="url">
-              
-                <span itemprop="name">使用LSTM生成尼采风格文章</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-08-29T21:42:58+08:00" content="2018-08-29">
-          08-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/30/Deep-Learning-with-Python-文本序列中的深度学习/" itemprop="url">
-              
-                <span itemprop="name">[Deep-Learning-with-Python]文本序列中的深度学习.md</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-07-30T21:45:57+08:00" content="2018-07-30">
-          07-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/22/Deep-Learning-with-Python-计算机视觉中的深度学习/" itemprop="url">
-              
-                <span itemprop="name">[Deep-Learning-with-Python]计算机视觉中的深度学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-07-22T17:23:07+08:00" content="2018-07-22">
-          07-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/线性代数/" rel="tag"># 线性代数</a>
+          
+            <a href="/tags/矩阵迹求导/" rel="tag"># 矩阵迹求导</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/14/矩阵微分-推导与应用/" rel="next" title="矩阵微分:推导与应用">
+                <i class="fa fa-chevron-left"></i> 矩阵微分:推导与应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2018/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2018/page/3/">3</a><a class="page-number" href="/archives/2018/page/4/">4</a><a class="extend next" rel="next" href="/archives/2018/page/3/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -625,6 +450,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -647,8 +479,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -710,6 +551,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -868,6 +725,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
