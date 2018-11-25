@@ -613,7 +613,7 @@ alpha游走概率，1-alpha停留概率；</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def PersonalRank(G, alpha, root, max_step):</span><br><span class="line">    rank = dict()#推荐结果</span><br><span class="line">    rank = &#123;x : 0 for x in G.keys()&#125;</span><br><span class="line">    rank[root] = 1</span><br><span class="line"></span><br><span class="line">    for k in range(max_step):</span><br><span class="line">        tmp = &#123;x : 0 for x in G.keys()&#125;</span><br><span class="line"></span><br><span class="line">        #取节点i和它的出边尾节点集合ri</span><br><span class="line">        for i, ri in G.items():</span><br><span class="line">        #取i-&gt;j边的尾节点j以及边E(i,j)的权重wij, 边的权重都为1，</span><br><span class="line">            for j, wij in ri.items():</span><br><span class="line">                if j not in tmp:</span><br><span class="line">                    tmp[j] = 0</span><br><span class="line">                tmp[j] += alpha * rank[i] / (1.0 * len(ri))</span><br><span class="line">                if j == root:</span><br><span class="line">                    tmp[j] += 1 - alpha</span><br><span class="line">        rank = tmp</span><br><span class="line"></span><br><span class="line">    return rank</span><br></pre></td></tr></table></figure>
 <p>虽然PersonalRank算法可以通过随机游走进行比较好的理论解释，但该算法在时间复杂度上有明显的缺点。因为在为每个用户进行推荐时，都需要在整个用户物品二分图上进行迭代，知道整个图上的每个顶点的PR值收敛。这一过程时间复杂度非常高，不仅无法在线提供实时推荐，甚至离线生成推荐结果也很耗时。</p>
 <p>为了解决PersonalRank每次都需要在全图迭代并造成时间复杂度高的问题，给出两种解决方法。第一种，减少迭代次数，在收敛之前就停止。会影响最终的精度，但一般来说影响不会特别大；另一种就是从矩阵论出发，重新设计算法。</p>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/11/10/推荐系统-评分预测/">[推荐系统]评分预测</a></li><li><a href="http://fja0kl.github.io/2018/11/07/推荐系统-利用上下文信息/">[推荐系统]利用上下文信息</a></li><li><a href="http://fja0kl.github.io/2018/11/06/推荐系统-利用用户标签数据/">[推荐系统]利用用户标签数据</a></li></ul></div>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/11/10/推荐系统-评分预测/">[推荐系统]评分预测</a></li><li><a href="http://fja0kl.github.io/2018/11/07/推荐系统-利用上下文信息/">[推荐系统]利用上下文信息</a></li><li><a href="http://fja0kl.github.io/2018/11/07/推荐系统-利用社交网络数据/">[推荐系统]利用社交网络数据</a></li></ul></div>
       
     </div>
     
@@ -739,7 +739,7 @@ alpha游走概率，1-alpha停留概率；</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -750,7 +750,7 @@ alpha游走概率，1-alpha停留概率；</p>
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -761,7 +761,7 @@ alpha游走概率，1-alpha停留概率；</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
