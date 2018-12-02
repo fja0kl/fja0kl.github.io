@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PCA,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="PCA主成分分析(Principal components analysis,PCA)是一种分析、简化数据集的技术。正如它的名字:主成分分析,这种方法可以有效的找出数据中最”主要”的元素和结构,去除噪音和冗余,将原有的复杂数据降维,揭示隐藏在复杂数据背后的简单结构.它的优点是简单,而且无参数限制,可以方便的应用在各个场合. PCA的数学原理数据表示对于给定数据集${x^1,x^2,…,x^n}$,">
+<meta name="keywords" content="PCA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PCA原理及实现">
+<meta property="og:url" content="http://fja0kl.github.io/2018/12/02/PCA原理及实现/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="PCA主成分分析(Principal components analysis,PCA)是一种分析、简化数据集的技术。正如它的名字:主成分分析,这种方法可以有效的找出数据中最”主要”的元素和结构,去除噪音和冗余,将原有的复杂数据降维,揭示隐藏在复杂数据背后的简单结构.它的优点是简单,而且无参数限制,可以方便的应用在各个场合. PCA的数学原理数据表示对于给定数据集${x^1,x^2,…,x^n}$,">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c029cebc4ff9e05833a117e">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c039048c4ff9e0582460b0d">
+<meta property="og:updated_time" content="2018-12-02T13:18:18.980Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PCA原理及实现">
+<meta name="twitter:description" content="PCA主成分分析(Principal components analysis,PCA)是一种分析、简化数据集的技术。正如它的名字:主成分分析,这种方法可以有效的找出数据中最”主要”的元素和结构,去除噪音和冗余,将原有的复杂数据降维,揭示隐藏在复杂数据背后的简单结构.它的优点是简单,而且无参数限制,可以方便的应用在各个场合. PCA的数学原理数据表示对于给定数据集${x^1,x^2,…,x^n}$,">
+<meta name="twitter:image" content="https://api.superbed.cn/pic/5c029cebc4ff9e05833a117e">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/12/02/PCA原理及实现/">
+
+
+
+
+
+  <title>PCA原理及实现 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/12/02/PCA原理及实现/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PCA原理及实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-02T21:17:16+08:00">
+                2018-12-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-02T21:18:18+08:00">
+                2018-12-02
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/02/PCA原理及实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/02/PCA原理及实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/12/02/PCA原理及实现/" class="leancloud_visitors" data-flag-title="PCA原理及实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h1><p>主成分分析(Principal components analysis,PCA)是一种分析、简化数据集的技术。正如它的名字:主成分分析,这种方法可以有效的找出数据中最”主要”的元素和结构,去除噪音和冗余,将原有的复杂数据降维,揭示隐藏在复杂数据背后的简单结构.它的优点是简单,而且无参数限制,可以方便的应用在各个场合.</p>
+<h1 id="PCA的数学原理"><a href="#PCA的数学原理" class="headerlink" title="PCA的数学原理"></a>PCA的数学原理</h1><h2 id="数据表示"><a href="#数据表示" class="headerlink" title="数据表示"></a>数据表示</h2><p>对于给定数据集${x^1,x^2,…,x^n}$,其中$x^i \in R^m$, 每条数据用一个列向量表示,同时用矩阵X表示全体数据集,X中的每行是一条数据,也就是说需要对每条数据表示做转置运算.</p>
+<h2 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h2><p>初始情况下,数据$x^i \in R^m$,就是说数据是用m维度表示的,也就是说表示一条数据需要m个坐标基[比如说笛卡尔坐标系,由两个坐标基表示,(1,0),(0,1)],那么降维就是用更少的维度k去表示数据[k&lt;m],由于维度降低了,必然会导致数据的丢失,而我们需要做的工作就是保证数据损失越小越好.这就引出一个问题: 怎么定义数据损失,或者说怎么选择低维空间坐标基? 选择的标准不同,pca对应实现方法也就不同.
+不同的标准,比如说可以选择降维后的数据表示之间方差越大越好[越混乱]</p>
+<p><img src="https://api.superbed.cn/pic/5c029cebc4ff9e05833a117e" alt="示例"></p>
+<h2 id="线性代数-基变换"><a href="#线性代数-基变换" class="headerlink" title="线性代数:基变换"></a>线性代数:基变换</h2><p>从线性代数的角度来看,PCA的目标就是使用另一组基去重新描述得到的数据数据.而新的基要尽量揭示原有的数据间的关系.PCA的目标就是找到”主成分[主元]”,最大程度地去除<strong>冗余和噪音的干扰</strong>.</p>
+<h3 id="标准正交基"><a href="#标准正交基" class="headerlink" title="标准正交基"></a>标准正交基</h3><p><strong>在m维向量空间中的每一个向量都是一组正交基的线性组合</strong>.最普通的一组正交基是标准正交基,数据集可以看做是在标准正交基下表示的.比如2维向量(2,3),正交基为:(0,1),(1,0).[在线性代数中，一个内积空间的正交基是元素两两正交的基。假若，一个正交基的基向量的模长都是单位长度1，则称这正交基为标准正交基]</p>
+<h3 id="基变换"><a href="#基变换" class="headerlink" title="基变换"></a>基变换</h3><p>从更严格的数学定义上,PCA回答的问题是:<strong>如何寻找到另一组正交基,它们是标准正交基的线性组合,而且能够最好的表示数据集</strong>?</p>
+<p>这里提出PCA方法的一个<strong>最关键的假设:线性</strong>. 这是一个非常强的假设条件.它使问题得到了很大程度上的简化:</p>
+<ol>
+<li>数据被限制在一个向量空间中,能被一组基表示;</li>
+<li>隐含地假设了数据之间的连续性关系.</li>
+</ol>
+<p>这样数据就可以被表示为各种基的线性组合.令X表示原数据集,X是一个m x n的矩阵,它的每一个列向量表示一个采样数据$x^i$,令Y表示转换后的新的数据集表示.P是它们之间的线性转换.
+$PX = Y$
+有如下定义:</p>
+<ul>
+<li>$p_i$表示P的行向量;</li>
+<li>$x^i$表示X的列向量;</li>
+<li>$y^i$表示Y的列向量.</li>
+</ul>
+<p>上述公式表示不同基之间的转换.在线性代数中,它有如下含义:<strong>P是从X到Y的转换矩阵(空间转换)</strong>.
+P的行向量, ${p_1,p_2,…,p_m}$是一组新的基,而Y是原数据在新的基下的重新表示.</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在线性的假设条件下,问题转化为寻找一组变换后的基,也就是P的行向量${p_1,p_2,…,p_m}$,这些向量就是PCA中的”主成分”.那么,怎样才能<strong>最好的表示</strong>原数据X? P的基怎么选择才是最好的?</p>
+<h2 id="方差和目标"><a href="#方差和目标" class="headerlink" title="方差和目标"></a>方差和目标</h2><p>“最好的表示”是什么意思?在线性系统中,”混乱数据”通常包含以下三种成分:<strong>噪音,旋转和冗余</strong>.分别对三种成分做出数学上的描述并分析.</p>
+<h3 id="噪音和旋转"><a href="#噪音和旋转" class="headerlink" title="噪音和旋转"></a>噪音和旋转</h3><p>噪音对数据的影响是巨大的,如果不能对噪音进行区分,就不可能抽取数据中有用的信息.<strong>噪音的衡量有多种方式,最常见的定义是信噪比(signal-to-noise ratio)</strong>,或者是方差比$\sigma^2$:
+$SNR=\frac{\sigma^2_{signal}}{\sigma^2_{noise}}$</p>
+<p>比较大的信噪比表示数据的准确度高,而信噪比低说明数据中的噪音成分比较多.<strong>那么怎样区分什么是信号,什么是噪音呢?</strong>我们假设:<strong>变化较大的信息被认为是信号,变换较小的则是噪音</strong>.而变化的大小则是由方差来描述.
+$\sigma^2=\frac{\sum_{i=1}^n(x^i-\hat{x})^2}{n-1}$</p>
+<p><strong>方差较大的分布,表示了采样点的主要分布趋势,是主信号或主要分量;而方差较小的分布则被认为是噪音或次要分量</strong>.</p>
+<h3 id="冗余"><a href="#冗余" class="headerlink" title="冗余"></a>冗余</h3><p>有时在实验中引入一些不必要的变量,可能会产生两种情况:</p>
+<p>1.该变量对结果没有影响;
+2.该变量可以用其他变量表示,从而造成数据冗余.</p>
+<p><img src="https://api.superbed.cn/pic/5c039048c4ff9e0582460b0d" alt="冗余情况"></p>
+<p>上图表示了两个观测变量之间的关系.(a)图中是低冗余,从统计学上说,这两个观测变量是相互独立的,它们之间的信息没有冗余;而相反的极端情况如(c),高度相关,两个变量之间可以相互表示.这种情况下,只用一个变量就可以表示了,这一个变量就是降维后的基.这也是PCA中”降维”思想的本源.</p>
+<h3 id="协方差矩阵"><a href="#协方差矩阵" class="headerlink" title="协方差矩阵"></a>协方差矩阵</h3><p>对于上面的简单情况[两个变量],可以通过简单的线性拟合来判断各个观测变量之间是否出现冗余,而<strong>对于复杂的情况,需要借助协方差来进行衡量和判断</strong>:
+$\sigma_{AB}^2=\frac{\sum_{i=1}^n(a^i-hat{a})(b^i-\hat{b})}{n-1}$
+A,B分别表示不同的观测变量所记录的一组值.
+对于一组具有m个观测变量[特征],n个采样时间点的采样数据X,将每个观测变量的值写为行向量,可以得到一个矩阵:
+$X=\begin{vmatrix}\ x_1\ x_2\ …\ x_m\end{vmatrix}$</p>
+<p>那么,协方差矩阵如下:
+$C_x = \frac1{n-1}XX^T$</p>
+<p>协方差矩阵结果是m x m的方阵[可以利用这个,确定上面协方差矩阵的计算公式,因为有时候会对X矩阵做转置,也就是X中的每一行表示一条记录,这种情况下就变成X.TX了].可以发现协方差矩阵具有以下性质:</p>
+<p>-Cx是一个<strong>m x m的平方对称矩阵</strong>;
+-Cx对角线上的元素是对应的观测变量的方差;
+-非对角线上的元素是对应特征之间的协方差.</p>
+<p>协方差矩阵Cx包含了所有观测变量之间的相关性度量.<strong>这些相关性度量反映了数据的噪音和冗余程度</strong>.<strong>在对角线上的元素越大,表明信号越强,变量的重要性越高;元素越小表明可能是存在噪音或次要变量</strong>;<strong>在非对角线上的元素大小则对应于相关观测变量之间的冗余程度的大小</strong>.这样协方差矩阵把数据取样中可能出现的3种情况都表示并度量好了.接下来就是对协方差矩阵进行操作,找到”主成分”.</p>
+<h3 id="协方差矩阵的对角化"><a href="#协方差矩阵的对角化" class="headerlink" title="协方差矩阵的对角化"></a>协方差矩阵的对角化</h3><p>PCA分析以及协方差矩阵优化的原则是:1)最小化变量冗余;对应于协方差矩阵的非对角线元素要尽量小;2)最大化信号,对应于协方差矩阵的主对角线元素要尽可能大.
+最小化冗余,应该让协方差矩阵的非对角线元素等于0,所以优化目标就是让协方差矩阵非对角线元素等于0,所以优化的目标矩阵$C_Y$应该是一个对角矩阵.PCA假设P所对应的一组变换基${p_1,p_2,…,p_m}$必须是标准正交基,而优化矩阵对角线上的元素越大,就说明信号的成分越大,换句话说就对应于越重要的”主成分”.</p>
+<h3 id="PCA求解"><a href="#PCA求解" class="headerlink" title="PCA求解"></a>PCA求解</h3><p>在线性代数中,PCA问题可以描述为:
+寻找一组正交基组成的矩阵P,有Y=PX,使得$C_Y=\frac1{n-1}YY^T$是对角矩阵.则P的行向量(也就是一组正交基)就是数据X的主元向量.
+对$C_Y$进行推导:</p>
+<p>$C_Y=\frac1{n-1}YY^T\=\frac1{n-1}(PX)(PX)^T\=\frac1{n-1}PXX^TP^T\=P\frac1{n-1}XX^TP^T\=PDP^T$
+其中,$D=\frac1{n-1}XX^T$,也就是说D是X的协方差矩阵.X协方差矩阵D是一个实对称矩阵,$C_Y$是一个对角矩阵,而且P是正交基矩阵,也就是说$P^T=P^{-1}$; 那么,从上面的公式可以看出,正交矩阵P就是将实对称矩阵D对角化的矩阵.对称矩阵D对角化,P的求解就对应于D的特征向量,而且对角化后的矩阵$C_Y$的对角线元素,对应于矩阵D的特征值.</p>
+<h1 id="PCA算法描述"><a href="#PCA算法描述" class="headerlink" title="PCA算法描述"></a>PCA算法描述</h1><p>PCA求解的一般步骤:</p>
+<p>1.收集数据形成m x n的矩阵X,m是观测变量个数[特征个数],n为数据样本集条数[采样点个数];
+2.矩阵X预处理,保证特征0均值,有时也需要进行1方差处理;
+3.求协方差矩阵$D=\frac1{n-1}XX^T$;
+4.对协方差矩阵D进行特征分解,求特征值以及特征向量;
+5.对特征值进行筛选,选择前k大特征值对应的特征向量,组合构成降维后的正交基P.
+6.Y=PX,Y对应于降维后的数据.</p>
+<p>因为特征值对应于矩阵对角化后的对角元素,而对角元素越大,说明方差越大,也可能是”信号”,主元.</p>
+<h1 id="PCA实现"><a href="#PCA实现" class="headerlink" title="PCA实现"></a>PCA实现</h1><p><a href="https://github.com/fja0kl/Machine-Learning-in-Action" target="_blank" rel="noopener">github repository</a></p>
+<h1 id="PCA假设和局限"><a href="#PCA假设和局限" class="headerlink" title="PCA假设和局限"></a>PCA假设和局限</h1><p>PCA模型中存在的很多假设条件决定了PCA算法的限制性,在有些场合可能会造成效果不好甚至失效.对于这些限制条件,进而会出现不同的PCA扩展技术.</p>
+<h2 id="PCA假设条件"><a href="#PCA假设条件" class="headerlink" title="PCA假设条件"></a>PCA假设条件</h2><h3 id="线性假设"><a href="#线性假设" class="headerlink" title="线性假设"></a>线性假设</h3><p><strong>PCA的内部模型是线性的</strong>,这也就决定了它能进行的主成分分析之间的关系也是线性的。kernel-PCA的一类方法就是使用非线性的权值对原有PCA技术的拓展:kernel核方法,和在SVM中类似,可以将非线性数据映射到高维中,进而可以保证数据的线性.</p>
+<h3 id="使用均值和方差进行充分估计"><a href="#使用均值和方差进行充分估计" class="headerlink" title="使用均值和方差进行充分估计"></a>使用均值和方差进行充分估计</h3><p>使用均值和方差进行描述的概率分布模型只限于指数型概率分布(如高斯分布),也就是说如果数据的概率分布不满足高斯分布或指数型概率分布,PCA就会失效.不过，所幸的是，根据中央极限定理，现实生活中所遇到的大部分采样数据的概率分布都是遵从高斯分布的。所以PCA仍然是一个使用于绝大部分领域的稳定且有效的算法。</p>
+<h3 id="大方差向量具有较大重要性"><a href="#大方差向量具有较大重要性" class="headerlink" title="大方差向量具有较大重要性"></a>大方差向量具有较大重要性</h3><p>PCA方法假设：数据本身具有较高的信噪比，所以具有最高方差的一维向量就可以被看作是主元，而方差较小的变化则被认为是噪音。</p>
+<h3 id="主元正交"><a href="#主元正交" class="headerlink" title="主元正交"></a>主元正交</h3><p>PCA方法假设主元向量之间都是正交的.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>您的支持就是我更新的最大动力!谢谢!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpeg" alt="fja0kl 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="fja0kl 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PCA/" rel="tag"># PCA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/26/kMeans聚类/" rel="next" title="kMeans聚类">
+                <i class="fa fa-chevron-left"></i> kMeans聚类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PCA"><span class="nav-number">1.</span> <span class="nav-text">PCA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PCA的数学原理"><span class="nav-number">2.</span> <span class="nav-text">PCA的数学原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据表示"><span class="nav-number">2.1.</span> <span class="nav-text">数据表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#降维"><span class="nav-number">2.2.</span> <span class="nav-text">降维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性代数-基变换"><span class="nav-number">2.3.</span> <span class="nav-text">线性代数:基变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标准正交基"><span class="nav-number">2.3.1.</span> <span class="nav-text">标准正交基</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基变换"><span class="nav-number">2.3.2.</span> <span class="nav-text">基变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">2.3.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方差和目标"><span class="nav-number">2.4.</span> <span class="nav-text">方差和目标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#噪音和旋转"><span class="nav-number">2.4.1.</span> <span class="nav-text">噪音和旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冗余"><span class="nav-number">2.4.2.</span> <span class="nav-text">冗余</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协方差矩阵"><span class="nav-number">2.4.3.</span> <span class="nav-text">协方差矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协方差矩阵的对角化"><span class="nav-number">2.4.4.</span> <span class="nav-text">协方差矩阵的对角化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PCA求解"><span class="nav-number">2.4.5.</span> <span class="nav-text">PCA求解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PCA算法描述"><span class="nav-number">3.</span> <span class="nav-text">PCA算法描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PCA实现"><span class="nav-number">4.</span> <span class="nav-text">PCA实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PCA假设和局限"><span class="nav-number">5.</span> <span class="nav-text">PCA假设和局限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA假设条件"><span class="nav-number">5.1.</span> <span class="nav-text">PCA假设条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性假设"><span class="nav-number">5.1.1.</span> <span class="nav-text">线性假设</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用均值和方差进行充分估计"><span class="nav-number">5.1.2.</span> <span class="nav-text">使用均值和方差进行充分估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大方差向量具有较大重要性"><span class="nav-number">5.1.3.</span> <span class="nav-text">大方差向量具有较大重要性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主元正交"><span class="nav-number">5.1.4.</span> <span class="nav-text">主元正交</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz',
+        appKey: 'Nw8hvihjOt1jGKfvVpix3P5V',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
