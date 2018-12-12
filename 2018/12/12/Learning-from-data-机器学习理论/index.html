@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="机器学习,可学性,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="明白机器学习中的通用理论,然后在细化到数学推导,之后再明白局限性以及改进;辅助以代码. 笔记.防止看得太过于枯燥. 这篇文章主要论述有限假设空间上的可学性问题.  -What is learning? -Can a machine learn? -How to do it? -How to do it well? -Take-home lessons. “学习”我们人类的学习过程,有时候并不是直">
+<meta name="keywords" content="机器学习,可学性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Learning-from-data]机器学习理论">
+<meta property="og:url" content="http://fja0kl.github.io/2018/12/12/Learning-from-data-机器学习理论/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="明白机器学习中的通用理论,然后在细化到数学推导,之后再明白局限性以及改进;辅助以代码. 笔记.防止看得太过于枯燥. 这篇文章主要论述有限假设空间上的可学性问题.  -What is learning? -Can a machine learn? -How to do it? -How to do it well? -Take-home lessons. “学习”我们人类的学习过程,有时候并不是直">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c068878c4ff9e0582460dd1">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c0fc6f5c4ff9e772736721d">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c1064d8c4ff9e77287e8e53">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c107668c4ff9e7727367293">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c107a6ac4ff9e772736729c">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c108356c4ff9e77287e8e9f">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c108401c4ff9e77273672b6">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c10b913c4ff9e0598c8d18a">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c10ff4ec4ff9e2b4d6986f2">
+<meta property="og:updated_time" content="2018-12-12T12:57:28.278Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Learning-from-data]机器学习理论">
+<meta name="twitter:description" content="明白机器学习中的通用理论,然后在细化到数学推导,之后再明白局限性以及改进;辅助以代码. 笔记.防止看得太过于枯燥. 这篇文章主要论述有限假设空间上的可学性问题.  -What is learning? -Can a machine learn? -How to do it? -How to do it well? -Take-home lessons. “学习”我们人类的学习过程,有时候并不是直">
+<meta name="twitter:image" content="https://api.superbed.cn/pic/5c068878c4ff9e0582460dd1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/12/12/Learning-from-data-机器学习理论/">
+
+
+
+
+
+  <title>[Learning-from-data]机器学习理论 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/12/12/Learning-from-data-机器学习理论/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Learning-from-data]机器学习理论</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-12T20:55:05+08:00">
+                2018-12-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-12T20:57:28+08:00">
+                2018-12-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/12/Learning-from-data-机器学习理论/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/12/Learning-from-data-机器学习理论/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/12/12/Learning-from-data-机器学习理论/" class="leancloud_visitors" data-flag-title="[Learning-from-data]机器学习理论">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>明白机器学习中的通用理论,然后在细化到数学推导,之后再明白局限性以及改进;辅助以代码.
+笔记.防止看得太过于枯燥.
+这篇文章主要论述有限假设空间上的可学性问题.</p>
+</blockquote>
+<p>-What is learning?
+-Can a machine learn?
+-How to do it?
+-How to do it well?
+-Take-home lessons.</p>
+<h1 id="“学习”"><a href="#“学习”" class="headerlink" title="“学习”"></a>“学习”</h1><p>我们人类的学习过程,有时候并不是直接从定义学习,更像是实例学习,比如说小孩学习”树”,并不能给出一个真正的定义,而是从实例的树来学习这个定义,也就是说”learning from data”.</p>
+<p>Learning from data: 因为<strong>不能给出一个明确的解析解</strong>,但是可以从大量的数据中构建一个经验解决方法.换句话说,就是我们不能给出明确的定义,但是可以从<strong>大量的数据</strong>中<strong>归纳</strong>出一种解决方法.  一种归纳推理:从特殊到一般. learning from data.</p>
+<p>Learning from data is used in situations where we  don’t have an analytic solution, but we do have data that we can use to construct an empirical solution.</p>
+<p>什么是学习?给出与”学习”相关的各种概念,目前为止出现的各种学习方法.</p>
+<h2 id="学习问题"><a href="#学习问题" class="headerlink" title="学习问题"></a>学习问题</h2><p>这种学习方法learning from data 是 machine 尝试以自己的角度从数据中学习,机器”自己”理解的角度/方法,当然这种方法对人类而言,可能是”天书”,but it works, it’s enough! 不需要人类理解.</p>
+<h3 id="学习的”成分”"><a href="#学习的”成分”" class="headerlink" title="学习的”成分”"></a>学习的”成分”</h3><p>数据记录x
+记录标签y
+数据集X
+标签Y
+目标函数f: 理想函数
+学习函数g: 学习到的函数
+假设空间H
+理想情况下 g = f, 我们学到的g函数和理想函数f完全相同; 一般情况下,就是用训练学习到的函数g去逼近ideal target function理想函数f.</p>
+<p>函数g的选择依据是:在训练数据集上g已经非常逼近期望函数f了,而且我们也希望在unseen data/新数据上也能逼近函数f,也就是说在新数据上也能”完美运行/不出错[判断出错]”,没有误差. <strong>但这个期望能否实现需要继续判断</strong>.</p>
+<p><img src="https://api.superbed.cn/pic/5c068878c4ff9e0582460dd1" alt=""></p>
+<p>图中定义了”学习”过程中的各个”成分”.</p>
+<p><strong>There is a target to be learned, but it’s unknown to us. We have a set of examples generated by the target. The learning algorithm uses these examples to look for a hypothesis that approximates the target.</strong></p>
+<h3 id="一个简单的学习模型"><a href="#一个简单的学习模型" class="headerlink" title="一个简单的学习模型"></a>一个简单的学习模型</h3><p><strong>对于一个实际的学习问题来说, 期望的目标函数f和数据集X能通过待求解的问题得到,是已知的[尽管目标函数并不是真正的已知],但是学习算法以及函数假设/假设函数是未知的,但是存在很多种选择需要我们自己选定. 假设函数集/函数空间和学习算法可以理解为”算法模型”</strong>.</p>
+<p>对于垃圾邮件分类器,<strong>如果数据集线性可分</strong>,那么我们能找到一个完美的模型:正确划分所有训练数据. 对于2-d维度来说,感知机模型的分类边界是一条直线.</p>
+<p>假设空间H:</p>
+<p>$H = {h|Y=h_{\theta}(X), \theta \in R^n}$</p>
+<p>假设空间由$\theta$参数定义的一个函数族[实现确定了选定那种类型的算法].</p>
+<p>感知机模型:</p>
+<p>$h(x) = sign(w^Tx)$</p>
+<p>分类结果是{+1, -1}.从式子中可以看出,分类结果是由两个向量内积决定,图像化来说就是两个向量的夹角决定,如果夹角大于90度,分为负类;夹角小于90度,分为正类.</p>
+<p>PLA(perceptron learning algorithm):基于数据对感知机模型参数w进行学习.具体来说:
+<strong>假设数据集线性可分</strong>,那么一定能找到一个超平面[参数向量w决定]将所有训练数据集中记录正确划分,也就是说,对于训练集中所有数据有h(xn)=yn.</p>
+<p>PLA是一个简单的迭代算法:最终的分类效果是对训练数据集”完美划分”.既然是一个迭代过程,刚开始划分效果并不好,需要进行优化,但是如何优化呢?或者说优化方法是什么?PLA给出了具体的方法.</p>
+<p>在每次迭代t,t=0,1,…,当前迭代的权重向量为w(t). 训练集$(x_1,y_1),(x_2,y_2),…,(x_N,y_N)$.
+在训练集D中<strong>找一个误分样本点(x(t), y(t))</strong>,使用这个误分样本点对当前的权重向量w(t)进行更新.既然是误分,可以知道$y(t) \neq sign(w^T(t)x(t))$. 更新规则:
+$w(t+1) = w(t) + y(t)x(t)$.</p>
+<p>因为是误分样本,所以有上面的不等关系,在具体来说,就是正类样本分成负类,负类分成正类;</p>
+<p>对于第一种情况来说,y(t)=1,但是感知机h(x)分成负类,因此$w^Tx$两个向量内积应该是负的,本来夹角应该是小于90度的,但由于当前权重向量不准确,导致夹角大于90度了,对于这种情况需要两个向量之间的夹角变到90度里,所以让$w(t+1) = w(t) + x(t)$,两个起点相同的钝角向量相加,结果[w(t+1)]和原来的向量x(t)之间的夹角变到90度里,因此更新后的超平面能对这个样本点正确分类了;</p>
+<p>对于情况二,y(t)=-1,但是h(x)分成正类,从图象上来说,本来两个钝角向量,变成了锐角向量,我们需要做的就是让锐角变到钝角去,从上面的例子中得到启发,两个起点相同的锐角向量[相减],$w(t+1) = w(t) - x(t)结果为更新后的权重向量w(t+1),此时两个向量的夹角成了钝角,也就是说超平面能对这个样本点(x(t),y(t))正确分类了.</p>
+<p>两种情况合二为一,更新规则变成:</p>
+<p>$w(t+1) = w(t) + y(t)x(t)$.</p>
+<p>符合两种误分情况的更新方法.同时从上面的更新方法来看,<strong>每次更新只选择一个误分样本点</strong>.但最终一定会得到一个”完美”的模型.并且这个结果和我们如何初始化w,如何选择误分样本无关.因为一定有一个”最优解”.</p>
+<p><strong>这种学习算法在无限的解空间里通过有限步的迭代最终找到了最优解</strong>,求解过程并不是无限次的使用每种可能进行尝试,而是有目的性的优化.<em>找准优化方向是根本</em>,只有方向正确,最终一定能找到.</p>
+<p><strong>BUT</strong>,关于这个学习模型还存在一定的疑问?</p>
+<ul>
+<li><strong>数据集D上学到的模型g对于unseen data是否适用</strong>?[学习理论的关键问题–模型的泛化评估]</li>
+<li>如果数据集D上的样本点不是线性可分呢?应该怎么办?</li>
+</ul>
+<p><strong>为什么一定能算法收敛?</strong>一定能找到一个最优解,证明PLA算法的更新规则是正确的.</p>
+<p><a href="http://www.cnblogs.com/HappyAngel/p/3456762.html#top" target="_blank" rel="noopener">http://www.cnblogs.com/HappyAngel/p/3456762.html#top</a></p>
+<p><strong>如果数据线性不可分怎么办?</strong>能否通过PLA变形,完成问题求解.</p>
+<p><a href="http://www.cnblogs.com/HappyAngel/p/3456762.html#top" target="_blank" rel="noopener">http://www.cnblogs.com/HappyAngel/p/3456762.html#top</a></p>
+<h3 id="Learning-VS-Design"><a href="#Learning-VS-Design" class="headerlink" title="Learning VS. Design"></a>Learning VS. Design</h3><p>Learning是基于数据进行学习的, design更像是专门设计的,由专家定义设计,有大量的专业知识[先验知识].design方法并不需要数据,不需要从数据中获取信息.</p>
+<h2 id="“学习”的可行性"><a href="#“学习”的可行性" class="headerlink" title="“学习”的可行性"></a>“学习”的可行性</h2><p>How could a limited data set reveal enough information to pin down the entire target function?
+有限的训练数据集为什么能从中学到整个数据集上的<strong>通用</strong>信息???或者说为什么有限集上学到的模型能在未知数据上应用?难道不会出错吗?</p>
+<p><img src="https://api.superbed.cn/pic/5c0fc6f5c4ff9e772736721d" alt="一个例子"></p>
+<p>从上面的例子可以看出,对于6个样本的数据集来说,学到的模型并不一致,但是在数据集里,模型能完美运行,数据集之外unseen data上,不同的模型有不同的预测结果.但是我们并不能判断到底哪个结果是正确的[缺少额外信息]? 这个例子从一定程度上表明了判断”学习可行性”的难度.</p>
+<h3 id="Outside-the-Data-Set"><a href="#Outside-the-Data-Set" class="headerlink" title="Outside the Data Set"></a>Outside the Data Set</h3><p>当我们在训练数据集D上进行训练时,表现良好,但在数据集之外unseen data上一无所知,这并不是学习,这属于单纯的记忆.我们关心的是模型在数据集之外的unseen data上的表现如何?</p>
+<p>Does the data set D tell us anything Outside of D that we didn’t know before? If the answer is YES, then we have learned something. If the answer is NO, we can conclude that learning is not feasible.
+训练数据集D,能够揭示数据集D之外的我们不知道的整个数据空间X上的信息?如果可以,那么机器学习就可行,能在有限集D上学到的知识是全局的,具有普世性[迁移性];如果不能揭示全局信息,机器学习就没有意义.</p>
+<p>The performance outside D is all that matters in learning.</p>
+<p>如何证明D上学到的f能够和全局h相互接近,这样,就可以用f来代替h,来进行应用.</p>
+<h3 id="Probability-to-the-Rescue"><a href="#Probability-to-the-Rescue" class="headerlink" title="Probability to the Rescue"></a>Probability to the Rescue</h3><p><strong>We will show that we can indeed infer something outside D using only D, but in a probabilistic way</strong>.虽然推断的函数和全局target函数f相比可能并不完全相同,但关键是我们使用一种方法能预测数据集D之外unseen data上的表现如何.一旦确定了这种方法,我们就可以扩展到一般性的学习问题上,并能确定什么是可以学习的,什么是不能学习的?</p>
+<p>举一个简单的例子,一个有红色和绿色石头的无限大瓶子[不能穷举石头个数],瓶子中红色石头和绿色石头的比例,如果在瓶子中随机选择一块石头,红色石头的概率是$\mu$,绿色石头的概率$1-\mu$. 我们假定$\mu$对于我们来说是未知的.</p>
+<p>我们随机从瓶子中选择包含N个石头的随机样本,观察在样本中红色石头的概率$v$. 这个概率$v$和概率$\mu$之间有什么关系呢?What does the value of $v$ tell us about the value of $\mu$?</p>
+<p>一个答案是无论N个样本的颜色是什么,对于那些没有被选择的石头,我们一无所知.我们可以在大多数是红色石头的瓶子中选出大多数是绿色石头的样本.对于参数$\mu$来说,随机变量$\nu$的概率分布,当取样样本数N非常大时,$\nu$趋向于$\mu$.</p>
+<p>为了量化$v$和$\mu$之间的关系,使用Hoeffding Inequality不等式.对于任意样本大小N,</p>
+<p>$P[|\nu-\mu|&gt;\epsilon] \leq 2e^{-2\epsilon^2 N}$ for any $\epsilon$ &gt; 0.</p>
+<p>P[\cdot]代表一个事件的概率.上面的不等式的意思是说,随着样本大小N逐渐变大,$\nu$和$\mu$差值大于$\epsilon$概率会指数级减小[两个概率之间相差很大的概率非常小],也就是说N越大,$\nu$和$\mu$之间越相似.不等式中的$\nu$仅依赖于随机样本,与$\mu$无关,$\mu$是大小未知.<strong>利用hoeffding不等式,可以用$\nu$来推断$\mu$</strong>.因为$\nu$倾向于接近$\mu$,所以$\mu$也越来越接近$\nu$.</p>
+<p>尽管$P[|\nu - \mu| &gt; \epsilon]$依赖于$\mu$,但是利用不等式可以断定它的一个不依赖$\mu$的上界$2e^{-2\epsilon^2 N}$.可以看出取样样本大小N决定上界的大小,而不是输入空间X的大小.输入空间可大可小,有限或无限,当我们使用相同大小的取样样本时,都不影响不等式的上界阈值.</p>
+<p>我们能断定$\mu$接近于$\nu$的依据是样本是<strong>随机选择的</strong>.如果样本依据某种选择方式选择,那么这个不等式就不再成立.</p>
+<p>瓶子模型问题对应于学习问题来说,未知的$\mu$对应于学习问题中未知函数$f:X \to Y.$ 对于任意假设$h \in H$,$x \in X$,如果$h(x) = f(x)$,对应于x点是绿色的;如果$h(x) \neq f(x)$,对应于石头是红色的.每个石头是什么颜色是未知的,因为f是未知的.<strong>但是如果我们依据某种概率分布P在输入空间X上随机选样本点x</strong>,假设x是红色的概率为$\mu$,绿色概率为$1-\mu$.输入空间X对应于下图中的瓶子:</p>
+<p><img src="https://api.superbed.cn/pic/5c1064d8c4ff9e77287e8e53" alt=""></p>
+<p>训练样本对应于瓶子中的样本点.如果训练集D中$x_1,…, x_N$是依据P独立地选出来,那一个随机样本可能是红色($h(x)=f(x)$),也可能是绿色($h(x) \neq f(x)$).红色概率为$\mu$.在D中每个点的颜色是已知的,因为对于N的点来说,$h(x_N)$和$f(x_N)$是已知的(h是假设函数,$f(x_N)=y_N$).这样学习问题就和瓶子模型对应上了,D中样本点是依据概率分布P在空间X中独立随机选择,这个概率分布P决定了$\mu$大小,因为$\mu$是未知的,因此随机选择分布P也是未知的.</p>
+<p><img src="https://api.superbed.cn/pic/5c107668c4ff9e7727367293" alt=""></p>
+<p>类比以后,不等式可以用在学习问题上,从而保证我们可以估计D之外的数据.依据$\nu$来估计$\mu$可以帮助我们了解target function f,尽管不知道f的具体形式.$\mu$可以知道假设函数h在估计f时的错误率;如果$\nu$接近于0,我们可以预测假设h函数将在整个输入空间X上无限接近于f[应用Hoeffding不等式].</p>
+<p>$\nu$的大小依赖于特定的假设函数h.在实际学习问题中,在整个假设空间H上,选择一些错误率小的$h \in H$.如果只有一个假设,这并不是一个学习过程,而是在”验证”这个假设的好坏.将瓶子扩展到多个,也就是多个假设函数,从而变成真正的学习问题.</p>
+<p>先定义几个概念,瓶子模型的$\nu$对应于训练集上的错误率in-sample error:</p>
+<p>$E_{in}(h)=(fraction of D where f and h disagree) = \frac1{N}\sum_{n=1}^{N}[h(x_n) \neq f(x_n)]$</p>
+<p>$E_{in}$完全依赖于特定的假设h.定义out-of-sample error:</p>
+<p>$E_{out}(h)=P[h(x) \neq f(x)]$,</p>
+<p>对应于瓶子模型的$\mu$,这个概率的大小依赖于从输入空间X选择样本x时的概率分布.</p>
+<p><img src="https://api.superbed.cn/pic/5c107a6ac4ff9e772736729c" alt=""></p>
+<p>不等式变成:</p>
+<p>$P[|E_{in}(h) - E_{out}(h)|&gt;\epsilon] \leq 2e^{-2\epsilon^2 N}$ for any $\epsilon &gt; 0$.</p>
+<p>我们考虑多个假设的假设空间H,设定H的有限的:</p>
+<p>$H={h_1,h_2,…,h_M}$.</p>
+<p>对应于上面图中的M个瓶子.<strong>Hoeffding不等式应用于每个单独的瓶子,或者说一个具体的假设函数</strong>,而不是多个瓶子.如果同时考虑所有的瓶子,情况就比较复杂.</p>
+<p>$P[|E_{in}(h) - E_{out}(h)|&gt;\epsilon] \leq 2e^{-2\epsilon^2 N}$ for any $\epsilon &gt; 0$.</p>
+<p>其中,<strong>h是在数据集生成之前就已经确定好了 h is fixed</strong>.对于有多个假设的H,学习算法基于数据集D选择最终的假设函数g. 在数据集生成之后,
+$P[|E_{in}(g) - E_{out}(g)|&gt;\epsilon] is small for the final hypothesis g$.</p>
+<p>但是g在生成数据之前并不确定,因为g是依据假设函数在数据D上的表现进行选择的.g是在M个h中间进行选择,因此不能直接把g带入到不等式当中.</p>
+<p>$P[|E_{in}(h) - E_{out}(h)|&gt;\epsilon]$要保证无论学习算法选择假设空间里的哪个假设作为最终g都成立.因为g是假设空间h中的一个具体的假设,所以:</p>
+<p><img src="https://api.superbed.cn/pic/5c108356c4ff9e77287e8e9f" alt=""></p>
+<p>左边成立,右边一定成立.再利用事件的联合概率,可以得到:</p>
+<p><img src="https://api.superbed.cn/pic/5c108401c4ff9e77273672b6" alt=""></p>
+<p>同时考虑M个模型,可以得到:</p>
+<p>$P[|E_{in}(g) - E_{out}(g)|&gt;\epsilon] \leq 2Me^{-2\epsilon^2 N}$</p>
+<p>右边界是希望M个模型$E_{in}(h_m)$同时逼近对应的$E_{out}(h_m)$.这样无论g选择哪一个模型最终都会满足这个不等式,逼近于对应的全局值.</p>
+<p>这种联合式的估计比单个模型上界更大,而且<strong>只有在假设空间H有限时才有意义</strong>,也就是说M的有限的.</p>
+<h3 id="Feasibility-of-Learning学习的可行性"><a href="#Feasibility-of-Learning学习的可行性" class="headerlink" title="Feasibility of Learning学习的可行性"></a>Feasibility of Learning学习的可行性</h3><p>上面两小节依次介绍了两个观点:依据数据集D学到的内容并不能用来判断数据集之外的数据记录.并没有学习到数据集之外的数据信息;之后又说我们可以学习something outside of D.这两个观点看起来是矛盾的.如何统一起来?</p>
+<p>1.通过对数据集D的学习能否学到一些数据集之外unseen data的信息呢?确定的说,”NO”;如果可以接受一种概率性的答案,数据集D能告诉我们一些数据集之外unseen data上f的一些信息,”YES”.
+通过概率性的角度,可以得到一个理想的答案.存在的前提条件是数据集D中的数据记录是独立选择/生成的.同时在用数据评估g和f的接近程度时,数据必须也是同样的方式独立随机选择的,否则Hoeffding不等式失效.
+2.学习可行性的含义是什么? 学会产生一个假设函数g去估计(接近/逼近)未知的目标函数f.如果学习是有效的,成功的,那么g应该接近于f,也就是说$E_{out}(g) \approx 0$. 然后从概率学中不能直接得到.Hoeffding不等式告诉我们,$E_{out}(g) \approx E_{in}(g)$. 为了确保$E_{out}(g) \approx 0$必须先让$E_{in}(g) \approx 0$.</p>
+<p>我们并不能保证一定会找到一个假设函数g能达到$E_{in}(g) \approx 0$, 但至少如果能找到的话,我们一定会知道.$E_{out}(g)$是未知的,因为f是未知的,但是$E_{in}(g)$是可以度量的.我们可以通过调整$E_{in}(g) \approx 0$让$E_{out}(g) \approx 0$. 理论依据是:</p>
+<p>$P[|E_{in}(g) - E_{out}(g)| &gt; \epsilon] \leq 2Me^{-2\epsilon^2 N}$</p>
+<p>这个不等式能保证$E_{out}(g) \approx E_{in}(g)$,所以可以用$E_{in}(g)$来近似替代$E_{out}(g)$.需要注意的是我们并不严格要求$E_{in}(g) \approx 0$,因为有时候并不能实现.</p>
+<p>学习的可行性可以划分为两个问题:
+<img src="https://api.superbed.cn/pic/5c10b913c4ff9e0598c8d18a" alt=""></p>
+<ul>
+<li>保证$E_{in}(g) \approx E_{out}(g)$;</li>
+<li>保证$E_{in}(g)$足够小.</li>
+</ul>
+<p>Hoeffding不等式可以解决第一个问题.第二个问题需要在在真实数据上我们运行学习算法之后,确定$E_{in}$的大小来确定.</p>
+<p>将学习的可行性划分为两个问题能帮助我们明白学习问题中不同成分所扮演的角色.</p>
+<p>我们先确定一些学习问题各个成分的复杂度如何?</p>
+<p><strong>假设空间H的复杂度</strong>.如果假设空间假设函数个数M增加,那么$E_{in}(g)$是$E_{out}(g)$的一个poor estimator,因为不等式的上界变大,两个之间的差距也变大,犯错概率增加.因此M可以看做是度量假设空间H的一个指标.对于上面两个问题,第一个问题,为了保证两者之间的接近,应该确保M不会过大,否则上界就会变大,但是这样并不能保证E_{in}(g)足够小,有可能会很大,因为选择不多;第二个问题,为了保证$E_{in}(g)$足够小,M应该足够大,这样就可以选择一个更好的假设g能更好地拟合数据,表现更好,更复杂的假设空间H可以保证选择的范围扩大,可选项增多,要知道林子大了什么鸟都有!所有M需要在两者之间权衡.</p>
+<p><strong>目标函数f的复杂度</strong>.<em>直觉上复杂函数比简单函数更难学</em>.我们看看能否从上面的两个问题中得到答案.从Hoeffding不等式中可以知道,目标函数f的复杂度并不影响$E_{in}(g)$和E_{out}(g)的接近程度.对于确定的数据集D和假设空间H,无论f复杂还是简单,都不影响不等式的上界,这只是可学性的第一个问题;如果目标函数过于复杂,那么第二个问题就会陷入困境.因为复杂模型的拟合(学习)比简单模型的学习更加复杂,难度更高,这就导致$E_{in}(g)$并不会很小.如果想模型复杂同时能确保$E_{in}(g)$足够小,那么第一个问题就会出错,两者之间差距变大.无论怎样,复杂模型比简单模型要更难学.极端情况下,对于一个极其复杂的模型f,我们可能<strong>不能学习</strong>.</p>
+<p>实际问题中,大多数目标函数都不是过于复杂,我们可以<strong>在一个合理假设空间H中,通过合理的数据集D</strong>来学习.这两个定语”合理/reasonable”是经验性的,而不是数学严格给定.有时候尽管不能学习到理想的函数f,但是我们至少能判定不能学习. 只要能保证H的复杂度能给定一个良好的Hoeffding上界,那么对于训练数据的拟合程度可以断定f的学习是否成功.</p>
+<blockquote>
+<p>通过将学习可学性划分成两个问题,可以判断某个具体问题是否可学.我们的目标是unseen data上的表现,也就是$E_{out}(g)$,我们想让它足够小,但是不能直接保证,使用Hoeffding不等式可以做一个桥梁,用数据集之间D上$E_{in}(g)$的表现作为unseen data(全局)$E_{out}(g)$的一个估计;之后的目光就集中在$E_{in}(g)$上,通过学习算法确保$E_{in}(g)$足够小,进而保证$E_{out}(g)$在数据集之外上也表现良好—-是可以学习的!Cool!</p>
+</blockquote>
+<h2 id="Error-and-Noise误差和噪音"><a href="#Error-and-Noise误差和噪音" class="headerlink" title="Error and Noise误差和噪音"></a>Error and Noise误差和噪音</h2><p>介绍两个概念:一个是函数”近似”,当我们讨论两个函数之间近似时是什么意思?第二个是关于目标函数的一个性质.在实际情况中,存在一些噪音使得目标函数f的输出并不是完全依赖于输入数据.有噪声的数据之后,学习问题有什么变化呢?</p>
+<h3 id="Error-Measures-误差计算"><a href="#Error-Measures-误差计算" class="headerlink" title="Error Measures 误差计算"></a>Error Measures 误差计算</h3><p>学习并不是对目标函数f的完美复制(也不可能实现).最终的假设函数g仅仅是目标函数f的一个近似(估计).所以,为了度量g对f估计的有多好,两者之间多相似,我们需要定义一个误差计算方法,量化两者之间的差距.</p>
+<p>不同的误差计算方法会影响学习过程.不同的误差计算方法产生的最终假设函数g也各不相同,尽管目标函数f和数据是一样的,不同的误差计算值之间可能相差很大.因此我们使用的<strong>错误计算方法会对我们学到的东西产生影响</strong>.<strong>误差计算方法怎么选择,需要进一步讨论</strong>.</p>
+<p>误差计算方法能量化模型每个假设函数h与目标函数f之间的差距:</p>
+<p>$Error = E(h, f)$</p>
+<p>E(h,f)是基于整个h和f,是由每个单独的输入点x上的误差来决定.所以我们可以逐个点的进行计算$e(h(x),f(x))$,全局误差计算逐个点之和的平均值.对于分类问题的误差,在逐个点上计算$e(h(x),f(x))=[h(x) \neq f(x)]$.
+在实际应用中,E(h,f)需要用户指定.相同的学习问题不同的内容会有不同的误差计算方法.</p>
+<h3 id="Noisy-Targets-噪音"><a href="#Noisy-Targets-噪音" class="headerlink" title="Noisy Targets 噪音"></a>Noisy Targets 噪音</h3><p>在实际情况中,用来学习的数据并不是由一个决定性的目标函数生成的.相反,它们是以一种有噪音的方式生成的,也就是说输出并不是只由输入决定.
+在有噪音的情况下,可以用相同的方法进行建模.将输出y看做一个受输入x影响的随机变量,而不是一个决定性的量.因此,可以得到一个目标分布P(y|x),而不是目标函数y=f(x).一个数据点(x,y)是由联合概率生成P(x,y)=P(x)P(y|x).
+可以将带噪音的目标函数看做是决定性函数加上噪音.对于输出y,其输入x决定性的输出是f(x),而y-f(x)看做是加在f上的噪音.
+而之前决定性的函数可以看做带噪音的目标函数的特殊情况:噪音为0.同时任意的目标函数f,可以看做分布P(y|x)的特殊情况,保证除了y=f(x)之外,其他y对应的概率都设为0.因此,无论目标是个分布还是函数,都不影响其普遍性.</p>
+<p><img src="https://api.superbed.cn/pic/5c10ff4ec4ff9e2b4d6986f2" alt="带噪音的一般情况"></p>
+<p>之前的可学性分析方法也可以用在带噪音的一般目标函数上.因为<strong>Hoeffding不等式可以用在任意的未知目标函数上</strong>.但是这并不意味着带噪音的目标函数和决定性函数学习难易程度相同.可学性的两个问题,相同的学习模型,在噪音环境下$E_{out}$可以接近$E_{in}$,但是$E_{in}$在噪音环境下更难学习,因为噪音环境下数据不好拟合.</p>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://www.davidfnck.com/mixed/tuling_for_wechat_fromfriend.html/">我要系列｜一个属于自己的家养小精灵</a></li></ul></div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>您的支持就是我更新的最大动力!谢谢!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpeg" alt="fja0kl 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="fja0kl 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/可学性/" rel="tag"># 可学性</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/02/PCA原理及实现/" rel="next" title="PCA原理及实现">
+                <i class="fa fa-chevron-left"></i> PCA原理及实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#“学习”"><span class="nav-number">1.</span> <span class="nav-text">“学习”</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习问题"><span class="nav-number">1.1.</span> <span class="nav-text">学习问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#学习的”成分”"><span class="nav-number">1.1.1.</span> <span class="nav-text">学习的”成分”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单的学习模型"><span class="nav-number">1.1.2.</span> <span class="nav-text">一个简单的学习模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning-VS-Design"><span class="nav-number">1.1.3.</span> <span class="nav-text">Learning VS. Design</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“学习”的可行性"><span class="nav-number">1.2.</span> <span class="nav-text">“学习”的可行性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Outside-the-Data-Set"><span class="nav-number">1.2.1.</span> <span class="nav-text">Outside the Data Set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Probability-to-the-Rescue"><span class="nav-number">1.2.2.</span> <span class="nav-text">Probability to the Rescue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feasibility-of-Learning学习的可行性"><span class="nav-number">1.2.3.</span> <span class="nav-text">Feasibility of Learning学习的可行性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Error-and-Noise误差和噪音"><span class="nav-number">1.3.</span> <span class="nav-text">Error and Noise误差和噪音</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Error-Measures-误差计算"><span class="nav-number">1.3.1.</span> <span class="nav-text">Error Measures 误差计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Noisy-Targets-噪音"><span class="nav-number">1.3.2.</span> <span class="nav-text">Noisy Targets 噪音</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz',
+        appKey: 'Nw8hvihjOt1jGKfvVpix3P5V',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
