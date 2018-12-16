@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="无限空间;理论,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Theory of Generalization样本外误差$E_{out}$测量了训练集D上学习的模型在unseen data上的泛化能力.$E_{out}$是基于整个输入空间X上的表现来测量的.如果使用样本集来计算模型的$E_{out}$,这些样本点必须是”unseen”,没有在训练集中出现过. 对应的,样本内误差$E_{in}$是基于训练集中的样本点,它评估模型在训练集上的表现. Genera">
+<meta name="keywords" content="无限空间;理论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Learning-from-data]无限假设空间的可学性以及模型泛化">
+<meta property="og:url" content="http://fja0kl.github.io/2018/12/16/Learning-from-data-无限假设空间的可学性以及模型泛化/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="Theory of Generalization样本外误差$E_{out}$测量了训练集D上学习的模型在unseen data上的泛化能力.$E_{out}$是基于整个输入空间X上的表现来测量的.如果使用样本集来计算模型的$E_{out}$,这些样本点必须是”unseen”,没有在训练集中出现过. 对应的,样本内误差$E_{in}$是基于训练集中的样本点,它评估模型在训练集上的表现. Genera">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c1203e7c4ff9e2b4d6987ab">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c1204a3c4ff9e2b4e044af2">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c1205bcc4ff9e2b4e044af3">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c121d2ec4ff9e2b4d6987e4">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c1222adc4ff9e2b4d6987ee">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c130ee7c4ff9e2b4e044bba">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c1313a1c4ff9e2b4d69887c">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c131649c4ff9e2b4d69887f">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c131f21c4ff9e2b4e044bc4">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c132308c4ff9e2b4e044bc9">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c1474abc4ff9e2b4e044d32">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c160773c4ff9e2b4e044e20">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c160cafc4ff9e2b4e044e30">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c16132fc4ff9e2b4e044e33">
+<meta property="og:image" content="https://api.superbed.cn/pic/5c1613c1c4ff9e2b4d698ade">
+<meta property="og:updated_time" content="2018-12-16T09:09:50.125Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Learning-from-data]无限假设空间的可学性以及模型泛化">
+<meta name="twitter:description" content="Theory of Generalization样本外误差$E_{out}$测量了训练集D上学习的模型在unseen data上的泛化能力.$E_{out}$是基于整个输入空间X上的表现来测量的.如果使用样本集来计算模型的$E_{out}$,这些样本点必须是”unseen”,没有在训练集中出现过. 对应的,样本内误差$E_{in}$是基于训练集中的样本点,它评估模型在训练集上的表现. Genera">
+<meta name="twitter:image" content="https://api.superbed.cn/pic/5c1203e7c4ff9e2b4d6987ab">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/12/16/Learning-from-data-无限假设空间的可学性以及模型泛化/">
+
+
+
+
+
+  <title>[Learning-from-data]无限假设空间的可学性以及模型泛化 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/12/16/Learning-from-data-无限假设空间的可学性以及模型泛化/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Learning-from-data]无限假设空间的可学性以及模型泛化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-16T17:08:42+08:00">
+                2018-12-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-16T17:09:50+08:00">
+                2018-12-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/16/Learning-from-data-无限假设空间的可学性以及模型泛化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/16/Learning-from-data-无限假设空间的可学性以及模型泛化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/12/16/Learning-from-data-无限假设空间的可学性以及模型泛化/" class="leancloud_visitors" data-flag-title="[Learning-from-data]无限假设空间的可学性以及模型泛化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Theory-of-Generalization"><a href="#Theory-of-Generalization" class="headerlink" title="Theory of Generalization"></a>Theory of Generalization</h2><p>样本外误差$E_{out}$测量了训练集D上学习的模型在unseen data上的泛化能力.$E_{out}$是基于整个输入空间X上的表现来测量的.如果使用样本集来计算模型的$E_{out}$,这些样本点必须是”unseen”,没有在训练集中出现过.</p>
+<p>对应的,样本内误差$E_{in}$是基于训练集中的样本点,它评估模型在训练集上的表现.</p>
+<p><strong>Generalization error</strong>泛化误差. 泛化是学习中的一个关键问题.Generalization is a key issue in learning.泛化误差可以定义为$E_{in}$和$E_{out}$两者之间的差异.Hoeffding不等式提供了一个泛化误差概率边界的描述.</p>
+<p>$P[| E_{in}(g)-E_{out}(g)| &gt; \epsilon] \leq 2Me^{-2\epsilon^2 N}$ for any $\epsilon &gt; 0$.</p>
+<p>同时可以知道,$|E_{in}(g)-E_{out}(g)| \leq \epsilon$的概率为$1-2Me^{-2N\epsilon^2$,也就是说$E_{out}(g) \leq E_{in}(g) + \epsilon$,选定一个tolerance $\delta$,所以$\delta = 2Me^{-2N\epsilon^2}$,$\epsilon = \sqrt{\frac1{2N} ln\frac{2M}{\delta}}$,最终,</p>
+<p>$E_{out}(g) \leq E_{in}(g) + \sqrt{\frac1{2N} ln\frac{2M}{\delta}}$.</p>
+<p>这个不等式提供了一个泛化边界.</p>
+<p>$|E_{in}-E_{out}| \leq \epsilon$,同时也保证对于所有的$h \in H$来说,$E_{out} \geq E_{in} - \epsilon$.对于最终的假设函数g既想让它在unseen data上表现良好,又想它是在所有假设集中做的最好的(H中不存在其他假设函数.使得$E_{out}(h)$比$E_{out}(g)$要好.).$E_{out}(h) \geq E_{in}(h) + \epsilon$这个边界确保不能做的更好了,因为选择的其他假设h对应$E_{in}$都比g要大,因此对应的$E_{out}$也要比g要大,样本外表现相对变差.</p>
+<p>误差边界$\sqrt{\frac1{2N} ln\frac{2M}{\delta}}$依赖于假设空间H的大小M.如果H是无限集合,那么这个边界就没有意义了(边界趋向于无限大).不幸的是,实际情况下大多数学习模型都是无限集合.</p>
+<p>为了在无限集合H上继续讨论模型的泛化能力,我们需要对上面的式子做一些变形,想用有限的数量去代替M,这样边界就有意义了.</p>
+<p>之前右边界M对应:</p>
+<p><img src="https://api.superbed.cn/pic/5c1203e7c4ff9e2b4d6987ab" alt=""></p>
+<p>确保最终选择的函数g:$|E_{in}(g)-E_{out}(g)| &gt; \epsilon$,因为g是H中的一个假设.将$\beta_m$代表事件”$|E_{in}(h_m)-E_{out}(h_m)| &gt; \epsilon$”,因此,对应不等式变为:</p>
+<p><img src="https://api.superbed.cn/pic/5c1204a3c4ff9e2b4e044af2" alt=""></p>
+<p>但是如果各个事件之间相互重叠,那么右边界就变得比实际上大得多.比如有3个假设,不同事件的面积代表对应的事件发生的概率,$\beta_1,beta_2,beta_3$三个事件的联合边界比3个事件对应面积小得多,尽管面积和的边界是正确的.由此推导,假设空间中如果有假设函数相差不多,就会造成大量的重叠,导致右边界比实际值大得多(放得太多!).我们需要想办法将对应的假设划分开来(归类,分成不同的类别),从而将无限的假设集变成有限的假设集.</p>
+<p><img src="https://api.superbed.cn/pic/5c1205bcc4ff9e2b4e044af3" alt=""></p>
+<h3 id="Effective-Number-of-Hypotheses假设空间的有效数量"><a href="#Effective-Number-of-Hypotheses假设空间的有效数量" class="headerlink" title="Effective Number of Hypotheses假设空间的有效数量"></a>Effective Number of Hypotheses假设空间的有效数量</h3><p>介绍一个概念growth function增长函数–定义假设空间的有效数量.我们用growth function来代替上面不等式中的M,growth function是一个组合量,能度量假设空间H中假设函数之间的差异,也就是图中不同假设之间的重叠面积的大小.</p>
+<p>对于一个2分类的目标函数,每个$h \in H$将输入空间X映射到{-1,1}上.<strong>growth function的定义是基于假设空间H中不同假设函数的数目,而且是基于有限的样本点,而不是整个输入空间X</strong>.
+一个假设函数$h \in H$应用到有限样本集上$x_1,x_2,…,x_N \in X$,可以得到一个二分类的N元组$h(x_1), h(x_2),…,h(x_N)$.N元组将N个样本集分为两类:正类,负类,这个N元组叫做dichotomy(二分)—对数据点一次结果划分.<strong>每个$h \in H$在N个数据点上都会产生一个dichotomy,但是不同的假设函数产生的dichotomy可能完全相同</strong>.</p>
+<p><strong>定义一</strong> $x_1,x_2,…,x_N \in X$,在N个数据点上,假设空间H产生的dichotomies定义为:</p>
+<p>$H(x_1,x_2,…,x_N) = {(h(x_1),h(x_2),…,h(x_N))|h \in H}$.</p>
+<p>H(x_1,x_2,…,x_N)空间是假设空间H中每个假设函数对N个数据点划分产生的dichotomy的集合空间.一个大的H(x_1,x_2,…,x_N)意味着假设空间更加多种多样–在N个数据点上产生的dichotomy更多.growth function基于dichotomies的数目.</p>
+<p><strong>定义二</strong> 假设空间H上的growth function定义为:</p>
+<p>$m_H(N) = max_{x_1,x_2,…,x_N \in X}|H(x_1,x_2,…,x_N)|$</p>
+<p>其中|\cdot|表示集合中元素的数目.$m_H(N)$表示在任意N个数据点假设空间H可以生成的不同dichotomies的最大数目.为了比较$m_H(N)$,我们需要考虑输入空间X中N个数据点的所有可能,然后选择能产生最多dichotomies的数据点集.和M类似,$m_H(N)$是假设空间H中假设函数数目的一种度量,不同之处在于每个假设是在N个输入点上进行衡量,而不是整个输入空间X.对于任意假设空间H,因为$H(x_1,x_2,…,x_N) \subseteq {-1,+1}^N$, $m_H(N)$最大值为:
+$m_H(N) \leq 2^N$.</p>
+<p>如果H能够生成N个数据点上所有的可能的类别分布,也就是说$H(x_1,x_2,…,x_N) = {-1,+1}^N$,称假设空间H能shatter(打碎)N个数据点[能覆盖N个数据所有可能的分类集合].</p>
+<p><img src="https://api.superbed.cn/pic/5c121d2ec4ff9e2b4d6987e4" alt=""></p>
+<p>图中可以看到,$m_H(N)$是N个数据点产生不同dichotomies的最大值,(a)图中3点共线时有种情况使用感知机模型不能划分,但是(b)图中3个点可能产生的dichotomies都可以实现,所以$m_H(3)=8$,(c)图中的dichotomy不同通过感知机生成,所以$m_H(4)=14$,而不是16.同时可以知道随着假设空间H变得复杂,$m_H(N)$也逐渐增大–这符合我们的期望.</p>
+<p>计算每个假设空间上的增长函数$m_H(N)$并不实际,而且也没有必要,因为我们使用增长函数$m_H(N)$来代替不等式中的M,我们可以计算增长函数$m_H(N)$的上界,而不是计算增长函数$m_H(N)$的确定值,使用增长函数的上界用在不等式中也成立.</p>
+<p><strong>定义三</strong> 对于假设空间H,如果k个点组成的输入集不能被假设空间shatter(打碎),那么k定义为假设空间H的break point.</p>
+<p>如果k是break point,那么$m_H(k) &lt; 2^k$. <strong>通常情况下,计算假设空间H的break point比计算假设空间的增长函数要容易得多</strong>.</p>
+<p><img src="https://api.superbed.cn/pic/5c1222adc4ff9e2b4d6987ee" alt="break point">
+如果数据点超过k,假设空间更不可能对其shatter,break point更像是对输入情况的一种界限.</p>
+<p>我们使用break point k来导出对任意N的增长函数$m_H(N)$的一个边界.比如2维感知机不能把4个点shatter,这个知识对于当输入点是5或更多时,对感知机能产生的dichotomies能有一个限制.接下来,讨论$m_H(N)$的边界是什么.</p>
+<h3 id="Bounding-the-Growth-Function增长函数的边界"><a href="#Bounding-the-Growth-Function增长函数的边界" class="headerlink" title="Bounding the Growth Function增长函数的边界"></a>Bounding the Growth Function增长函数的边界</h3><p>关于增长函数而言,如果$m_H(N) = 2^N$在某个点被打破,那么$m_H(N)$对于任意值N可以通过这个break point用一个简单的<strong>多项式</strong>确定边界.如果不存在break point,对于所有N而言,$m_H(N) = 2^N$总是成立的.如果用$m_H(N)$来代替不等式中的Ｍ，那么$\sqrt{\frac1{2N}ln\frac{2M}{\delta}}$泛化误差边界无论训练样本N取多大都不可能趋于零($m_H(N) = 2^N$);但是如果$m_H(N)$可以用一个多项式来代替,那么当训练样本数$N \to \infty$,泛化误差将会趋于零,这意味着在充足样本集下,模型的泛化结果可以非常好.</p>
+<p><strong>定理</strong> 如果存在k,使得$m_H(k) &lt; 2^k$成立,那么,</p>
+<p><img src="https://api.superbed.cn/pic/5c130ee7c4ff9e2b4e044bba" alt=""></p>
+<p>对于所有的N都成立.RHS是一个<strong>N的k-1阶多项式</strong>.<em>如果增长函数存在break point k,那么就可以使用N的多项式来确定增长函数的上界,因此可以来替换增长函数</em>.</p>
+<p>上面定理的含义是指如果假设空间H存在一个break point,我们就可以确保模型的泛化效果,$m_H(N)$存在一个多项式边界.</p>
+<h3 id="The-VC-Dimension-VC维"><a href="#The-VC-Dimension-VC维" class="headerlink" title="The VC Dimension VC维"></a>The VC Dimension VC维</h3><p>上面的定理可以使用break point对整个增长函数growth function确定边界.<strong>break point越小,边界越好</strong>(越小).</p>
+<p><strong>VC维</strong> 假设空间H的VC维$d_{VC}(H)$,简写为$d_{VC}$,是指<strong>能被H打散</strong>的最大的示例集（数据集）的大小<em>N</em>,N满足$m_H(N)=2^N$.如果对于所有的N,等式$m_H(N)=2^N$都成立,那么$d_{VC}= \infty$.</p>
+<p>如果$d_{VC}$是假设空间H的VC维,那么break point $k = d_{VC}+1$.因为根据VC维定义,VC维是假设空间H能打碎的最大样本集,所以k就是H的break point,而且不可能存在更小的break point了,因为H可以打碎$d_{VC}$个样本点,对于更小的样本点更不在话下.</p>
+<p>因为$m_H$的break point k满足$k=d_{VC}+1$,所以定理可以改写为:</p>
+<p><img src="https://api.superbed.cn/pic/5c1313a1c4ff9e2b4d69887c" alt=""></p>
+<p>所以,VC维是增长函数$m_H(N)$的多项式阶数.这个多项式边界可以进行简化.可以用归纳法证明:</p>
+<p>$m_H(N) \leq N^{d_{VC}} + 1$.</p>
+<p>这样,增长函数growth function可以用VC维来进行约束,接下来就是分析使用增长函数$m_H(N)$对M进行替换后,泛化边界的如何变化.使用$m_H(N)$替换M后,</p>
+<p><img src="https://api.superbed.cn/pic/5c131649c4ff9e2b4d69887f" alt=""></p>
+<p>已知增长函数$m_H(N)$可以被一个N的多项式约束,除非假设空间为VC维无穷大$d_{VC}(H) = \infty$.增长函数取对数后,呈对数级增长,然后被$\frac1{N}$减小,因此,如果训练样本N足够大,那么$E_{out}$会接近于$E_{in}$.(证明了无穷大时,可学性的第一个问题).</p>
+<p>只有当VC维趋于无穷大时,假设才会失效.对于任意有限的VC维来说,误差收敛到0的速度取决于VC维的大小,因为VC维是多项式的阶数.VC维越小,收敛到0的速度越快.</p>
+<p>但是仅仅用$m_H(N)$来代替泛化边界中M是不够的,还需要进一步调整.不过VC维在其中还扮演了非常重要的角色.<strong>可以将假设空间中假设分为两类:good models &amp; bad models</strong>.’Good models’指VC维有限,且样本集N足够大的模型,这种模型可以保证$E_{out} \approx E_{in}$,样本集的表现可以泛化到样本集之外;’bad models’指VC维无穷大,对于bad models无论样本集N取多大,我们不能基于VC维对$E_{in}$和$E_{out}$进行泛化比较.</p>
+<p>可以将VC维看做模型的”有用参数量”,模型参数越多,假设空间假设函数越多,这反应了增长函数$m_H(N)$的大小.比如说$w_0,w_1,…,w_d$的感知机模型,VC维是d+1.<strong>对于其他模型而言,有用参数可能不太明显</strong>.<strong>VC维能衡量有用参数或自由度</strong>,这些量可以保证模型数目的多样性.但多样性也不是越多越好,比如$m_H(N) = 2^N$而且$d_{VC} = \infty$的模型,这种情况下不能对模型进行泛化.</p>
+<h3 id="The-VC-Generalization-Bound-VC泛化边界"><a href="#The-VC-Generalization-Bound-VC泛化边界" class="headerlink" title="The VC Generalization Bound VC泛化边界"></a>The VC Generalization Bound VC泛化边界</h3><p>如果将增长函数growth function作为假设空间有效假设的一种度量量,那么使用$m_H(N)$代替不等式中M后,可以得到:</p>
+<p><img src="https://api.superbed.cn/pic/5c131f21c4ff9e2b4e044bc4" alt=""></p>
+<p>但这个不等式证明并不是最终的形式.需要修改泛化边界才能成立.使用下面定理,可以到处正确的边界,叫做VC维泛化边界.对于任意二分类目标函数f,任意假设空间H,任意学习算法A,任意的输入概率分布P都成立:</p>
+<p><strong>定理:VC泛化边界</strong> 对于任意tolerance $\delta &gt; 0$,</p>
+<p>$E_{out}(g) \leq E_{in}(g) + \sqrt{\frac8{N}ln\frac{4m_H(2N)}{\delta}}$</p>
+<p>成立的概率是$1-\delta$.</p>
+<p>如果和上面的不等式进行比较,可以发现下面不等是的边界更大(move the bound in the weaker direction).只要VC维是有限的,误差就会收敛于0(尽管速度变慢),因为和$m_H(N)$一样,$m_H(2N)$也是N的$d_{VC}$阶多项式.这意味着如果有足够的数据,无限假设空间H中有限VC的每个假设函数的$E_{in}$能很好的泛化到$E_{out}$上.其中的关键在于使用定义假设空间有效假设的有限增长函数来替代假设空间的真正数目,从而确定边界.</p>
+<p>VC维泛化边界是机器学习理论中非常重要的一个数据结果.它证明了无限假设空间的可学性问题.
+<strong>The data set D is the source of randomization in the original Hoeffding Inequality</strong>.</p>
+<p><img src="https://api.superbed.cn/pic/5c132308c4ff9e2b4e044bc9" alt=""></p>
+<h2 id="Interpreting-the-Generalization-Bound-泛化边界解释"><a href="#Interpreting-the-Generalization-Bound-泛化边界解释" class="headerlink" title="Interpreting the Generalization Bound 泛化边界解释"></a>Interpreting the Generalization Bound 泛化边界解释</h2><p>上面不等式是一个通用结果,可以应用到所有的假设集,所有的学习算法,输入空间,概率分布以及二分类目标函数上.同时也可以扩展到其他类型的目标函数上.因为不等式结果的通用性,因此对于有的模型来说边界可能过于松loose,原因在于这个相同的边界要覆盖到多种类型模型上.</p>
+<p>VC维可以用作一种评估模型泛化能力的一个指标,但是相对意义上的,并不具有绝对意义.在实际问题中会采用不同的边界.</p>
+<h3 id="Sample-Complexity样本复杂度"><a href="#Sample-Complexity样本复杂度" class="headerlink" title="Sample Complexity样本复杂度"></a>Sample Complexity样本复杂度</h3><p>样本复杂度是指模型达到一定的泛化能力时所需要的训练样本数目N.模型的泛化表现可以用两个参数衡量:$\epsilon$和$\delta$.误差容忍度$\epsilon$表示容忍的泛化误差量,置信度参数$\delta$表示大于容忍泛化误差边界的概率.随着$\epsilon$和$\delta$变小,训练样本数N的变化速度表示了为达到一定泛化能力所需要的训练样本数.</p>
+<p>对于给定的模型,可以用VC边界来建立样本复杂度.对于固定的$\delta$,假定泛化误差边界最多是$\epsilon$.从不等式中可以知道,泛化误差限制在$\sqrt{\frac8{N}ln\frac{4m_H(2N)}{\delta}}$,为了确保不等式$\sqrt{\frac8{N}ln\frac{4m_H(2N)}{\delta}} \leq \epsilon$成立.为了保证泛化误差最大是$\epsilon$,那么训练集样本大小N:</p>
+<p>$N \geq \frac8{\epsilon^2}ln\frac{4m_H(2N)}{\delta}$</p>
+<p>但是这个样本复杂度N的边界不太明显,因为N出现在不等式的两端.如果用基于VC维的多项式代替$m_H(2N)$,可以得到:</p>
+<p>$N \geq \frac8{\epsilon^2}ln\frac{4((2N)^{d_{VC}}+1)}{\delta}$</p>
+<p>但这个不等式同样也是不确定的.我们可以用简单的迭代方法计算N的数值(对N初始化一个值,然后反复计算不等式,直到N收敛).</p>
+<h3 id="Penalty-for-Model-Complexity-模型复杂度惩罚"><a href="#Penalty-for-Model-Complexity-模型复杂度惩罚" class="headerlink" title="Penalty for Model Complexity 模型复杂度惩罚"></a>Penalty for Model Complexity 模型复杂度惩罚</h3><p>样本复杂度是在泛化误差边界$\epsilon$和置信度$\delta$确定的情况下对训练样本N的一个估计.但是在大多数实际情况中,都是给定一个固定大小的训练样本集D,因此N大小是确定的.在这种情况下,对于给定N,模型在unseen data上表现如何是我们所关注的问题.</p>
+<p>$E_{out}(g) \leq E_{in}(g) + \sqrt{\frac8{N}ln\frac{4m_H(2N)}{\delta}}$</p>
+<p>如果用基于VC维的多项式代替$m_H(2N)$,可以得到out-of-sample误差的另一种边界表示:</p>
+<p>$E_{out}(g) \leq E_{in}(g) + \sqrt{\frac8{N}ln\frac{4((2N)^{d_{VC}}+1)}{\delta}}$</p>
+<p>可以将$E_{out}(g)$的边界看做两部分,第一部分是$E_{in}(g)$,第二部分是随着假设空间H的VC维而变化的量$\Omega(N,H,\delta)$,所以:</p>
+<p>$E_{out}(g) \leq E_{in}(g) + \Omega(N,H,\delta)$</p>
+<p>其中,</p>
+<p>$\Omega(N,H,\delta) = \sqrt{\frac8{N}ln\frac{4m_H(2N)}{\delta}} \leq \sqrt{\frac8{N}ln\frac{4((2N)^{d_{VC}}+1)}{\delta}}$</p>
+<p>可以将$\Omega(N,H,\delta)$看做是对模型复杂度的一种惩罚.当使用更加复杂的假设空间H时(VC维增加),右边不等式边界增加,因此样本外数据上的$E_{out}(g)$表现会恶化.如果用相同的训练样本去拟合一个相对简单模型时,$E_{out}(g)$变现会更好(右边界变小).从模型复杂度惩罚的等式来看,如果用更高的置信度(更小的$\delta$),那么模型会变差;如果用更多样本N,模型会变好.</p>
+<p>如果用更复杂的假设空间H(更好的VC维),那么$\Omega(N,H,\delta)$会变大,但用数据去拟合模型时,由于有更多的假设可以选择,$E_{in}(g)$会变小.因此<strong>存在一个权衡(tradeoff):更复杂的模型可以让样本集模型$E_{in}(g)$表现变好,但是$\Omega(N,H,\delta)$会增加(惩罚度变大,因此$E_{out}(g)$变差,泛化效果不好)</strong>.最佳的模型是两个量的组合值($E_{out}(g)$)能最小.</p>
+<p><img src="https://api.superbed.cn/pic/5c1474abc4ff9e2b4e044d32" alt=""></p>
+<h3 id="The-Test-Set-测试集"><a href="#The-Test-Set-测试集" class="headerlink" title="The Test Set 测试集"></a>The Test Set 测试集</h3><p>泛化边界是基于$E_{in}$的对$E_{out}$的一个宽泛估计.这个估计对于训练过程来说是一个指导,但如果目标是得到一个关于$E_{out}$的精准预测,这个边界作用不大.</p>
+<p>一种可选方法是使用test set测试集对$E_{out}$进行估计,测试集中的数据并不应用在训练过程中.最终的假设函数g是在测试集上进行评估,评估结果作为$E_{out}$的一个估计.</p>
+<p>把测试集上的测试结果称作$E_{test}$.当我们用$E_{test}$作为$E_{out}$的一个估计时,事实上假定$E_{test}$泛化效果很好,接近于$E_{out}$.但是,<strong>$E_{test}$和$E_{in}$类似只是一个对样本结果估计</strong>.我们如何确保$E_{test}$泛化效果如何呢?
+$E_{test}$泛化效果相关的假设的有效数目是1.因为考虑到测试集,只存在一个假设,就是训练过程中产生的最终假设函数g.选择的测试集不同并不影响最终的假设函数,但如果选择不同的训练集,最终的假设函数会跟着改变.同时Hoeffding不等式可以应用在$E_{test}$的一个假设上,产生的边界比VC维边界更加紧密.测试集越大,$E_{test}$对$E_{out}$的估计越准确.</p>
+<p>使用测试集有一定的代价.测试集并不影响学习过程的输出,学习过程仅和训练集相关.测试集告诉我们学习过程产生的模型表现如何.因此,如果我们将一部分数据分成测试集,那么用于训练的数据就会减少.因为训练数据是用来在假设空间中选择一个假设,因此训练数据对于选择最终的假设函数至关重要.<strong>There is a tradeoff to setting aside test examples</strong>.训练集和测试集如何划分,比例如何需要仔细权衡.</p>
+<p>在一些文献中,$E_{test}$看做是$E_{out}$的同义词.</p>
+<h3 id="Other-Target-Types-其他目标类型"><a href="#Other-Target-Types-其他目标类型" class="headerlink" title="Other Target Types 其他目标类型"></a>Other Target Types 其他目标类型</h3><p>尽管VC维分析是基于二分类目标函数的,但是也可以扩展到实值函数或其他类型函数上.介绍一种新的方法偏差-方差分析.</p>
+<p>为了符合实值函数,需要调整$E_{in}$和$E_{out}$的定义.在实值函数中,需要测量h(x)和f(x)之间的距离,而不是判断两个值是否相等.</p>
+<p>最常用的误差测量方法是平方误差$e(h(x),f(x)) = (h(x)-f(x))^2$.可以定义样本内和样本外的误差.样本外误差是基于整个输入空间X的,</p>
+<p>$E_{out}(h) = E[( h(x)-f(x))^2]$</p>
+<p>样本内误差是基于整个训练集误差量的平均值:</p>
+<p>$E_in(h)=\frac1{N} \sum_{n=1}^N(h(x_n) -f(x_n))^2$</p>
+<p>使用样本误差均值去评估误差的期望值.</p>
+<h2 id="Approximation-Generalization-tradeoff"><a href="#Approximation-Generalization-tradeoff" class="headerlink" title="Approximation-Generalization tradeoff"></a>Approximation-Generalization tradeoff</h2><p>VC维分析需要选择在训练数据上接近目标函数f和在unseen data上泛化良好这两个变现之间取得平衡的假设.当在假设空间H中选择假设函数时,需要在两个矛盾的目标之间进行权衡:在假设空间中选择可以接近f的假设,同时保证训练数据上学的模型能泛化到整个输入空间上.VC维泛化边界就是一种两者之间权衡方法.如果H太过于简单,选择的假设可能不能接近f,样本内误差很大;如果H太过于复杂,泛化效果变差,因为模型复杂度太大.存在另外一种方法:近似泛化tradeoff.这种方法适合平方误差测量,而不是VC分析中使用的二分误差.这种方法提供了一个新的角度:VC维分析中使用$E_{in}$加上惩罚项$\Omega$来对$E_{out}$进行近似;这里将$E_{out}$分成两部分误差项.</p>
+<h3 id="Bias-and-Variance偏差和方差"><a href="#Bias-and-Variance偏差和方差" class="headerlink" title="Bias and Variance偏差和方差"></a>Bias and Variance偏差和方差</h3><p>样本外误差偏差-方差分解是基于平方误差测量方法的.Out-of-sample误差:</p>
+<p>$E_{out}(g^{(D)}) = E_x[ (g^{(D)}(x) - f(x))^2]$</p>
+<p>其中,$E_{x}$表示关于x的期望值.在最终假设g上添加显性的对数据集D的依赖关系.上面等式中样本外误差的计算依赖于从选择数据集D中训练出来的最终假设g,也就是说是依赖于选择的训练数据集的.我们可以在所有可能的训练集上求期望值,移除对选择的特定数据集D的依赖,从而独立于数据集:</p>
+<p>$E_D[ E_{out}(g^D)] = E_D[ E_x[(g^{(D)}(x) - f(x))^2]] \=E_x[ E_D[(g^{(D)}(x) - f(x))^2]] \=E_x[ E_D[ g^{(D)(x)^2}] -2 E_D[ g^{(D)(x)}]f(x) + f(x)^2]$</p>
+<p>其中,$E_D[ g^{(D)}(x)]$是一个平均函数,也可以表示为$\hat{g}(x)$.可以理解为生成若干个数据集$D_1,D_2,…,D_K$然后在每个数据集上进行训练学习,生成最终的假设$g_1,g_2,…,g_K$.而任意数据x在最终的平均假设上的结果为$\hat{g}(x) \approx \frac1{K} \sum_{k=1}^K g_k(x)$.本质上,可以将g(x)看做是一个随机变量,在随机数据集上的随机产生的;$\hat{g}(x)$是特定值x在随机变量上的期望值,$\hat{g}$是一个函数,取平均值.同时函数$\hat{g}$有一点违反常识:$\hat{g}$不在假设空间中,但是在假设空间中函数的平均值.</p>
+<p>可以使用$\hat{g}$对out-of-sample误差进行改写:
+<img src="https://api.superbed.cn/pic/5c160773c4ff9e2b4e044e20" alt=""></p>
+<p>其中,$\hat{g}(x)$是对于D来说是一个常量;$(\hat{g}(x)-f(x))^2$测量从数据集D中学到的平均函数与目标函数f之间的差距,可以把这个量称为bias偏差:</p>
+<p>$bias(x)=(\hat{g}(x)-f(x))^2$</p>
+<p>表示学习模型偏离目标函数的距离(偏差).因为$\hat{g}(x)$是从不限数目多个数据集中学习的,因此它在估计目标函数时仅仅受限于模型自身.$E_D[ (g^{(D)}(x) - \hat{g}(x))^2]$是随机变量$g^{(D)}(x)$的方差:</p>
+<p>$var(x) = E_D[ (g^{(D)}(x) - \hat{g}(x))^2]$</p>
+<p>评估依赖于数据集的最终假设的变化情况(方差).最后,out-of-sample误差的偏差-方差分解为:</p>
+<p>$E_D[ E_{out}(g^{(D)})] = E_x[ bias(x) + var(x)] \=bias + var$</p>
+<p>因为,$bias = E_x[ bias(x)], var=E_x[ var(x)]$. 这里的推导都基于数据是无噪音的假设.如果是带噪音的数据,在最终的偏差-方差分解中需要加上噪音项.</p>
+<p><img src="https://api.superbed.cn/pic/5c160cafc4ff9e2b4e044e30" alt=""></p>
+<p>可以将方差看做学习模型的不稳定性(也就是方差的意义).</p>
+<p>在偏差方差分析中学习算法有很大的影响(在VC维分析中却无关紧要).</p>
+<ol>
+<li>VC维分析只基于假设空间H,独立于学习算法A;在偏差-方差分析中,学习算法A和假设空间H同样重要.相同的假设空间,不同的学习算法会产生不同的$g^{(D)}$.</li>
+<li>尽管偏差-方差分析是基于平方误差测量方法的,但是学习算法并不一定是基于最小化平方误差.可以使用任何基于D的标准产生最终假设$g^{(D)}$.但一旦产生$g^{(D)}$之后,必须基于平方误差计算偏差和方差.</li>
+</ol>
+<p>不幸的是,<strong>实际情况下偏差和方差并不能计算出来</strong>,因为它们是依赖于目标函数和输入概率分布,而这两项都是未知的.但是偏差-方差分析在开发模型时是一种非常重要的概念性工具.当考虑偏差和方差时,需要考虑两个目标:在不显著增加偏差的基础上尝试降低方差;在不显著增加方差的基础上尝试降低偏差.</p>
+<h3 id="The-Learning-Curve学习曲线"><a href="#The-Learning-Curve学习曲线" class="headerlink" title="The Learning Curve学习曲线"></a>The Learning Curve学习曲线</h3><p>学习曲线概括了当训练集样本数N变化时,样本内误差和样本外误差的变化情况.在大小为N的数据集D上学习之后,可以得到依赖于D的样本误差和样本外误差.就像之前在偏差-方差中介绍的一样,对大小为N的所有可能数据集D求期望之后,$E_D[ E_{in}[ g^{(D)}]]$和$E_D[ E_{out}[ g^{(D)}]]$是关于N的函数.比如一个简单模型和复杂模型的学习曲线如下:
+<img src="https://api.superbed.cn/pic/5c16132fc4ff9e2b4e044e33" alt=""></p>
+<p>可以看出,对于简单模型来说,收敛速度更快,但是最终表现比复杂模型要差.对于两个模型来说,样本外误差都随着N的增大而减小;样本内误差随着N增加而增大. 用VC维分析和偏差-方差分析,结果如何呢?</p>
+<p><img src="https://api.superbed.cn/pic/5c1613c1c4ff9e2b4d698ade" alt=""></p>
+<p>在VC维分析中,$E_{out}$是$E_{in}$和泛化边界模型复杂度惩罚$\Omega$之和.在偏差-方差分析中,$E_{out}$被分解为偏差和方差之和.
+随着样本点增多,泛化误差和方差都减小.学习曲线可表明了关于$E_{in}$的一个重要特性.随着N的增加,为了逼近f,$E_{in}$接近于学习模型的最小误差.当N很小时,$E_{in}$与”应该的最小误差”很远,主要是因为对小数据来说,学习难度更小.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>您的支持就是我更新的最大动力!谢谢!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpeg" alt="fja0kl 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="fja0kl 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/无限空间-理论/" rel="tag"># 无限空间;理论</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/12/Learning-from-data-机器学习理论/" rel="next" title="[Learning-from-data]机器学习理论">
+                <i class="fa fa-chevron-left"></i> [Learning-from-data]机器学习理论
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Theory-of-Generalization"><span class="nav-number">1.</span> <span class="nav-text">Theory of Generalization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Effective-Number-of-Hypotheses假设空间的有效数量"><span class="nav-number">1.1.</span> <span class="nav-text">Effective Number of Hypotheses假设空间的有效数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bounding-the-Growth-Function增长函数的边界"><span class="nav-number">1.2.</span> <span class="nav-text">Bounding the Growth Function增长函数的边界</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-VC-Dimension-VC维"><span class="nav-number">1.3.</span> <span class="nav-text">The VC Dimension VC维</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-VC-Generalization-Bound-VC泛化边界"><span class="nav-number">1.4.</span> <span class="nav-text">The VC Generalization Bound VC泛化边界</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interpreting-the-Generalization-Bound-泛化边界解释"><span class="nav-number">2.</span> <span class="nav-text">Interpreting the Generalization Bound 泛化边界解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample-Complexity样本复杂度"><span class="nav-number">2.1.</span> <span class="nav-text">Sample Complexity样本复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Penalty-for-Model-Complexity-模型复杂度惩罚"><span class="nav-number">2.2.</span> <span class="nav-text">Penalty for Model Complexity 模型复杂度惩罚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Test-Set-测试集"><span class="nav-number">2.3.</span> <span class="nav-text">The Test Set 测试集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Other-Target-Types-其他目标类型"><span class="nav-number">2.4.</span> <span class="nav-text">Other Target Types 其他目标类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Approximation-Generalization-tradeoff"><span class="nav-number">3.</span> <span class="nav-text">Approximation-Generalization tradeoff</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bias-and-Variance偏差和方差"><span class="nav-number">3.1.</span> <span class="nav-text">Bias and Variance偏差和方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Learning-Curve学习曲线"><span class="nav-number">3.2.</span> <span class="nav-text">The Learning Curve学习曲线</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz',
+        appKey: 'Nw8hvihjOt1jGKfvVpix3P5V',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
