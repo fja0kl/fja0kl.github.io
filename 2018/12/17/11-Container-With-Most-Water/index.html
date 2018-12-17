@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="决策树,">
+  <meta name="keywords" content="双指针,">
 
 
 
@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="决策树决策树是一种基本的分类和回归方法.决策树顾名思义,模型可以表示为树型结构,可以认为是if-then的集合,也可以认为是定义在特征空间与类空间上的条件概率分布.  决策树的中间节点可以看做是对一种特征的判断,也是符合上一次判断特征某种取值的数据集,根节点代表所有数据集;叶子节点看做是判断所属的类别. 决策树学习通常包括3个步骤: 特征选择. 决策树生成和决策树剪枝. 目前常用的决策树算法有ID">
-<meta name="keywords" content="决策树">
+<meta name="description" content="题意给定n个非负整数$a_1,a_2,…,a_n$,其中每个数表示坐标点$(i,a_i)$,i是数组下标,$a_i$是对应高度.寻找两条线,使得两条线构成的长方形面积最大,盛水最多.  Example: Input: [1,8,6,2,5,4,8,3,7] Output: 49 解暴力破解对每种情况进行循环,计算对应的面积,同时保存最大的面积. 123456789101112131415class">
+<meta name="keywords" content="双指针">
 <meta property="og:type" content="article">
-<meta property="og:title" content="决策树">
-<meta property="og:url" content="http://fja0kl.github.io/2018/11/25/决策树/index.html">
+<meta property="og:title" content="11. Container With Most Water">
+<meta property="og:url" content="http://fja0kl.github.io/2018/12/17/11-Container-With-Most-Water/index.html">
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
-<meta property="og:description" content="决策树决策树是一种基本的分类和回归方法.决策树顾名思义,模型可以表示为树型结构,可以认为是if-then的集合,也可以认为是定义在特征空间与类空间上的条件概率分布.  决策树的中间节点可以看做是对一种特征的判断,也是符合上一次判断特征某种取值的数据集,根节点代表所有数据集;叶子节点看做是判断所属的类别. 决策树学习通常包括3个步骤: 特征选择. 决策树生成和决策树剪枝. 目前常用的决策树算法有ID">
+<meta property="og:description" content="题意给定n个非负整数$a_1,a_2,…,a_n$,其中每个数表示坐标点$(i,a_i)$,i是数组下标,$a_i$是对应高度.寻找两条线,使得两条线构成的长方形面积最大,盛水最多.  Example: Input: [1,8,6,2,5,4,8,3,7] Output: 49 解暴力破解对每种情况进行循环,计算对应的面积,同时保存最大的面积. 123456789101112131415class">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://api.superbed.cn/pic/5bfa5deac4ff9e05833a099d">
-<meta property="og:updated_time" content="2018-11-25T09:55:01.181Z">
+<meta property="og:image" content="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg">
+<meta property="og:updated_time" content="2018-12-17T14:21:21.851Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="决策树">
-<meta name="twitter:description" content="决策树决策树是一种基本的分类和回归方法.决策树顾名思义,模型可以表示为树型结构,可以认为是if-then的集合,也可以认为是定义在特征空间与类空间上的条件概率分布.  决策树的中间节点可以看做是对一种特征的判断,也是符合上一次判断特征某种取值的数据集,根节点代表所有数据集;叶子节点看做是判断所属的类别. 决策树学习通常包括3个步骤: 特征选择. 决策树生成和决策树剪枝. 目前常用的决策树算法有ID">
-<meta name="twitter:image" content="https://api.superbed.cn/pic/5bfa5deac4ff9e05833a099d">
+<meta name="twitter:title" content="11. Container With Most Water">
+<meta name="twitter:description" content="题意给定n个非负整数$a_1,a_2,…,a_n$,其中每个数表示坐标点$(i,a_i)$,i是数组下标,$a_i$是对应高度.寻找两条线,使得两条线构成的长方形面积最大,盛水最多.  Example: Input: [1,8,6,2,5,4,8,3,7] Output: 49 解暴力破解对每种情况进行循环,计算对应的面积,同时保存最大的面积. 123456789101112131415class">
+<meta name="twitter:image" content="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://fja0kl.github.io/2018/11/25/决策树/">
+  <link rel="canonical" href="http://fja0kl.github.io/2018/12/17/11-Container-With-Most-Water/">
 
 
 
 
 
-  <title>决策树 | fja0kl's Blog</title>
+  <title>11. Container With Most Water | fja0kl's Blog</title>
   
 
 
@@ -255,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/11/25/决策树/">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/12/17/11-Container-With-Most-Water/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fja0kl">
@@ -272,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">决策树</h1>
+          <h1 class="post-title" itemprop="name headline">11. Container With Most Water</h1>
         
 
         <div class="post-meta">
@@ -284,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-25T17:53:31+08:00">
-                2018-11-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-17T22:19:04+08:00">
+                2018-12-17
               </time>
             
 
@@ -300,8 +300,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-11-25T17:55:01+08:00">
-                2018-11-25
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-17T22:21:21+08:00">
+                2018-12-17
               </time>
             
           </span>
@@ -319,8 +319,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/ML/" itemprop="url" rel="index">
-                    <span itemprop="name">ML</span>
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
                   </a>
                 </span>
 
@@ -337,8 +337,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/11/25/决策树/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/25/决策树/" itemprop="commentCount"></span>
+                <a href="/2018/12/17/11-Container-With-Most-Water/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/17/11-Container-With-Most-Water/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -346,7 +346,7 @@
 
           
           
-             <span id="/2018/11/25/决策树/" class="leancloud_visitors" data-flag-title="决策树">
+             <span id="/2018/12/17/11-Container-With-Most-Water/" class="leancloud_visitors" data-flag-title="11. Container With Most Water">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -377,59 +377,26 @@
       
 
       
-        <h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><p>决策树是一种基本的分类和回归方法.决策树顾名思义,模型可以表示为树型结构,可以认为是if-then的集合,也可以认为是定义在特征空间与类空间上的条件概率分布.</p>
-<p><img src="https://api.superbed.cn/pic/5bfa5deac4ff9e05833a099d" alt="决策树示例"></p>
-<p>决策树的中间节点可以看做是对一种特征的判断,也是符合上一次判断特征某种取值的数据集,根节点代表所有数据集;叶子节点看做是判断所属的类别.</p>
-<p><strong>决策树学习通常包括3个步骤: 特征选择. 决策树生成和决策树剪枝.</strong></p>
-<p>目前常用的决策树算法有ID3, C4.5 和CART.</p>
-<h1 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h1><p>在数据集中的所有特征列表中,选择<strong>分类效果最好</strong>的特征,或者说让分类效果尽可能的”纯”,通俗的说就是让划分的每个结果的尽可能属于同一个类别,都是自己人. 那么, 分类效果最好,或者说纯度,怎么定义? 用什么衡量特征的分类效果呢? 不同的决策树算法采用不同的衡量指标.比如说,ID3采用信息增益,C4.5采用信息增益比率,CART分类回归树当用于分类时,采用Gini指数,用于回归问题时采用<em>均方差差</em>[计算划分之前的均方差,划分之后的均方差,再做差运算]. 无论是哪种指标,<strong>本质上,都是比较用特征划分前后两种状态之间的差异变化,变化越明显越好</strong>,而各种<strong>指标是对这种差异变化的量化</strong>. 但是不同的指标会有不同的倾向性,这种倾向性从指标计算公式上可以发现,而倾向性又会引出不同的问题,进而产生不同的优化方法.</p>
-<p>另一方面,最佳的特征的选择,总是需要对所有特征进行一次遍历,分别计算每种特征的划分效果,比较求最优特征的最佳特征划分值.</p>
-<h2 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h2><p>计算信息增益之前,需要先引出信息熵的概念.熵是信息论中的一个非常重要的概念,信息熵的计算,对于一个数据集D,其中N中类别的第k类样本所占比例为pk,则数据集D的信息熵:</p>
-<p>$Ent(D)= -\sum_{k=1}^{N}p_k log_2 p_k$</p>
-<p>从信息熵的计算公式可以知道,Ent(D)的取值范围在[0, $log_2n$], 最小,或者说节点最纯时[都是同一个类别],为0;最大,最混乱时[每种类别比例都相等],为$log_2n$.</p>
-<p>知道了信息熵的计算公式,那么划分前,计算数据集的信息熵, 依据特征f的n种取值划分后的n个节点,分别计算信息熵,然后依据各个节点数据集的比率,加权平均,计算划分后的总的信息熵,前后两次做差,得到这次划分的信息增益,用来衡量特征f的划分效果如何.</p>
-<p>信息增益:
-信息增益表示得知特征f的信息而使得类Y的信息的不确定性较少的程度.</p>
-<p>$Gain(D,f) = Ent(D) - \sum_{i=1}^{n} \frac{|D_i|}{|D|}Ent(D_i)$</p>
-<p>信息增益越大,特征划分效果越好. 信息增益指标,趋向于选择取值数目多的特征.[个人观点:特征取值越多,划分到每个子节点的数据越少,一定程度上,纯度越高,混乱程度越低,熵取值越小,进而,信息增益越大.比如说,ID特征,因为ID是唯一的,所有划分到每个ID取值节点上也就一个数据点,纯度100%,熵为0.]</p>
-<h2 id="信息增益比率"><a href="#信息增益比率" class="headerlink" title="信息增益比率"></a>信息增益比率</h2><p>$GainRatio(D,f)=\frac{Gain(D,f)}{IV(f)}$</p>
-<p>其中,
-$IV(f) = -\sum_{v=1}^{V}\frac{|D_v|}{|D|}log_2\frac{|D_v|}{|D|}$</p>
-<p>$D_v$表示特征f取值为v的数据子集.</p>
-<p>因为信息增益会倾向于选择特征取值多的特征,所以,我们对多取值特征进行惩罚,除以特征f的固有值[或者说特征f的信息熵,f的信息熵越大,相应f的取值情况越多,惩罚力度越大].</p>
-<h2 id="Gini指数"><a href="#Gini指数" class="headerlink" title="Gini指数"></a>Gini指数</h2><p>假设数据集D有K个类,样本点属于第k类的概率为pk,则概率分布的基尼指数定义为:</p>
-<p>$Gini(D)=\sum_{k=1}^Kp_k(1-p_k) =1 - \sum_{k=1}^Kp_k^2$</p>
-<p>知道了gini指数的计算公式,计算划分前的gini指数,划分后,计算各个节点的gini指数值,然后根据划分后子节点的数据比例进行加权求和,得到划分后的总gini指数,最后对两次结果做差,得到特征f的划分效果, 差值越大,分类效果越好.</p>
-<h2 id="均方差MSE-和-不平均"><a href="#均方差MSE-和-不平均" class="headerlink" title="均方差MSE[和,不平均]"></a>均方差MSE[和,不平均]</h2><p>和分类时相似,计算划分前节点的均方差,划分后计算子节点的均方差,依据数据比例加权平均,再计算两次结果差值,差值越大越好.</p>
-<p>MAE也可以用作特征选择指标,和MSE类似.</p>
-<h1 id="决策树生成"><a href="#决策树生成" class="headerlink" title="决策树生成"></a>决策树生成</h1><p>决策树本质上也是一棵树,所以符合数据结构中树的一般性构造过程,也就是<strong>递归</strong>.</p>
-<p>既然是递归构建过程,首先要明白的是递归终止条件,否则就会陷入死循环.那么决策树的终止条件是什么呢?决策树中符合终止条件时,停止继续划分,生成叶节点.</p>
-<p>如果是分类树:</p>
-<ol>
-<li>如果节点数据全是同一类别,停止递归[没有必要了,都是自己人];</li>
-<li>如果特征列表为空,停止递归[在分类问题中,一般情况下,每种划分特征只会用一次,用完就扔了—负心汉];</li>
-<li>如果所有样本在所有特征上取值都相同,停止递归[特征没用,不具有区分度—所有特征上取值都相同,千篇一律]</li>
-</ol>
-<p>如果是回归树,回归树通常会设定自定义的参数,比如均方差变化最小值,每个节点容忍的最小样本数,相应的条件:</p>
-<ol>
-<li>均方差变化太小[小于预定义的阈值];</li>
-<li>划分后节点的样本量太少[小于预定义的阈值,比如只有2,3个,小猫两三只没有必要继续划分了];</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[终止条件]检测数据集中的每个子项是否属于同一分类,or 特征集为空：</span><br><span class="line"></span><br><span class="line">    If so:  return  类标签</span><br><span class="line"></span><br><span class="line">    Else:</span><br><span class="line">        寻找划分数据集的最好特征（--基于信息增益）</span><br><span class="line">        划分数据集</span><br><span class="line">        创建分支结点</span><br><span class="line">            for    每个划分的子集</span><br><span class="line">                调用自己，并增加返回结果到分支结点中</span><br><span class="line"></span><br><span class="line">        return    分支结点</span><br></pre></td></tr></table></figure>
-<p>上面伪代码中存在一个问题, 类标签怎么确定?
-如果叶子节点都属于同一类别,那么给定所属类别即可;如果叶子节点数据属于不同的类别,大家进行投票决定,服从多数人的利益[少数服从多数].</p>
-<h1 id="树剪枝"><a href="#树剪枝" class="headerlink" title="树剪枝"></a>树剪枝</h1><p>因为在决策树的构建过程中,可能会存在过拟合现象,或者说决策树深度太深,太过于复杂;因此,我们可以对决策树进行剪枝处理.剪枝又分为预剪枝和后剪枝.</p>
-<p>预剪枝是指在决策树生成过程中,对每个节点在划分前先进行估计,如果当前的划分不能带来决策树泛化性能的提升[泛化性能可以用错误率,或者说均方差衡量],则停止划分将当前节点标记为叶节点.</p>
-<p>后剪枝过程是一个不断尝试的过程:找到叶子节点,尝试合并[将叶子节点的双亲变成叶子节点],比较合并前后的变化效果.变化效果需要定量分析,这个数据量指标分类问题可以使用错误率,回归树可以使用均方差, 而指标的计算需要数据,因此我们需要一定的测试数据,然后使用测试数据在已经生成的决策树上进行不断测试,假如合并后比合并前效果好,分类问题上就是错误率降低了,回归问题上均方差减少了,我们就进行合并处理[或者说是剪枝处理].</p>
-<h1 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h1><p>决策树使用范围,或者说对数据集的要求: 标称数据或数值型数据.<strong>本质上,决策树只适用于标称型数据[也就是离散数据]</strong>,但如果是连续数据[在特征取值上连续],我们需要进行<strong>离散处理</strong>.不同类型的决策树处理问题不同,有的决策树需要对数据进行预先离散化处理;但有的决策树本身可以处理连续数据.</p>
-<p>决策树在生成过程中会遇到各种各样的问题.有数据集的问题,也有决策树本身的问题,而决策树本身也有自己的适用范围,不可能适用于所有问题[一招鲜吃遍天impossible].比如说:</p>
+        <h1 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h1><p>给定n个非负整数$a_1,a_2,…,a_n$,其中每个数表示坐标点$(i,a_i)$,i是数组下标,$a_i$是对应高度.寻找两条线,使得两条线构成的长方形面积最大,盛水最多.</p>
+<p><img src="https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg" alt=""></p>
+<p>Example:</p>
+<p>Input: [1,8,6,2,5,4,8,3,7]
+Output: 49</p>
+<h1 id="解"><a href="#解" class="headerlink" title="解"></a>解</h1><h2 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h2><p>对每种情况进行循环,计算对应的面积,同时保存最大的面积.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (height.size()&lt;<span class="number">2</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;height.size();i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;height.size();j++)&#123;</span><br><span class="line">                <span class="keyword">int</span> minH = min(height[i], height[j]);</span><br><span class="line">                res = max(res, minH*(j-i));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度O(N*N).时间复杂度太高.而复杂度太高主要是进行了一些实际上并不需要的计算,尽管利用对称性,减少了一半的计算量.</p>
+<h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><p>思路:面积等于底<em>高,底是由两条线下标差决定,高是由两条线最短的线决定(木桶理论).假如有两个指针left和right分别指向头和尾,此时的面积是$min(a[left],a[right])</em>(N-1)$,而且这时候的底是最长的.如果这时候的面积值并不是最大值,也就是说存在:</p>
+<p>$Base <em> Height &gt; min(a_1,a_N) </em> (N-1)$.</p>
+<p>这种情况下由于Base一定小于(N-1),也就是说Height要比之前的大,那么,应该一定$a_1,a_N$两条线中较短的那条线,保证面积的高度可以发生改变(增大),也就是说:</p>
 <ul>
-<li>连续数据: 离散化处理;</li>
-<li>空缺数据: 如果在某个特征上数据存在空缺值,怎么处理? 我们可以先将取特征上非空的数据子集,当做非空数据处理,然后将特征取值为空记录按照子节点数据的比率划分到所有子节点上.</li>
-<li>etc.</li>
+<li>如果$a_1 &lt; a_N$,问题变成在$a_2,a_N$之间查找最大面积,也就是left++;</li>
+<li>如果$a_1 &gt; a_N$,问题变成在$a_1,a_{N-1}$之间查找最大面积,也就是right–;</li>
 </ul>
-<p>具体问题具体分析,依据不同的任务,数据集的不同特点选择<strong>适合的算法模型</strong>.</p>
-<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p><a href="https://github.com/fja0kl/Machine-Learning-in-Action" target="_blank" rel="noopener">repository</a> 欢迎fork,star.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left=<span class="number">0</span>, right = height.size()<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> area = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(left &lt; right)&#123;</span><br><span class="line">            area = max(area, min(height[left], height[right])*(right-left));</span><br><span class="line">            <span class="keyword">if</span>(height[left] &lt; height[right]) left++;</span><br><span class="line">            <span class="keyword">else</span> right--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> area;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度O(N).</p>
+<blockquote>
+<p>优化:关注自己解法存在的问题,优化方向是什么.比如说暴力破解方法,N*N,主要是因为做了一些不必要的计算,所以下一步的优化方向就是如何减少这些计算,这就需要重新审题,发现题目中的隐藏信息以及问题存在的性质.</p>
+</blockquote>
 
       
     </div>
@@ -476,7 +443,7 @@ $IV(f) = -\sum_{v=1}^{V}\frac{|D_v|}{|D|}log_2\frac{|D_v|}{|D|}$</p>
       
         <div class="post-tags">
           
-            <a href="/tags/决策树/" rel="tag"># 决策树</a>
+            <a href="/tags/双指针/" rel="tag"># 双指针</a>
           
         </div>
       
@@ -489,8 +456,8 @@ $IV(f) = -\sum_{v=1}^{V}\frac{|D_v|}{|D|}log_2\frac{|D_v|}{|D|}$</p>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/15/一个矩阵迹求导公式的证明/" rel="next" title="一个矩阵迹求导公式的证明">
-                <i class="fa fa-chevron-left"></i> 一个矩阵迹求导公式的证明
+              <a href="/2018/12/16/Learning-from-data-无限假设空间的可学性以及模型泛化/" rel="next" title="[Learning-from-data]无限假设空间的可学性以及模型泛化">
+                <i class="fa fa-chevron-left"></i> [Learning-from-data]无限假设空间的可学性以及模型泛化
               </a>
             
           </div>
@@ -498,10 +465,6 @@ $IV(f) = -\sum_{v=1}^{V}\frac{|D_v|}{|D|}log_2\frac{|D_v|}{|D|}$</p>
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/26/kMeans聚类/" rel="prev" title="kMeans聚类">
-                kMeans聚类 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -640,7 +603,7 @@ $IV(f) = -\sum_{v=1}^{V}\frac{|D_v|}{|D|}log_2\frac{|D_v|}{|D|}$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#决策树"><span class="nav-number">1.</span> <span class="nav-text">决策树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特征选择"><span class="nav-number">2.</span> <span class="nav-text">特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息增益"><span class="nav-number">2.1.</span> <span class="nav-text">信息增益</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信息增益比率"><span class="nav-number">2.2.</span> <span class="nav-text">信息增益比率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gini指数"><span class="nav-number">2.3.</span> <span class="nav-text">Gini指数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#均方差MSE-和-不平均"><span class="nav-number">2.4.</span> <span class="nav-text">均方差MSE[和,不平均]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#决策树生成"><span class="nav-number">3.</span> <span class="nav-text">决策树生成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#树剪枝"><span class="nav-number">4.</span> <span class="nav-text">树剪枝</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他问题"><span class="nav-number">5.</span> <span class="nav-text">其他问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">6.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题意"><span class="nav-number">1.</span> <span class="nav-text">题意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解"><span class="nav-number">2.</span> <span class="nav-text">解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#暴力破解"><span class="nav-number">2.1.</span> <span class="nav-text">暴力破解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针"><span class="nav-number">2.2.</span> <span class="nav-text">双指针</span></a></li></ol></li></ol></div>
             
 
           </div>
