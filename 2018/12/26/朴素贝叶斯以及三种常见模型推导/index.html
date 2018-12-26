@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="朴素贝叶斯,Gaussian,Bernoulli,Multinomial,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="朴素贝叶斯 在机器学习中，朴素贝叶斯分类器是一系列以假设特征之间强（朴素）独立下运用贝叶斯定理为基础的简单概率分类器。  朴素贝叶斯算法Naive Bayes定义中有两个关键定义:特征之间强假设独立和贝叶斯定理.这两个定义就是朴素贝叶斯的关键.接下来先了解一下这两个定义. 贝叶斯定理贝叶斯定义是概率论中的一个定理,它跟随机变量的条件概率以及边缘概率分布有关. 通常，事件A在事件B（发生）的条件下的">
+<meta name="keywords" content="朴素贝叶斯,Gaussian,Bernoulli,Multinomial">
+<meta property="og:type" content="article">
+<meta property="og:title" content="朴素贝叶斯以及三种常见模型推导">
+<meta property="og:url" content="http://fja0kl.github.io/2018/12/26/朴素贝叶斯以及三种常见模型推导/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="朴素贝叶斯 在机器学习中，朴素贝叶斯分类器是一系列以假设特征之间强（朴素）独立下运用贝叶斯定理为基础的简单概率分类器。  朴素贝叶斯算法Naive Bayes定义中有两个关键定义:特征之间强假设独立和贝叶斯定理.这两个定义就是朴素贝叶斯的关键.接下来先了解一下这两个定义. 贝叶斯定理贝叶斯定义是概率论中的一个定理,它跟随机变量的条件概率以及边缘概率分布有关. 通常，事件A在事件B（发生）的条件下的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2018/12/25/5c223b8cef67b.jpg">
+<meta property="og:updated_time" content="2018-12-26T01:32:36.365Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="朴素贝叶斯以及三种常见模型推导">
+<meta name="twitter:description" content="朴素贝叶斯 在机器学习中，朴素贝叶斯分类器是一系列以假设特征之间强（朴素）独立下运用贝叶斯定理为基础的简单概率分类器。  朴素贝叶斯算法Naive Bayes定义中有两个关键定义:特征之间强假设独立和贝叶斯定理.这两个定义就是朴素贝叶斯的关键.接下来先了解一下这两个定义. 贝叶斯定理贝叶斯定义是概率论中的一个定理,它跟随机变量的条件概率以及边缘概率分布有关. 通常，事件A在事件B（发生）的条件下的">
+<meta name="twitter:image" content="https://i.loli.net/2018/12/25/5c223b8cef67b.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2018/12/26/朴素贝叶斯以及三种常见模型推导/">
+
+
+
+
+
+  <title>朴素贝叶斯以及三种常见模型推导 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/12/26/朴素贝叶斯以及三种常见模型推导/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">朴素贝叶斯以及三种常见模型推导</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-26T09:31:12+08:00">
+                2018-12-26
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-26T09:32:36+08:00">
+                2018-12-26
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/26/朴素贝叶斯以及三种常见模型推导/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/26/朴素贝叶斯以及三种常见模型推导/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/12/26/朴素贝叶斯以及三种常见模型推导/" class="leancloud_visitors" data-flag-title="朴素贝叶斯以及三种常见模型推导">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h1><blockquote>
+<p>在机器学习中，朴素贝叶斯分类器是一系列以假设特征之间强（朴素）独立下运用贝叶斯定理为基础的简单概率分类器。</p>
+</blockquote>
+<p>朴素贝叶斯算法Naive Bayes定义中有两个关键定义:特征之间强假设独立和贝叶斯定理.这两个定义就是朴素贝叶斯的关键.接下来先了解一下这两个定义.</p>
+<h2 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h2><p>贝叶斯定义是概率论中的一个定理,它跟随机变量的条件概率以及边缘概率分布有关.</p>
+<p>通常，事件A在事件B（发生）的条件下的概率，与事件B在事件A（发生）的条件下的概率是不一样的，然而,这两者之间是有确定的关系的，贝叶斯定理就是这种关系的陈述。贝叶斯公式的一个用途在于通过已知的三个概率函数推出第四个.</p>
+<p>直接给出公式:</p>
+<p>$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$</p>
+<p>其中,P(A|B)是指事件B发生的情况下事件A发生的概率(条件概率).在贝叶斯定理中,每个名词都有约定俗成的名称:</p>
+<ul>
+<li>P(A|B)是已知B发生后A的条件概率,也由于得知B的取值而被称作<strong>A的后验概率</strong>;</li>
+<li>P(A)是A的先验概率(或边缘概率).之所以称为”先验”是因为它不考虑任何B方面的因素;</li>
+<li>P(B|A)是已知A发生后B的条件概率,也由于得知A的取值而成称作<strong>B的后验概率</strong>;</li>
+<li>P(B)是B的先验概率(或边缘概率).</li>
+</ul>
+<p>按这些术语,贝叶斯定理可以表述为:</p>
+<p>后验概率 = (似然性 * 先验概率)/标准化常量</p>
+<p>也就是说,后验概率与先验概率和相似度的乘积成正比.</p>
+<p>同时,分母P(B),可以根据全概率公式分解为:</p>
+<p>$P(B)=∑n_{i=1}P(Ai)P(B|Ai)$</p>
+<h2 id="条件独立性假设"><a href="#条件独立性假设" class="headerlink" title="条件独立性假设"></a>条件独立性假设</h2><p>如果P(X,Y|Z)=P(X|Z)P(Y|Z)，或等价地P(X|Y,Z）=P(X|Z），则称事件X,Y对于给定事件Z是条件独立的，也就是说，当Z发生时，X发生与否与Y发生与否是无关的。</p>
+<p>应用在自然语言处理中,就是说在文章类别确定的条件下,文章的各个特征(单词)在类别确定的条件下是独立的,并不相关,用通俗的话说,在文章类别确定的条件下,文章各个词之间出现与否没有相关性(事实上,并不成立).这是一个非常强的假设,但对问题的求解来说变得更加简单.</p>
+<h2 id="朴素贝叶斯的概率模型"><a href="#朴素贝叶斯的概率模型" class="headerlink" title="朴素贝叶斯的概率模型"></a>朴素贝叶斯的概率模型</h2><p>设输入空间$X \subseteq R^n$为n为向量的集合,输出空间为类标记集合$Y = {c_1,c_2,…,c_k}$.输入为特征向量$x \in X$,输出为类标记$y \in Y$. X是定义在输入空间X上的随机变量,Y是定义在输出空间Y上的随机变量.P(X,Y)是X和Y的联合概率分布.训练数据集:</p>
+<p>$T = {(x_1,y_1), (x_2,y_2),…,(x_N,y_N)}$</p>
+<p>由P(X,Y)独立同分布产生.因此朴素贝叶斯模型也是一个生成模型.</p>
+<p>朴素贝叶斯算法通过训练集学习联合概率分布P(X,Y),具体地,学习先验概率分布以及条件概率分布.其中先验概率分布</p>
+<p>$P(Y=c_k), k=1,2,…,K$</p>
+<p>条件概率分布</p>
+<p>$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},…,X^{(n)}=x^{(n)}|Y=c_k)$, k=1,2,…,K</p>
+<p>通过两个概率得到联合概率分布P(X,Y) = P(X|Y)P(Y).</p>
+<p>条件概率分布P(X=x|Y=c_k)有指数级数量的参数,其估计实际上不可行的.假设$x^{(j)}$有$S_j$个取值,j=1,2,…,n,Y有K个取值,那么参数个数为$K\prod_{j=1}^n S_j$.</p>
+<p>指数级的参数估计事实上并不可行,因此朴素贝叶斯算法针对各个特征之间做了假设,也就是对条件概率分布作了条件独立性假设,这是一个很强的假设,通过这个假设,我们的参数求解变得可行,这也就是朴素贝叶斯的”朴素”的由来.这种情况下,我们同样假设$x^{(j)}$有$S_j$个取值,j=1,2,…,n,Y有K个取值,那么参数个数为$K\sum_{i=1}^nS_j$,需要估计的参数量大大减少.条件独立性假设是</p>
+<p>$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},…,X^{(n)}=x^{(n)}|Y=c_k) \newline = \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)$</p>
+<p>朴素贝叶斯算法分类时,对给定输入x,通过学习到的模型计算后验概率分布$P(Y=c_k|X=x)$,将后验概率最大的类作为输入x的类输出.后验概率根据贝叶斯定理计算:</p>
+<p>$P(Y=c_k|X=x)=\frac{P(Y=c_k)P(X=x|Y=c_k)}{\sum_k P(X=x|Y=c_k)P(Y=c_k)} \newline = \frac{P(Y=c_k) \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}{\sum_k P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}$</p>
+<p>上面的公式是后验概率分布中的一项,由于对于相同输入x下不同类别的后验概率的分母都相同,而最终的类输出是后验概率分布中概率最大对应的类别,所以我们可以简化为只比较分子的大小就可以确定最终的结果,也就是说,最终类输出为:</p>
+<p>$y=arg max_{c_k}P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)$.</p>
+<p>如果我们对右边的乘积概率取log,连乘积就可以转换成为和,计算更简单(加法总比乘法简单),上诉公式存在一种变种:</p>
+<p>$y=arg max_{c_k} logP(Y=c_k) + \sum_{j=1}^n logP(X^{(j)}=x^{(j)}|Y=c_k)$.</p>
+<p>同时这种形式,也可以看做是一种线性回归,权重系数为1.</p>
+<p>介绍完,朴素贝叶斯的概率模型之后,我们目前的主要问题就集中在如何估计这个模型的$K\sum_{i=1}^nS_j$个参数:$P(Y=c_k),P(X^{(j)}=x^{(j)}|Y=c_k)$,估算出参数,我们就可以对输入向量x做预测.针对这些参数的求解方法不同,存在不同的朴素贝叶斯类型,具体介绍三种:伯努利朴素贝叶斯,多项式朴素贝叶斯和高斯朴素贝叶斯.不同类型的朴素贝叶斯对参数的求法不同,而根源在于对P条件概率(X=x|Y=c_k)的假设分布不同,也就是说在给定类别的情况下,对X假设的分布不同:伯努利假设是伯努利分布(其实应该是多变量伯努利分布),多项式假设是多项式分布,而高斯也就是假设是高斯分布(其实是多变量高斯分布).然后,我们细化到三种不同类型的朴素贝叶斯理论中.</p>
+<h1 id="Bernoulli-Naive-Bayes-伯努利朴素贝叶斯"><a href="#Bernoulli-Naive-Bayes-伯努利朴素贝叶斯" class="headerlink" title="Bernoulli Naive Bayes 伯努利朴素贝叶斯"></a>Bernoulli Naive Bayes 伯努利朴素贝叶斯</h1><p>伯努利朴素贝叶斯,其实应该叫”Multi-variate Naive Bayes”,假设P(X=x|Y=c_k)是多变量伯努利分布.在了解多变量伯努利分布之前,先介绍一下什么是(单变量的)伯努利分布.</p>
+<h2 id="伯努利分布"><a href="#伯努利分布" class="headerlink" title="伯努利分布"></a>伯努利分布</h2><p>伯努利分布,又叫做两点分布或0-1分布,是一个离散型概率分布.称随机变量X有伯努利分布,参数为p(0&lt; p &lt;1),它分别以概率p和1-p取1和0为值.</p>
+<p>最简单的例子就是抛硬币,硬币结果为正或反.</p>
+<p>$ P(X = x) = p^x <em> (1-p)^{(1-x)} = p</em>x + (1-p)*(1-x)$,</p>
+<p>幂次运算变成乘法运算,更简单.当x=1时,概率是P(X=1)=p,当x=0时,概率P(X=0)=1-p,这样就可以将两种情况合在一起.</p>
+<p>了解了什么是伯努利分布之后,我们再看什么是多元伯努利分布(多变量 multi-variate Bernoulli).</p>
+<h2 id="多元伯努利分布"><a href="#多元伯努利分布" class="headerlink" title="多元伯努利分布"></a>多元伯努利分布</h2><p>多元伯努利分布,通俗的讲就是同时进行多个不同的伯努利实验,$P(X=x)=\theta$,其中x是一个向量,$\theta$也是一个向量,表示不同伯努利实验的参数.</p>
+<p>伯努利多项式将文档的生成模型P(X=x|Y=c_k)假设服从为多元伯努利分布,由于我们之前做的特征独立性假设,$x=(x^{(1)},x^{(2)}=x^{(2)},…,^{(n)})$是一个向量形式,而其中$x^{(j)} \in {0, 1}$,也就是说x向量是onehot形式的向量(每个维度值是0或1),表示这个维度的特征是否出现.特征集$F = {f_1,f_2,…,f_n }$有n个特征,特征集的维度决定了输入空间X的维度,而且特征集的维度可以对应到输入空间的各个维度上.</p>
+<p>$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},…,X^{(n)}=x^{(n)}|Y=c_k) \newline = \prod_{i=1}^{n} p(t_i|Y=c_k)<em>x^i+(1-p(t_i|Y=c_k))</em>(1-x^i)$</p>
+<p>因为特征之间的独立性,所以多元伯努利变成各个伯努利分布的连乘积,需要注意的一点是<strong>因为是伯努利分布,0-1,特征出现有一个概率p,特征不出现也有一个概率1-p</strong>.最终模型的参数估计完成之后,对新样本进行预测时,如果某个特征不出现,需要<strong>乘上这个特征不出现的概率</strong>,不能只计算特征出现的概率!!!两个向量直接相乘,并不能得到最终的结果.</p>
+<p>对应的伯努利朴素贝叶斯模型为:</p>
+<p>$P(Y=c_k|X=x)=\frac{P(Y=c_k)P(X=x|Y=c_k)}{\sum_k P(X=x|Y=c_k)P(Y=c_k)} \newline = \frac{P(Y=c_k) \prod_{j=1}^n p(t_j|Y=c_k)<em>x^j+(1-p(t_j|Y=c_k))</em>(1-x^j)}{\sum_k P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}$</p>
+<p>为了简化运算,我们可以将分母忽略,虽然对应的结果不是真正的概率,但是相同样本的各个后验概率之间的大小关系保持不变,同时如果两边同时做log运算,后验概率之间的大小关系同样保持不变.因此,</p>
+<p>$y=arg max_{c_k} P(Y=c_k) * \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k) \newline=arg max_{c_k} logP(Y=c_k) + \sum_{j=1}^n logP(X^{(j)}=x^{(j)}|Y=c_k)$.</p>
+<p>了解了多元伯努利分布之后,接下来的工作就是对参数进行估计,计算$P(x^i|Y=c_k)$,$P(Y=c_k)$.</p>
+<h3 id="参数估计"><a href="#参数估计" class="headerlink" title="参数估计"></a>参数估计</h3><p>参数估计的过程也是朴素贝叶斯分类器学习的过程.而参数估计可以使用极大似然估计.先验概率$P(Y=c_k)$的极大似然估计是</p>
+<p>$P(Y=c_k)=\frac{\sum_{i=1}^N I(y_i = c_k)}{N}$, k=1,2,…,K</p>
+<p>其中,I(x)是一个指示函数,如果x为真,I(x)结果为1,如果x为假,I(x)=0.用语言描述来说,$P(Y=c_k)$这个概率等于在N个样本的数据集中,类别为$c_k$的样本所占的比例.</p>
+<p>条件概率$P(X^{(i)}=x^{(i)}|Y=c_k)$的极大似然估计是:</p>
+<p>$P(X^i=x^i|Y=c_k) = \frac{\sum_{i=1}^N I(X^i=x^i, y_i=c_k)}{\sum_{i=1}^N I(y_i=c_k)}$</p>
+<p>用语言描述来说,条件概率$P(X^i=x^i|Y=c_k)$等于在类别为$c_k$的样本集合(数据集的子集)中,第i个特征等于$x_i$的概率,$x^i$是0或1,而且$P(X^i=x^i|Y=c_k)$服从伯努利分布,所以只需要计算一个,比如P$(X^i=1|Y=c_k)$,$P(X^i=0|Y=c_k) = 1 - P(X^i=1|Y=c_k)$,因为两个概率和为1(这是<strong>同一个变量</strong>).</p>
+<p>这些参数估计完之后,朴素贝叶斯就完成了学习过程,接下来就可以使用它去进行预测了(应用才是最终的目的).</p>
+<h3 id="0概率处理"><a href="#0概率处理" class="headerlink" title="0概率处理"></a>0概率处理</h3><p>由于$P(X^i=x^i|Y=c_k)$是伯努利分布,参数p在[0,1]之间,有可能存在$P(X^i=x^i|Y=c_k) = 0$,也就是存在0概率.</p>
+<p>举例来说,在当前类别下的所有样本中特征i都出现了(=1),根据上面的条件概率极大似然估计,可以知道$P(X^i=1|Y=c_k) = 1$,那么对应的,$P(X^i=0|Y=c_k) = 0$,那么当新样本来的时候,加入存在一条记录x,它很巧地没有第i个特征(这不巧了吗?不是),由于0概率的存在,那么使用上面的贝叶斯公式,就会出现属于某个列别的概率为0,$P(Y=c_k|X=x)=0$.但这种情况是应该避免的,那么如何避免呢?</p>
+<p>我们在对条件概率进行极大似然估计时,针对分子和分母做一些小变动,</p>
+<p>$P(X^i=x^i|Y=c_k) = \frac{\alpha + \sum_{i=1}^N I(X^i=x^i, y_i=c_k)}{S_i<em>\alpha + \sum_{i=1}^N I(y_i=c_k)} \newline=\frac{\alpha + \sum_{i=1}^N I(X^i=x^i, y_i=c_k)}{2</em>\alpha + \sum_{i=1}^N I(y_i=c_k)}$</p>
+<p>其中,$S_i$表示第i个特征不同取值的个数,由于这里是one-hot,取值为2,所以$S_i = 2$,$\alpha$乘以$S_i$是保证$S_i$个不同取值对应的条件概率之和为1,不偏袒任意一种情况,一视同仁.</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>To Be Continued.</p>
+<blockquote>
+<p>数学推导—矩阵形式,批量计算,高效快捷.</p>
+</blockquote>
+<h1 id="Multinomial-Naive-Bayes-多项式朴素贝叶斯"><a href="#Multinomial-Naive-Bayes-多项式朴素贝叶斯" class="headerlink" title="Multinomial Naive Bayes 多项式朴素贝叶斯"></a>Multinomial Naive Bayes 多项式朴素贝叶斯</h1><p>多项式朴素贝叶斯,假设P(X=x|Y=c_k)是多项式分布.在了解多项式朴素贝叶斯之前,先介绍一下什么是多项式分布?</p>
+<h2 id="多项式分布"><a href="#多项式分布" class="headerlink" title="多项式分布"></a>多项式分布</h2><p>将伯努利分布的单变量扩展到d维向量$\vec x$,其中$x_i \in {0,1}$,且$\sum_{i=1}^d x_i =1$,假设$x_i=1$的概率是$\mu \in [0,1]$,并且$\sum_{i=1}^d \mu_i=1$,则将得到离散分布:</p>
+<p>$P(x|\mu)= \prod_{i=1}^d \mu_i^{x_i}$.</p>
+<p>其中x,$\mu$都是d维向量形式.在此的基础上扩展二项分布到多项式分布(Multinomial distribution),该分布描述的是在n次独立实验中有$m_i$词$x_i=1$的概率,其密度函数可以表达为如下形式:</p>
+<p>$p(m_1,m_2,…,m_d|n, \mu)=\frac{n!}{m_1!m_2!…m_d!} \prod_{i=1}^d \mu_i^{m_i}$</p>
+<p>多项式分布的期望,方差如下:
+$E(x)=n \mu_i$</p>
+<p>$var(x)=n \mu_i(1-\mu_i)$</p>
+<h2 id="多项式朴素贝叶斯"><a href="#多项式朴素贝叶斯" class="headerlink" title="多项式朴素贝叶斯"></a>多项式朴素贝叶斯</h2><p>多项式分布应用到朴素贝叶斯上,对于文档分类问题来说,假设给定文档类型的基础上文档生成模型$P(X=x|Y=c_k)$是一个多项式分布.这样对应关系就是:</p>
+<p>-文档分类中的d维字典(d个特征)对应于多项式分布中的向量的d个维度;
+-文档分类中,词$w_i$出现与否,对应于d维向量中$x_i \in {0,1}$,两种取值情况,且$\sum_{i=1}^d x_i =1$;
+-文档分类中,词$w_i$出现的概率,对应于离散分布中$x_i=1$的概率是$\mu \in [0,1]$,并且$\sum_{i=1}^d \mu_i=1$;
+-文档分类中,给定类别下,对应一次抽样结果x(d维向量)的概率为:$P(x|\mu)= \prod_{i=1}^d \mu_i^{x_i}$,因为如果一个词不出现,即$x_i=0$,那么对应$\mu_i^0=1$,所以$P(x|\mu)$可以简写为$P(x_i|\mu)=\mu_i$;
+-n次独立实验中有$n_i$词$x_i=1$的概率,对应到文档模型中特征i(第i个词)出现了$n_i$次,n次实验对应到文档模型中表示这篇文档的长度为n(一共有n个词),对应概率密度函数为:$p(m_1,m_2,…,m_d|n, \mu)=\frac{n!}{m_1!m_2!…m_d!} \prod_{i=1}^d \mu_i^{m_i}$
+|多项式分布|文档模型|
+|:-:|:-:|
+|d维向量|d个维度,d个特征|
+|$x_i \in {0,1}$|第i个词出现与否|
+|$x_i=1$的概率是$\mu \in [0,1]$|第i个词出现的概率|
+|$P(x|\mu)= \prod_{i=1}^d \mu_i^{x_i}$|给定类别下,一次抽样结果的概率(一个词)|
+|n次实验|对应长度为n的文档n次抽样结果|</p>
+<p>需要注意的是,应用在文本分类的多项式朴素贝叶斯模型之前,一般多项式条件概率如下:</p>
+<p>$P(X=x|Y=c_k) = P(X^1=x^1,X^2=x^2,…,X^d=x^d|Y=c_k)= P(|x|)\frac{n!}{x^1!x^2!…x^d!} \prod_{i=1}^d P(w_i|Y=c_k)^{x^i}$</p>
+<p>我们的多项式朴素贝叶斯概率模型为:</p>
+<p>$P(Y=c_k|X=x)=\frac{P(Y=c_k)\frac{n!}{x^1!x^2!…x^d!} \prod_{i=1}^d P(w_i|Y=c_k)^{x^i}}{P(X=x)}$</p>
+<p>这里为了方便,首先我们假设文章长度和文章的类别之间没有相关性(事实上也并不成立,比如说相对较长的邮件,相比垃圾邮件而言,正常邮件的概率更大),也就是说P(|x|)的分布与文章所属类别无关.另一方面,由于最终所属类别是后验概率最大对应的类别,所以,我们可以将文章长度P(|x|)建模的概率,忽略掉,就像我们之前忽略伯努利分布中的分母一样.</p>
+<p>$P(X=x|Y=c_k) = P(X^1=x^1,X^2=x^2,…,X^d=x^d|Y=c_k)=\frac{n!}{x^1!x^2!…x^d!} \prod_{i=1}^d P(w_i|Y=c_k)^{x^i}$</p>
+<p>再者,为了更加方便,我们通常对两边取log运算,将幂次运算转换成线性运算:</p>
+<p>$logP(X=x|Y=c_k) = logP(X^1=x^1,X^2=x^2,…,X^d=x^d|Y=c_k)=\frac{n!}{x^1!x^2!…x^d!} \prod_{i=1}^d P(w_i|Y=c_k)^{x^i}$</p>
+<p>我们也可以将文章长度阶乘省略,然后变成:</p>
+<p>$y=arg max_{c_k} P(Y=c_k)P(X=x|Y=c_k)) \newline =arg max_{c_k} logP(Y=c_k) + \sum_{j=1}^d x^{(j)}logP(w_j|Y=c_k)$.</p>
+<p>这样就变成线性运算,就和线性回归一样,运算高效而简单.</p>
+<p>将文档模型对应到多项式分布上得到多项式朴素贝叶斯,在我们对其做出假设分布之后,剩下的工作就是对假设分布下每个类别下的d个条件概率以及先验分布进行估计.此外,还需要说明的一点是:多项式朴素贝叶斯模型采用词袋模型,每个$x_i$表示第i个特征出现的次数,也就是词频term-frequency,有时候也可以使用tf-idf作为值.</p>
+<h3 id="参数估计-1"><a href="#参数估计-1" class="headerlink" title="参数估计"></a>参数估计</h3><p>参数估计的过程也是朴素贝叶斯分类器学习的过程.而参数估计可以使用极大似然估计.先验概率$P(Y=c_k)$的极大似然估计是</p>
+<p>$P(Y=c_k)=\frac{\sum_{i=1}^N I(y_i = c_k)}{N}$, k=1,2,…,K</p>
+<p>其中,I(x)是一个指示函数,如果x为真,I(x)结果为1,如果x为假,I(x)=0.用语言描述来说,$P(Y=c_k)$这个概率等于在N个样本的数据集中,类别为$c_k$的样本所占的比例.</p>
+<p>条件概率$P(w_t|Y=c_k)$的极大似然估计是:</p>
+<p>$P(w_t|Y=c_k) = \frac{\sum_{i=1}^N I(w_t=1, y_i=c_k)<em>x_i^{(t)}}{\sum_{i=1}^N\sum_{s=1}^d I(w_s=1,y_i=c_k)}</em>x_i^{(s)}$</p>
+<p>用语言描述来说,条件概率$P(w_t|Y=c_k)$等于在类别为$c_k$的样本集合(数据集的子集)中,第t个特征出现的概率等于$c_k$类样本第t个特征出现的总次数(考虑词频,不再是0,1)占$c_k$类样本的总词数(文章长度之和,文章单词特征是固定的,考虑了词频)的比例.</p>
+<p>为了方便理解,将$N_{t,k}$表示为第k类样本集合中第t个特征出现的总次数,$N_k$表示为在所有样本中第k类样本的总词数(第k类样本长度之和,考虑频数),简写成:</p>
+<p>$P(w_t|Y=c_k)=\frac{N_{t,k}}{N_k}$</p>
+<blockquote>
+<p>需要注意的是,$\sum_t P(w_t|Y=c_k)=1$,意思是给定分类下,各个维度的概率之和为1,在文章分类中,就是给定文章分类的情况下,各个词出现的条件概率之和为1,和每个词出现多少词没有关系.</p>
+</blockquote>
+<h3 id="0概率处理-1"><a href="#0概率处理-1" class="headerlink" title="0概率处理"></a>0概率处理</h3><p>和伯努利朴素贝叶斯模型类似,有可能存在某一维度,数据集在这一维度上都是0,对应到文档分类上,就是这个词在所有文章中都没有出现过(词典选的不好,特征选择不好),这种情况就会出现0概率.所以我们需要对条件概率做一点小改动:</p>
+<p>$P(w_t|Y=c_k)=\frac{\alpha + N_{t,k}}{d*\alpha + N_k}$</p>
+<p>其中,d表示数据维度为d(有d个特征,每个特征都加$\alpha$,保证概率和为1,$\alpha$需要乘d).当$\alpha=1$时,叫做Laplace Smoonthing拉普拉斯平滑,当然$\alpha$也可以小于1.</p>
+<h2 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h2><p>To Be Continued</p>
+<h1 id="Gaussian-Naive-Bayes-高斯朴素贝叶斯"><a href="#Gaussian-Naive-Bayes-高斯朴素贝叶斯" class="headerlink" title="Gaussian Naive Bayes 高斯朴素贝叶斯"></a>Gaussian Naive Bayes 高斯朴素贝叶斯</h1><p>高斯朴素贝叶斯,假设P(X=x|Y=c_k)是多元高斯分布.在了解高斯朴素贝叶斯之前,先介绍一下什么是高斯分布,什么是多元高斯分布?</p>
+<h2 id="高斯分布"><a href="#高斯分布" class="headerlink" title="高斯分布"></a>高斯分布</h2><p>高斯分布又称正态分布，在实际应用中最为广泛。对于单变量$x \in(−\infty,+\infty)$,高斯分布的参数有两个，分别是均值$\mu \in (−\infty,+\infty)$和方差$\sigma^2&gt;0$，其概率密度函数为</p>
+<p>$N(x|\mu,\sigma^2)=\frac1{\sqrt{2\pi}\sigma}exp{-\frac{(x-\mu)^2}{2\sigma^2}}$</p>
+<h2 id="多元高斯分布"><a href="#多元高斯分布" class="headerlink" title="多元高斯分布"></a>多元高斯分布</h2><p><img src="https://i.loli.net/2018/12/25/5c223b8cef67b.jpg" alt=""></p>
+<p>其中,$\mu$是D维均值向量,$\sum$是DxD的协方差矩阵,$|\sum|$是$\sum$的行列式.多元高斯分布的期望是$\mu$,方差是$\sum$</p>
+<p>特殊的,<strong>如果D个维度之间相互独立,那么多元高斯分布就可以表示成单元高斯分布概率密度函数的连乘积</strong>.</p>
+<h2 id="高斯朴素贝叶斯"><a href="#高斯朴素贝叶斯" class="headerlink" title="高斯朴素贝叶斯"></a>高斯朴素贝叶斯</h2><p>高斯朴素贝叶斯模型是假设条件概率P(X=x|Y=c_k)是多元高斯分布,另一方面,由之前的特征的条件独立性假设,我们就可以通过对每个特征的条件概率建模,<strong>每个特征的条件概率$N(\mu_t,\sigma_t^2)$也服从高斯分布</strong>.</p>
+<p>在$c$类下第i个词对应的高斯分布为:</p>
+<p>$g(x_i;\mu_{i,c},\sigma_{i,c})=\frac1{\sigma_{i,c}\sqrt{2\pi}}exp{-\frac{(x_i-\mu_{i,c})^2}{2\sigma_{i,c}^2}}$</p>
+<p>其中,$\mu_{i,c}$,$\sigma_{i,c}^2$表示c类下第i个特征的均值和方差.</p>
+<p>由于特征之间的独立性假设,我们可以得到条件概率:</p>
+<p>$P(X=x|Y=c)=\prod_{i=1}^d g(x_i;\mu_{i,c},\sigma_{i,c})$</p>
+<p>一共有d个特征.</p>
+<p>高斯朴素贝叶斯变成:</p>
+<p>$P(Y=c_k|X=x)=\frac{P(Y=c_k)P(X=x|Y=c_k)}{\sum_k P(X=x|Y=c_k)P(Y=c_k)}\propto P(Y=c_k)P(X=x|Y=c_k)$</p>
+<p>$y=arg max_{c_k} P(Y=c_k)P(X=x|Y=c_k)$.</p>
+<p>了解了多元高斯分布分布之后,接下来的工作就是对参数进行估计,计算$\mu_{i,c}$和$\sigma_{i,c}$.</p>
+<h3 id="参数估计-2"><a href="#参数估计-2" class="headerlink" title="参数估计"></a>参数估计</h3><p>先验概率和之前的估算方法相同,不再描述.主要是对高斯分布的均值和方差的估计,采用的方法仍然是极大似然估计.</p>
+<p>均值的估计$\mu_{i,c}$是在样本类别$c$中,所有$X_i$的平均值;</p>
+<p>方差的估计$\sigma_{i,k}^2$为样本类别$c$中所有$X_i$的方差.</p>
+<p>对于一个连续的样本值,带入高斯分布,就可以求出它的概率分布了.</p>
+<p>所有参数估计完成之后,就可以计算给定样本的条件概率$P(X=x|Y=c_k)$,进而可以计算$P(Y=c_k)P(X=x|Y=c_k)$,之后就可以确定样本类别,完成模型预测.</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="http://www.csuldw.com/2016/08/19/2016-08-19-probability-distributions/" target="_blank" rel="noopener">概率分布</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/naive_bayes.html#naive-bayes" target="_blank" rel="noopener">sklearn贝叶斯文档</a></li>
+<li>《统计学习方法》，李航</li>
+<li><a href="https://blog.csdn.net/u012162613/article/details/48323777" target="_blank" rel="noopener">朴素贝叶斯理论推导与三种常见模型</a></li>
+<li><a href="https://zh.wikipedia.org/zh-hans/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8" target="_blank" rel="noopener">朴素贝叶斯分类器</a></li>
+<li><a href="http://www2.aueb.gr/users/ion/docs/ceas2006_paper.pdf" target="_blank" rel="noopener">Spam Filtering with Naive Bayes – Which Naive Bayes?</a></li>
+<li><a href="https://www.inf.ed.ac.uk/teaching/courses/inf2b/learnnotes/inf2b-learn07-notes-nup.pdf" target="_blank" rel="noopener">Text Classification using Naive Bayes</a></li>
+<li><a href="http://www.cs.cmu.edu/~knigam/papers/multinomial-aaaiws98.pdf" target="_blank" rel="noopener">A Comparison of Event Models for Naive Bayes Text Classification</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>您的支持就是我更新的最大动力!谢谢!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpeg" alt="fja0kl 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="fja0kl 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/朴素贝叶斯/" rel="tag"># 朴素贝叶斯</a>
+          
+            <a href="/tags/Gaussian/" rel="tag"># Gaussian</a>
+          
+            <a href="/tags/Bernoulli/" rel="tag"># Bernoulli</a>
+          
+            <a href="/tags/Multinomial/" rel="tag"># Multinomial</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/23/Bag-of-Words词袋模型/" rel="next" title="Bag-of-Words词袋模型">
+                <i class="fa fa-chevron-left"></i> Bag-of-Words词袋模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#朴素贝叶斯"><span class="nav-number">1.</span> <span class="nav-text">朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#贝叶斯定理"><span class="nav-number">1.1.</span> <span class="nav-text">贝叶斯定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件独立性假设"><span class="nav-number">1.2.</span> <span class="nav-text">条件独立性假设</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#朴素贝叶斯的概率模型"><span class="nav-number">1.3.</span> <span class="nav-text">朴素贝叶斯的概率模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bernoulli-Naive-Bayes-伯努利朴素贝叶斯"><span class="nav-number">2.</span> <span class="nav-text">Bernoulli Naive Bayes 伯努利朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#伯努利分布"><span class="nav-number">2.1.</span> <span class="nav-text">伯努利分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多元伯努利分布"><span class="nav-number">2.2.</span> <span class="nav-text">多元伯努利分布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数估计"><span class="nav-number">2.2.1.</span> <span class="nav-text">参数估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0概率处理"><span class="nav-number">2.2.2.</span> <span class="nav-text">0概率处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">2.3.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Multinomial-Naive-Bayes-多项式朴素贝叶斯"><span class="nav-number">3.</span> <span class="nav-text">Multinomial Naive Bayes 多项式朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式分布"><span class="nav-number">3.1.</span> <span class="nav-text">多项式分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式朴素贝叶斯"><span class="nav-number">3.2.</span> <span class="nav-text">多项式朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数估计-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">参数估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0概率处理-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">0概率处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现-1"><span class="nav-number">3.3.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gaussian-Naive-Bayes-高斯朴素贝叶斯"><span class="nav-number">4.</span> <span class="nav-text">Gaussian Naive Bayes 高斯朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯分布"><span class="nav-number">4.1.</span> <span class="nav-text">高斯分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多元高斯分布"><span class="nav-number">4.2.</span> <span class="nav-text">多元高斯分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯朴素贝叶斯"><span class="nav-number">4.3.</span> <span class="nav-text">高斯朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数估计-2"><span class="nav-number">4.3.1.</span> <span class="nav-text">参数估计</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz',
+        appKey: 'Nw8hvihjOt1jGKfvVpix3P5V',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
