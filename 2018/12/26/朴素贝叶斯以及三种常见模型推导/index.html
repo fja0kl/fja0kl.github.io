@@ -88,7 +88,7 @@
 <meta property="og:description" content="朴素贝叶斯 在机器学习中，朴素贝叶斯分类器是一系列以假设特征之间强（朴素）独立下运用贝叶斯定理为基础的简单概率分类器。  朴素贝叶斯算法Naive Bayes定义中有两个关键定义:特征之间强假设独立和贝叶斯定理.这两个定义就是朴素贝叶斯的关键.接下来先了解一下这两个定义. 贝叶斯定理贝叶斯定义是概率论中的一个定理,它跟随机变量的条件概率以及边缘概率分布有关. 通常，事件A在事件B（发生）的条件下的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2018/12/25/5c223b8cef67b.jpg">
-<meta property="og:updated_time" content="2018-12-26T02:17:51.060Z">
+<meta property="og:updated_time" content="2018-12-26T02:22:59.973Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="朴素贝叶斯以及三种常见模型推导">
 <meta name="twitter:description" content="朴素贝叶斯 在机器学习中，朴素贝叶斯分类器是一系列以假设特征之间强（朴素）独立下运用贝叶斯定理为基础的简单概率分类器。  朴素贝叶斯算法Naive Bayes定义中有两个关键定义:特征之间强假设独立和贝叶斯定理.这两个定义就是朴素贝叶斯的关键.接下来先了解一下这两个定义. 贝叶斯定理贝叶斯定义是概率论中的一个定理,它跟随机变量的条件概率以及边缘概率分布有关. 通常，事件A在事件B（发生）的条件下的">
@@ -300,7 +300,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-12-26T10:17:51+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-26T10:22:59+08:00">
                 2018-12-26
               </time>
             
@@ -443,7 +443,7 @@
 <h3 id="0概率处理"><a href="#0概率处理" class="headerlink" title="0概率处理"></a>0概率处理</h3><p>由于$P(X^i=x^i|Y=c_k)$是伯努利分布,参数p在[0,1]之间,有可能存在$P(X^i=x^i|Y=c_k) = 0$,也就是存在0概率.</p>
 <p>举例来说,在当前类别下的所有样本中特征i都出现了(=1),根据上面的条件概率极大似然估计,可以知道$P(X^i=1|Y=c_k) = 1$,那么对应的,$P(X^i=0|Y=c_k) = 0$,那么当新样本来的时候,加入存在一条记录x,它很巧地没有第i个特征(这不巧了吗?不是),由于0概率的存在,那么使用上面的贝叶斯公式,就会出现属于某个列别的概率为0,$P(Y=c_k|X=x)=0$.但这种情况是应该避免的,那么如何避免呢?</p>
 <p>我们在对条件概率进行极大似然估计时,针对分子和分母做一些小变动,</p>
-<p>$P(X^i=x^i|Y=c_k) = \frac{\alpha + \sum_{i=1}^N I(X^i=x^i,y_i=c_k)}{S_i\alpha + \sum_{i=1}^N I(y_i=c_k)}\ =\frac{\alpha + \sum_{i=1}^N I(X^i=x^i, y_i=c_k)}{2\alpha + \sum_{i=1}^N I(y_i=c_k)}$</p>
+<p>$P(X^i=x^i|Y=c_k)=\frac{\alpha+\sum_{i=1}^NI(X^i=x^i,y_i=c_k)}{S_i\alpha+\sum_{i=1}^NI(y_i=c_k)} \ =\frac{\alpha+\sum_{i=1}^NI(X^i=x^i,y_i=c_k)}{2\alpha+\sum_{i=1}^NI(y_i=c_k)}$</p>
 <p>其中,$S_i$表示第i个特征不同取值的个数,由于这里是one-hot,取值为2,所以$S_i = 2$,$\alpha$乘以$S_i$是保证$S_i$个不同取值对应的条件概率之和为1,不偏袒任意一种情况,一视同仁.</p>
 <h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>To Be Continued.</p>
 <blockquote>
