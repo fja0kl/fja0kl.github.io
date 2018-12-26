@@ -88,7 +88,7 @@
 <meta property="og:description" content="朴素贝叶斯 在机器学习中，朴素贝叶斯分类器是一系列以假设特征之间强（朴素）独立下运用贝叶斯定理为基础的简单概率分类器。  朴素贝叶斯算法Naive Bayes定义中有两个关键定义:特征之间强假设独立和贝叶斯定理.这两个定义就是朴素贝叶斯的关键.接下来先了解一下这两个定义. 贝叶斯定理贝叶斯定义是概率论中的一个定理,它跟随机变量的条件概率以及边缘概率分布有关. 通常，事件A在事件B（发生）的条件下的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2018/12/25/5c223b8cef67b.jpg">
-<meta property="og:updated_time" content="2018-12-26T01:50:55.985Z">
+<meta property="og:updated_time" content="2018-12-26T02:00:02.787Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="朴素贝叶斯以及三种常见模型推导">
 <meta name="twitter:description" content="朴素贝叶斯 在机器学习中，朴素贝叶斯分类器是一系列以假设特征之间强（朴素）独立下运用贝叶斯定理为基础的简单概率分类器。  朴素贝叶斯算法Naive Bayes定义中有两个关键定义:特征之间强假设独立和贝叶斯定理.这两个定义就是朴素贝叶斯的关键.接下来先了解一下这两个定义. 贝叶斯定理贝叶斯定义是概率论中的一个定理,它跟随机变量的条件概率以及边缘概率分布有关. 通常，事件A在事件B（发生）的条件下的">
@@ -300,7 +300,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-12-26T09:50:55+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-26T10:00:02+08:00">
                 2018-12-26
               </time>
             
@@ -409,9 +409,9 @@
 <p>通过两个概率得到联合概率分布P(X,Y) = P(X|Y)P(Y).</p>
 <p>条件概率分布P(X=x|Y=c_k)有指数级数量的参数,其估计实际上不可行的.假设$x^{(j)}$有$S_j$个取值,j=1,2,…,n,Y有K个取值,那么参数个数为$K\prod_{j=1}^n S_j$.</p>
 <p>指数级的参数估计事实上并不可行,因此朴素贝叶斯算法针对各个特征之间做了假设,也就是对条件概率分布作了条件独立性假设,这是一个很强的假设,通过这个假设,我们的参数求解变得可行,这也就是朴素贝叶斯的”朴素”的由来.这种情况下,我们同样假设$x^{(j)}$有$S_j$个取值,j=1,2,…,n,Y有K个取值,那么参数个数为$K\sum_{i=1}^nS_j$,需要估计的参数量大大减少.条件独立性假设是</p>
-<p>$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},…,X^{(n)}=x^{(n)}|Y=c_k)\=\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)$</p>
+<p>$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},…,X^{(n)}=x^{(n)}|Y=c_k)\ =\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)$</p>
 <p>朴素贝叶斯算法分类时,对给定输入x,通过学习到的模型计算后验概率分布$P(Y=c_k|X=x)$,将后验概率最大的类作为输入x的类输出.后验概率根据贝叶斯定理计算:</p>
-<p>$P(Y=c_k|X=x)=\frac{P(Y=c_k)P(X=x|Y=c_k)}{\sum_k P(X=x|Y=c_k)P(Y=c_k)}\=\frac{P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}{\sum_k P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}$</p>
+<p>$P(Y=c_k|X=x)=\frac{P(Y=c_k)P(X=x|Y=c_k)}{\sum_k P(X=x|Y=c_k)P(Y=c_k)}\ =\frac{P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}{\sum_k P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}$</p>
 <p>上面的公式是后验概率分布中的一项,由于对于相同输入x下不同类别的后验概率的分母都相同,而最终的类输出是后验概率分布中概率最大对应的类别,所以我们可以简化为只比较分子的大小就可以确定最终的结果,也就是说,最终类输出为:</p>
 <p>$y=arg max_{c_k}P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)$.</p>
 <p>如果我们对右边的乘积概率取log,连乘积就可以转换成为和,计算更简单(加法总比乘法简单),上诉公式存在一种变种:</p>
@@ -421,15 +421,15 @@
 <h1 id="Bernoulli-Naive-Bayes-伯努利朴素贝叶斯"><a href="#Bernoulli-Naive-Bayes-伯努利朴素贝叶斯" class="headerlink" title="Bernoulli Naive Bayes 伯努利朴素贝叶斯"></a>Bernoulli Naive Bayes 伯努利朴素贝叶斯</h1><p>伯努利朴素贝叶斯,其实应该叫”Multi-variate Naive Bayes”,假设P(X=x|Y=c_k)是多变量伯努利分布.在了解多变量伯努利分布之前,先介绍一下什么是(单变量的)伯努利分布.</p>
 <h2 id="伯努利分布"><a href="#伯努利分布" class="headerlink" title="伯努利分布"></a>伯努利分布</h2><p>伯努利分布,又叫做两点分布或0-1分布,是一个离散型概率分布.称随机变量X有伯努利分布,参数为p(0&lt; p &lt;1),它分别以概率p和1-p取1和0为值.</p>
 <p>最简单的例子就是抛硬币,硬币结果为正或反.</p>
-<p>$P(X=x)=p^x<em>(1-p)^{(1-x)}=p</em>x+(1-p)*(1-x)$</p>
+<p>$P(X=x)=p^x <em> (1-p)^{(1-x)}=p </em> x+(1-p)*(1-x)$</p>
 <p>幂次运算变成乘法运算,更简单.当x=1时,概率是P(X=1)=p,当x=0时,概率P(X=0)=1-p,这样就可以将两种情况合在一起.</p>
 <p>了解了什么是伯努利分布之后,我们再看什么是多元伯努利分布(多变量 multi-variate Bernoulli).</p>
 <h2 id="多元伯努利分布"><a href="#多元伯努利分布" class="headerlink" title="多元伯努利分布"></a>多元伯努利分布</h2><p>多元伯努利分布,通俗的讲就是同时进行多个不同的伯努利实验,$P(X=x)=\theta$,其中x是一个向量,$\theta$也是一个向量,表示不同伯努利实验的参数.</p>
 <p>伯努利多项式将文档的生成模型P(X=x|Y=c_k)假设服从为多元伯努利分布,由于我们之前做的特征独立性假设,$x=(x^{(1)},x^{(2)}=x^{(2)},…,^{(n)})$是一个向量形式,而其中$x^{(j)} \in {0, 1}$,也就是说x向量是onehot形式的向量(每个维度值是0或1),表示这个维度的特征是否出现.特征集$F = {f_1,f_2,…,f_n }$有n个特征,特征集的维度决定了输入空间X的维度,而且特征集的维度可以对应到输入空间的各个维度上.</p>
-<p>$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},…,X^{(n)}=x^{(n)}|Y=c_k)\=\prod_{i=1}^{n} p(t_i|Y=c_k)<em>x^i+(1-p(t_i|Y=c_k))</em>(1-x^i)$</p>
+<p>$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},…,X^{(n)}=x^{(n)}|Y=c_k)\ =\prod_{i=1}^{n} p(t_i|Y=c_k)<em>x^i+(1-p(t_i|Y=c_k))</em>(1-x^i)$</p>
 <p>因为特征之间的独立性,所以多元伯努利变成各个伯努利分布的连乘积,需要注意的一点是<strong>因为是伯努利分布,0-1,特征出现有一个概率p,特征不出现也有一个概率1-p</strong>.最终模型的参数估计完成之后,对新样本进行预测时,如果某个特征不出现,需要<strong>乘上这个特征不出现的概率</strong>,不能只计算特征出现的概率!!!两个向量直接相乘,并不能得到最终的结果.</p>
 <p>对应的伯努利朴素贝叶斯模型为:</p>
-<p>$P(Y=c_k|X=x)=\frac{P(Y=c_k)P(X=x|Y=c_k)}{\sum_k P(X=x|Y=c_k)P(Y=c_k)}\=\frac{P(Y=c_k)\prod_{j=1}^n p(t_j|Y=c_k)<em>x^j+(1-p(t_j|Y=c_k))</em>(1-x^j)}{\sum_k P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}$</p>
+<p>$P(Y=c_k|X=x)=\frac{P(Y=c_k)P(X=x|Y=c_k)}{\sum_k P(X=x|Y=c_k)P(Y=c_k)}\ =\frac{P(Y=c_k)\prod_{j=1}^n p(t_j|Y=c_k)<em>x^j+(1-p(t_j|Y=c_k))</em>(1-x^j)}{\sum_k P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}$</p>
 <p>为了简化运算,我们可以将分母忽略,虽然对应的结果不是真正的概率,但是相同样本的各个后验概率之间的大小关系保持不变,同时如果两边同时做log运算,后验概率之间的大小关系同样保持不变.因此,</p>
 <p>$y=arg max_{c_k} P(Y=c_k) * \prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k) \=arg max_{c_k} logP(Y=c_k) + \sum_{j=1}^n logP(X^{(j)}=x^{(j)}|Y=c_k)$.</p>
 <p>了解了多元伯努利分布之后,接下来的工作就是对参数进行估计,计算$P(x^i|Y=c_k)$,$P(Y=c_k)$.</p>
@@ -443,7 +443,7 @@
 <h3 id="0概率处理"><a href="#0概率处理" class="headerlink" title="0概率处理"></a>0概率处理</h3><p>由于$P(X^i=x^i|Y=c_k)$是伯努利分布,参数p在[0,1]之间,有可能存在$P(X^i=x^i|Y=c_k) = 0$,也就是存在0概率.</p>
 <p>举例来说,在当前类别下的所有样本中特征i都出现了(=1),根据上面的条件概率极大似然估计,可以知道$P(X^i=1|Y=c_k) = 1$,那么对应的,$P(X^i=0|Y=c_k) = 0$,那么当新样本来的时候,加入存在一条记录x,它很巧地没有第i个特征(这不巧了吗?不是),由于0概率的存在,那么使用上面的贝叶斯公式,就会出现属于某个列别的概率为0,$P(Y=c_k|X=x)=0$.但这种情况是应该避免的,那么如何避免呢?</p>
 <p>我们在对条件概率进行极大似然估计时,针对分子和分母做一些小变动,</p>
-<p>$P(X^i=x^i|Y=c_k) = \frac{\alpha + \sum_{i=1}^N I(X^i=x^i,y_i=c_k)}{S_i<em>\alpha + \sum_{i=1}^N I(y_i=c_k)}\=\frac{\alpha + \sum_{i=1}^N I(X^i=x^i, y_i=c_k)}{2</em>\alpha + \sum_{i=1}^N I(y_i=c_k)}$</p>
+<p>$P(X^i=x^i|Y=c_k) = \frac{\alpha + \sum_{i=1}^N I(X^i=x^i,y_i=c_k)}{S_i\alpha + \sum_{i=1}^N I(y_i=c_k)}\ =\frac{\alpha + \sum_{i=1}^N I(X^i=x^i, y_i=c_k)}{2\alpha + \sum_{i=1}^N I(y_i=c_k)}$</p>
 <p>其中,$S_i$表示第i个特征不同取值的个数,由于这里是one-hot,取值为2,所以$S_i = 2$,$\alpha$乘以$S_i$是保证$S_i$个不同取值对应的条件概率之和为1,不偏袒任意一种情况,一视同仁.</p>
 <h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>To Be Continued.</p>
 <blockquote>
