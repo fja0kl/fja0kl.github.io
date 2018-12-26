@@ -88,7 +88,7 @@
 <meta property="og:description" content="朴素贝叶斯 在机器学习中，朴素贝叶斯分类器是一系列以假设特征之间强（朴素）独立下运用贝叶斯定理为基础的简单概率分类器。  朴素贝叶斯算法Naive Bayes定义中有两个关键定义:特征之间强假设独立和贝叶斯定理.这两个定义就是朴素贝叶斯的关键.接下来先了解一下这两个定义. 贝叶斯定理贝叶斯定义是概率论中的一个定理,它跟随机变量的条件概率以及边缘概率分布有关. 通常，事件A在事件B（发生）的条件下的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2018/12/25/5c223b8cef67b.jpg">
-<meta property="og:updated_time" content="2018-12-26T02:30:46.998Z">
+<meta property="og:updated_time" content="2018-12-26T02:39:08.278Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="朴素贝叶斯以及三种常见模型推导">
 <meta name="twitter:description" content="朴素贝叶斯 在机器学习中，朴素贝叶斯分类器是一系列以假设特征之间强（朴素）独立下运用贝叶斯定理为基础的简单概率分类器。  朴素贝叶斯算法Naive Bayes定义中有两个关键定义:特征之间强假设独立和贝叶斯定理.这两个定义就是朴素贝叶斯的关键.接下来先了解一下这两个定义. 贝叶斯定理贝叶斯定义是概率论中的一个定理,它跟随机变量的条件概率以及边缘概率分布有关. 通常，事件A在事件B（发生）的条件下的">
@@ -300,7 +300,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-12-26T10:30:46+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-26T10:39:08+08:00">
                 2018-12-26
               </time>
             
@@ -426,10 +426,10 @@
 <p>了解了什么是伯努利分布之后,我们再看什么是多元伯努利分布(多变量 multi-variate Bernoulli).</p>
 <h2 id="多元伯努利分布"><a href="#多元伯努利分布" class="headerlink" title="多元伯努利分布"></a>多元伯努利分布</h2><p>多元伯努利分布,通俗的讲就是同时进行多个不同的伯努利实验,$P(X=x)=\theta$,其中x是一个向量,$\theta$也是一个向量,表示不同伯努利实验的参数.</p>
 <p>伯努利多项式将文档的生成模型P(X=x|Y=c_k)假设服从为多元伯努利分布,由于我们之前做的特征独立性假设,$x=(x^{(1)},x^{(2)}=x^{(2)},…,^{(n)})$是一个向量形式,而其中$x^{(j)} \in {0, 1}$,也就是说x向量是onehot形式的向量(每个维度值是0或1),表示这个维度的特征是否出现.特征集$F = {f_1,f_2,…,f_n }$有n个特征,特征集的维度决定了输入空间X的维度,而且特征集的维度可以对应到输入空间的各个维度上.</p>
-<p>$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},…,X^{(n)}=x^{(n)}|Y=c_k) \= \prod_{i=1}^{n} p(t_i|Y=c_k)<em>x^i+(1-p(t_i|Y=c_k))</em>(1-x^i)$</p>
+<p>$P(X=x|Y=c_k)=P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},…,X^{(n)}=x^{(n)}|Y=c_k)\=\prod_{i=1}^{n} p(t_i|Y=c_k)x^i+(1-p(t_i|Y=c_k))(1-x^i)$</p>
 <p>因为特征之间的独立性,所以多元伯努利变成各个伯努利分布的连乘积,需要注意的一点是<strong>因为是伯努利分布,0-1,特征出现有一个概率p,特征不出现也有一个概率1-p</strong>.最终模型的参数估计完成之后,对新样本进行预测时,如果某个特征不出现,需要<strong>乘上这个特征不出现的概率</strong>,不能只计算特征出现的概率!!!两个向量直接相乘,并不能得到最终的结果.</p>
 <p>对应的伯努利朴素贝叶斯模型为:</p>
-<p>$P(Y=c_k|X=x)=\frac{P(Y=c_k)P(X=x|Y=c_k)}{\sum_k P(X=x|Y=c_k)P(Y=c_k)}\ =\frac{P(Y=c_k)\prod_{j=1}^n p(t_j|Y=c_k)<em>x^j+(1-p(t_j|Y=c_k))</em>(1-x^j)}{\sum_k P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}$</p>
+<p>$P(Y=c_k|X=x)=\frac{P(Y=c_k)P(X=x|Y=c_k)}{\sum_kP(X=x|Y=c_k)P(Y=c_k)}\=\frac{P(Y=c_k)\prod_{j=1}^n p(t_j|Y=c_k)x^j+(1-p(t_j|Y=c_k))(1-x^j)}{\sum_k P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k)}$</p>
 <p>为了简化运算,我们可以将分母忽略,虽然对应的结果不是真正的概率,但是相同样本的各个后验概率之间的大小关系保持不变,同时如果两边同时做log运算,后验概率之间的大小关系同样保持不变.因此,</p>
 <p>$y=arg max_{c_k} P(Y=c_k)\prod_{j=1}^n P(X^{(j)}=x^{(j)}|Y=c_k) \ =arg max_{c_k} logP(Y=c_k)+\sum_{j=1}^nlogP(X^{(j)}=x^{(j)}|Y=c_k)$.</p>
 <p>了解了多元伯努利分布之后,接下来的工作就是对参数进行估计,计算$P(x^i|Y=c_k)$,$P(Y=c_k)$.</p>
