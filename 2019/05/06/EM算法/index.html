@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="推荐系统,">
+  <meta name="keywords" content="EM算法,">
 
 
 
@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="离线实验方法评分预测问题基本都通过离线实验进行研究。在给定用户评分数据集后,研究人员会将数据集按照一定的方式分成训练集和测试集,然后根据测试集建立用户兴趣模型来预测测试集中的用户评分。可以使用RMSE度量预测的精度.评分预测的目的是找到最好的模型最小化测试集的RMSE. 评分预测算法平均值最简单的评分预测算法是利用平均值预测用户对物品的评分。平均值有各种形式. 全局平均值在平均值里最简单的是全局平">
-<meta name="keywords" content="推荐系统">
+<meta name="description" content="Q 隐含变量是什么？ 参数估计估计的什么参数？ EM算法用来干什么的的？E是什么？M又是什么？ 流程是什么？ 原理是什么？ 应用场景？  背景知识极大似然估计一种参数估计方法。什么是参数估计？用在概率模型中，一般认为事件概率符合一定的分布，而这个分布的参数就是要估计的参数。参数估计就是用实验观测的结果取估计可能概率分布的参数，或者说是知道结果推原因。 最大似然估计会寻找关于θ的最可能的值（即，在所">
+<meta name="keywords" content="EM算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[推荐系统]评分预测">
-<meta property="og:url" content="http://fja0kl.github.io/2018/11/10/推荐系统-评分预测/index.html">
+<meta property="og:title" content="EM算法">
+<meta property="og:url" content="http://fja0kl.github.io/2019/05/06/EM算法/index.html">
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
-<meta property="og:description" content="离线实验方法评分预测问题基本都通过离线实验进行研究。在给定用户评分数据集后,研究人员会将数据集按照一定的方式分成训练集和测试集,然后根据测试集建立用户兴趣模型来预测测试集中的用户评分。可以使用RMSE度量预测的精度.评分预测的目的是找到最好的模型最小化测试集的RMSE. 评分预测算法平均值最简单的评分预测算法是利用平均值预测用户对物品的评分。平均值有各种形式. 全局平均值在平均值里最简单的是全局平">
+<meta property="og:description" content="Q 隐含变量是什么？ 参数估计估计的什么参数？ EM算法用来干什么的的？E是什么？M又是什么？ 流程是什么？ 原理是什么？ 应用场景？  背景知识极大似然估计一种参数估计方法。什么是参数估计？用在概率模型中，一般认为事件概率符合一定的分布，而这个分布的参数就是要估计的参数。参数估计就是用实验观测的结果取估计可能概率分布的参数，或者说是知道结果推原因。 最大似然估计会寻找关于θ的最可能的值（即，在所">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.superbed.cn/pic/5be6dc489dc6d6863d2d3741">
-<meta property="og:updated_time" content="2018-11-10T13:39:00.964Z">
+<meta property="og:updated_time" content="2019-05-06T14:40:54.082Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[推荐系统]评分预测">
-<meta name="twitter:description" content="离线实验方法评分预测问题基本都通过离线实验进行研究。在给定用户评分数据集后,研究人员会将数据集按照一定的方式分成训练集和测试集,然后根据测试集建立用户兴趣模型来预测测试集中的用户评分。可以使用RMSE度量预测的精度.评分预测的目的是找到最好的模型最小化测试集的RMSE. 评分预测算法平均值最简单的评分预测算法是利用平均值预测用户对物品的评分。平均值有各种形式. 全局平均值在平均值里最简单的是全局平">
-<meta name="twitter:image" content="https://www.superbed.cn/pic/5be6dc489dc6d6863d2d3741">
+<meta name="twitter:title" content="EM算法">
+<meta name="twitter:description" content="Q 隐含变量是什么？ 参数估计估计的什么参数？ EM算法用来干什么的的？E是什么？M又是什么？ 流程是什么？ 原理是什么？ 应用场景？  背景知识极大似然估计一种参数估计方法。什么是参数估计？用在概率模型中，一般认为事件概率符合一定的分布，而这个分布的参数就是要估计的参数。参数估计就是用实验观测的结果取估计可能概率分布的参数，或者说是知道结果推原因。 最大似然估计会寻找关于θ的最可能的值（即，在所">
 
 
 
@@ -122,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://fja0kl.github.io/2018/11/10/推荐系统-评分预测/">
+  <link rel="canonical" href="http://fja0kl.github.io/2019/05/06/EM算法/">
 
 
 
 
 
-  <title>[推荐系统]评分预测 | fja0kl's Blog</title>
+  <title>EM算法 | fja0kl's Blog</title>
   
 
 
@@ -255,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/11/10/推荐系统-评分预测/">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2019/05/06/EM算法/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fja0kl">
@@ -272,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[推荐系统]评分预测</h1>
+          <h1 class="post-title" itemprop="name headline">EM算法</h1>
         
 
         <div class="post-meta">
@@ -284,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-10T21:38:10+08:00">
-                2018-11-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-06T22:39:44+08:00">
+                2019-05-06
               </time>
             
 
@@ -300,8 +298,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-11-10T21:39:00+08:00">
-                2018-11-10
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-06T22:40:54+08:00">
+                2019-05-06
               </time>
             
           </span>
@@ -319,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/推荐系统/" itemprop="url" rel="index">
-                    <span itemprop="name">推荐系统</span>
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
                   </a>
                 </span>
 
@@ -337,8 +335,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/11/10/推荐系统-评分预测/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/10/推荐系统-评分预测/" itemprop="commentCount"></span>
+                <a href="/2019/05/06/EM算法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/06/EM算法/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -346,7 +344,7 @@
 
           
           
-             <span id="/2018/11/10/推荐系统-评分预测/" class="leancloud_visitors" data-flag-title="[推荐系统]评分预测">
+             <span id="/2019/05/06/EM算法/" class="leancloud_visitors" data-flag-title="EM算法">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -377,37 +375,75 @@
       
 
       
-        <h2 id="离线实验方法"><a href="#离线实验方法" class="headerlink" title="离线实验方法"></a>离线实验方法</h2><p>评分预测问题基本都通过离线实验进行研究。在给定用户评分数据集后,研究人员会将数据集按照一定的方式分成训练集和测试集,然后根据测试集建立用户兴趣模型来预测测试集中的用户评分。可以使用RMSE度量预测的精度.评分预测的目的是找到最好的模型最小化测试集的RMSE.</p>
-<h2 id="评分预测算法"><a href="#评分预测算法" class="headerlink" title="评分预测算法"></a>评分预测算法</h2><h3 id="平均值"><a href="#平均值" class="headerlink" title="平均值"></a>平均值</h3><p>最简单的评分预测算法是利用平均值预测用户对物品的评分。平均值有各种形式.</p>
-<h4 id="全局平均值"><a href="#全局平均值" class="headerlink" title="全局平均值"></a>全局平均值</h4><p>在平均值里最简单的是全局平均值.定义为训练集里所有评分记录的评分平均值:
-$\mu = \frac{\sum_{(u,i) \in Train} r_{ui}}{\sum_{(u,i) \in Train} 1}$</p>
-<p>最终的预测函数可以直接定义为:
-$\hat{r_{ui}} = \mu$</p>
-<h4 id="用户评分平均值"><a href="#用户评分平均值" class="headerlink" title="用户评分平均值"></a>用户评分平均值</h4><p>用户u的评分平均值$\overline{r_u}$定义为用户u在训练集中所有评分的平均值:
-$\overline{r_u} = \frac{\sum_{i \in N(u)}r_{ui}}{\sum_{i \in N(u)} 1}$
-最终的预测函数可以定义为:
-$\hat{r_{ui}} = \overline{r_u}$</p>
-<h4 id="物品评分平均值"><a href="#物品评分平均值" class="headerlink" title="物品评分平均值"></a>物品评分平均值</h4><p>物品i的评分平均值$\overline{r_i}$定义为物品i在训练集中接受的所有评分的平均值:
-$\overline{r_i} = \frac{\sum_{u \in N(i)}r_{ui}}{\sum_{u \in N(i)} 1}$
-最终的预测函数可以定义为:
-$\hat{r_{ui}} = \overline{r_i}$</p>
-<h3 id="用户分类对物品分类的平均值"><a href="#用户分类对物品分类的平均值" class="headerlink" title="用户分类对物品分类的平均值"></a>用户分类对物品分类的平均值</h3><p><img src="https://www.superbed.cn/pic/5be6dc489dc6d6863d2d3741" alt=""></p>
-<h3 id="基于邻域的方法"><a href="#基于邻域的方法" class="headerlink" title="基于邻域的方法"></a>基于邻域的方法</h3><p>基于用户的邻域算法和基于物品的邻域算法都可以应用到评分预测中.基于用户的邻域算法认为预测一个用户对一个物品的评分,需要参考和这个用户兴趣相似的用户对该物品的评分.</p>
-<p>基于物品的邻域算法在预测用户u对物品i的评分时,会参考用户u对和物品i相似的其他物品的评分.</p>
-<h3 id="加入时间信息"><a href="#加入时间信息" class="headerlink" title="加入时间信息"></a>加入时间信息</h3><p>利用时间信息的方法主要分为两种,一种是将时间信息应用到基于邻域的模型中,另一种是将时间信息应用到矩阵分解模型中.</p>
-<h2 id="推荐系统经验10则"><a href="#推荐系统经验10则" class="headerlink" title="推荐系统经验10则"></a>推荐系统经验10则</h2><ul>
-<li>确定你真的需要推荐系统. 推荐系统只有在用户遇到信息过载时才必要。</li>
-<li>确定商业目标和用户满意度之间的关系。对用户好的推荐系统不代表商业上有用的推荐系统,因此要首先确定用户满意的推荐系统和商业上需求的差距。</li>
-<li>选择合适的开发人员。</li>
-<li>忘记冷启动的问题。不断地创新,互联网上有任何你想要的数据。只要用户喜欢你的产品,他们就会不断贡献新的数据。</li>
-<li>平衡数据和算法之间的关系。<strong>使用正确的用户数据对推荐系统至关重要</strong>。对用户行为数据的深刻理解是设计好推荐系统的必要条件,因此分析数据是设计系统中最重要的部分。数据分析决定了如何设计模型,而算法只是决定了最终如何优化模型。</li>
-<li>找到相关的物品很容易,但是何时以何种方式将它们展现给用户是很困难的。</li>
-<li>不要浪费时间计算相似兴趣的用户,可以直接利用社会网络数据。</li>
-<li>需要不断地提升算法的扩展性。</li>
-<li>选择合适的用户反馈方式。</li>
-<li>设计合理的评测系统,时刻关注推荐系统各方面的性能。</li>
+        <h1 id="Q"><a href="#Q" class="headerlink" title="Q"></a>Q</h1><ol>
+<li>隐含变量是什么？</li>
+<li>参数估计估计的什么参数？</li>
+<li>EM算法用来干什么的的？E是什么？M又是什么？</li>
+<li>流程是什么？</li>
+<li>原理是什么？</li>
+<li>应用场景？</li>
+</ol>
+<h1 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h1><h2 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h2><p>一种参数估计方法。什么是参数估计？用在概率模型中，一般认为事件概率符合一定的分布，而这个分布的参数就是要估计的参数。参数估计就是用实验观测的结果取估计可能概率分布的参数，或者说是知道结果推原因。
+最大似然估计会寻找关于θ的最可能的值（即，在所有可能的 θ取值中，寻找一个值使这个采样的“可能性”最大化）。从数学上来说，我们可以在θ的所有可能取值中寻找一个值使得似然函数取到最大值。这个使可能性最大的$\hat{\theta}$值即称为θ的最大似然估计。由定义，最大似然估计是样本的函数。极大似然估计是建立在这样的思想上：已知某个参数能使这个样本出现的概率最大，我们当然不会再去选择其他小概率的样本，所以干脆就把这个参数作为估计的真实值。</p>
+<p>自己理解的话就是说，概率模型，观察结果符合某种概率分布，每个事件(观测结果的取值)都是可以用某个参数的表达式(符合的分布)来表示，即事件发生的概率是概率模型参数的一个函数。另一方面，我们可以认为在事件所有可能的结果中，观察到的结果是最有可能发生的。也就是说观察结果是概率模型中取值最大的，因为观察结果是符合一定的概率分布，其参数表示为$\theta$。依据实验的观察结果，假设事件之间相互独立(每种观察结果之间互不影响)，我们就可以得到一个似然函数(可能函数)：每个事件对应的$theta$函数的连乘积。我们通过最大化这个似然函数(去逼近观察结果，因为现在观察结果由theta表示，而theta取值有无数种可能，通过最大化，逼近观察结果，对应的参数theta，就是所求结果)就可以估计出分布的参数$\theta$.</p>
+<p><strong>极大似然估计是我们知道事件服从某种分布，只是不知道分布的参数</strong>。</p>
+<h1 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h1><p>复杂化的极大似然估计。概率模型存在隐变量，通俗讲就是观察结果并不是一种变量，并不完全相同(同质)，它们又可以继续划分，分成若干个份，每份符合同种分布(同质)，相似性更高。而这个份的划分就是隐变量。比如，现有100个男生，100个女生的共200人统计身高(假设身高服从正态分布)，现在我们需要估计男生和女生各自身高的正态分布的参数。200个人的身高，每个样本，我们并不知道它是男生还是女生，或者说200个样本中又可以细分成2份，男生和女生身高，各自服从自己的分布。现在的观测结果是忽略掉性别，只统计了身高，而我们的目标又是估计男生和女生的身高分布的参数(每个样本属于男生还是女生，这个变量也可以用一个分布来表示，但是这并不是我们需要求解的参数)。</p>
+<p><strong>EM用来估计观测结果的参数，而不是隐变量的参数</strong>。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>最大期望算法（Expectation-maximization algorithm，又译期望最大化算法）在统计中被用于寻找，依赖于不可观察的隐性变量的概率模型中，参数的最大似然估计。</p>
+<p>在统计计算中，最大期望（EM）算法是在<strong>概率模型</strong>中<strong>寻找参数最大似然估计或者最大后验估计</strong>的算法，其中<strong>概率模型依赖于无法观测的隐变量</strong>。——–所以不能直接使用极大似然估计。
+最大期望算法经过两个步骤交替进行计算：</p>
+<p>第一步是计算期望（E），利用对隐藏变量的现有估计值，计算其最大似然估计值；</p>
+<p>第二步是最大化（M），最大化在E步上求得的最大似然值来计算参数的值。M步上找到的参数估计值被用于下一个E步计算中，这个过程不断交替进行。</p>
+<h2 id="EM算法的隐变量"><a href="#EM算法的隐变量" class="headerlink" title="EM算法的隐变量"></a>EM算法的隐变量</h2><p>一般用Y表示观测到的随机变量的数据，Z表示隐随机变量的数据， Y和Z连在一起称为完全数据，仅Y一个被称为不完全数据。EM算法面临的主要问题就是这个隐变量Z，加入Z已知的话，就可以划分极大似然估计问题来求解。那么如何把Z变成已知的？</p>
+<p>假如，我们知道随机变量的估计参数，那么我们依据参数以及Y观察结果，可以估计隐变量Z服从分布的参数，这样就可以估计出Z的分布(也就是说Z分布变成了已知)；接下来根据估计出的Z分布，来对观测结果的参数进行估计(隐含变量已知)，使用极大似然估计进行求解，如果这个估计值和起始假设值相同，那么终止迭代；如果不同过程反复，直到参数收敛。</p>
+<p>第一步，给出参数的一个假设值后，依据参数值和观测结果，可以推导出隐变量Z的一个可能结果，然后根据这个Z的结果，对Z的参数进行极大似然估计；第二步，知道Z的分布后，可以依据Y，Z完全数据使用极大似然估计来估计计算参数。</p>
+<p>但实际上Z的参数并不需要估计，只需要知道每个样本上Z的取值结果即可。</p>
+<p>这个过程相当于进行了两次极大似然估计：第一次，假设参数已知，估计隐变量的参数；第二次已知隐变量分布，估计参数。</p>
+<p>我们<strong>先给参数一个估计值，然后再估计隐变量，再计算参数的新的估计估计值</strong>。如果两个估计值相同，那么返回结果，终止迭代；如果不同，反复迭代，直到参数收敛。</p>
+<h2 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h2><h3 id="EM算法的目标函数"><a href="#EM算法的目标函数" class="headerlink" title="EM算法的目标函数"></a>EM算法的目标函数</h3><p>一般情况下的极大似然函数如下：</p>
+<p>$L(\theta) = L(x_1,x_2,…,x_n; \theta) = \prod_{i=1}^n p(x_i; \theta)$</p>
+<p>但是现在，我们的观测结果中隐变量的存在。假设一个样本集${x_1, x_2,…,x_m}$，包含m个样本，每个样本有隐含类别Z。这种情况下，对数极大似然函数如下：</p>
+<p>$L(\theta) = \sum_{i=1}^mlog p(x; \theta) = \sum_{i=1}^mlog\sum_z p(x,z;\theta)$</p>
+<p>其中需要对每个样本x_i的所有可能类别z求联合分布概率和(将类别z去掉)。但是直接求比较困难，因为隐变量z的存在，而且不知道z的分布情况，如果确定z之后，求解就容易了。</p>
+<p>对于参数估计，本质上还是项获得一个使得似然函数最大化的那个参数$\theta$,但是现在似然函数中存在一个隐变量Z。现在的目标是找到合适的$\theta$和Z使得$L(\theta)$最大。</p>
+<p>我们将上面的式子做一个变化，分子分母同时乘以一个相等的函数(即隐变量Z的概率分布$Q_i(z^{(i)})$, 其概率之和为1).</p>
+<blockquote>
+<p><strong>Jensen不等式</strong>
+如果f是凸函数，X是随机变量，那么：E[f(X)]&gt;=f(E[X])，通俗的说法是函数的期望大于等于期望的函数。
+特别地，如果f是严格凸函数，当且仅当 P(X = EX) = 1，即X是常量时，上式取等号，也就是$E[f(x)] = f(EX)$</p>
+</blockquote>
+<p>同时利用Jensen不等式，可以得到：</p>
+<p>$\sum_{i=1}^m logp(x^{(i)}; \theta)=\sum_{i=1}^mlog\sum_z p(x^{(i)},z;\theta)=\newline \sum_{i=1}^m log\sum_{z^{(i)}}Q_i(z^{(i)})\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})} \geq\sum_i\sum_{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$</p>
+<p>其中，$\sum_{z^{(i)}}Q_i(z^{(i)})\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$是$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$的期望，相应概率为$Q_i(z^{(i)})$</p>
+<p>如果要满足Jensen不等式的等号，则有：</p>
+<p>$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})} = c$, c为常数。</p>
+<p>由于$Q_i(z^{(i)})$是一个分布，所以满足：$\sum_zQ_i(z^{(i)}) = 1$</p>
+<p>从上面两个式子可以知道，</p>
+<p>$Q_i(z^{(i)}) = \frac{P(x^{(i)}, z^{(i)}; \theta)}{\sum_zP(x^{(i)}, z^{(i)}; \theta)=\newline\frac{P(x^{(i)}, z^{(i)}; \theta)}{P(x^{(i)}; \theta)}} = P(z^{(i)|x^{(i)}; \theta})$</p>
+<p>一个条件概率，如果$Q_i(z^{(i)})=P(z^{(i)}|x^{(i)};\theta)$, 那么就可以算出包含隐变量的对数似然函数的一个下界。如果能极大化这个下界，也就相当于在极大化我们的对数似然函数。所以，我们需要极大化下式：</p>
+<p>$argmax_{\theta} \sum_i^m\sum_{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}\$</p>
+<p>去掉常数部分，小极大化的对数似然下界为：</p>
+<p>$argmax_{\theta} \sum_i^m\sum_{z^{(i)}}Q_i(z^{(i)})log p(x^{(i)},z^{(i)};\theta)$</p>
+<p>这个式子是我们EM算法中的M步。E步是求logP(x(i)，z(i);θ)基于条件概率分布Qi(z(i))的期望 ∑z(i)Qi(z(i))logP(x(i)，z(i);θ)。</p>
+<h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><p>输入：观察数据$x=(x^{(1)}, x^{(2)},…,x^{(m)})$，联合分布p(x,z;theta),条件分布p(z|x;theta)，最大迭代次数J</p>
+<ol>
+<li>随机初始化模型参数$\theta$的初值$\theta^0$</li>
+<li>for j from 1 to J 开始EM算法迭代：<ul>
+<li>E步：计算联合分布的条件概率期望：<ul>
+<li>$Q_i(z^{(i)})=P(z^{(i)}|x^{(i)};\theta)$</li>
+<li>$L(\theta, \theta^j) = \sum_{i=1}^m\sum_{z^{(i)}}Q_i(z^{(i)})logP(x^{(i)}, z^{(i)};\theta)$</li>
 </ul>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/11/07/推荐系统-利用上下文信息/">[推荐系统]利用上下文信息</a></li><li><a href="http://fja0kl.github.io/2018/11/10/推荐系统-推荐系统架构分析/">[推荐系统]推荐系统架构分析</a></li><li><a href="http://fja0kl.github.io/2018/11/04/推荐系统-推荐系统冷启动问题/">[推荐系统]推荐系统冷启动问题</a></li></ul></div>
+</li>
+<li>M步：极大化L(\theta, \theta^j),得到$\theta^{j+1}$:<ul>
+<li>$\theta^{j+1} = argmax_{\theta}L(\theta, \theta^j)$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如果$\theta^{j+1}$已经收敛，则算法结束；否则继续回到E步进行迭代.</li>
+</ol>
+<h1 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h1><p>算法已知的是观察数据，未知的是隐含变量和模型参数。在E步，所做的事情就是固定模型参数的值，优化隐含数据的分布；而在M步，所做的事情就是固定隐含数据分布，优化模型参数的值。</p>
+
       
     </div>
     
@@ -453,7 +489,7 @@ $\hat{r_{ui}} = \overline{r_i}$</p>
       
         <div class="post-tags">
           
-            <a href="/tags/推荐系统/" rel="tag"># 推荐系统</a>
+            <a href="/tags/EM算法/" rel="tag"># EM算法</a>
           
         </div>
       
@@ -466,8 +502,8 @@ $\hat{r_{ui}} = \overline{r_i}$</p>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/10/推荐系统-推荐系统架构分析/" rel="next" title="[推荐系统]推荐系统架构分析">
-                <i class="fa fa-chevron-left"></i> [推荐系统]推荐系统架构分析
+              <a href="/2019/05/05/特征工程/" rel="next" title="特征工程">
+                <i class="fa fa-chevron-left"></i> 特征工程
               </a>
             
           </div>
@@ -475,10 +511,6 @@ $\hat{r_{ui}} = \overline{r_i}$</p>
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/13/线性代数回归/" rel="prev" title="线性代数回归">
-                线性代数回归 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -617,7 +649,7 @@ $\hat{r_{ui}} = \overline{r_i}$</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#离线实验方法"><span class="nav-number">1.</span> <span class="nav-text">离线实验方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评分预测算法"><span class="nav-number">2.</span> <span class="nav-text">评分预测算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平均值"><span class="nav-number">2.1.</span> <span class="nav-text">平均值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全局平均值"><span class="nav-number">2.1.1.</span> <span class="nav-text">全局平均值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户评分平均值"><span class="nav-number">2.1.2.</span> <span class="nav-text">用户评分平均值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#物品评分平均值"><span class="nav-number">2.1.3.</span> <span class="nav-text">物品评分平均值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户分类对物品分类的平均值"><span class="nav-number">2.2.</span> <span class="nav-text">用户分类对物品分类的平均值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于邻域的方法"><span class="nav-number">2.3.</span> <span class="nav-text">基于邻域的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加入时间信息"><span class="nav-number">2.4.</span> <span class="nav-text">加入时间信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐系统经验10则"><span class="nav-number">3.</span> <span class="nav-text">推荐系统经验10则</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Q"><span class="nav-number">1.</span> <span class="nav-text">Q</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#背景知识"><span class="nav-number">2.</span> <span class="nav-text">背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#极大似然估计"><span class="nav-number">2.1.</span> <span class="nav-text">极大似然估计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EM算法"><span class="nav-number">3.</span> <span class="nav-text">EM算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EM算法的隐变量"><span class="nav-number">3.2.</span> <span class="nav-text">EM算法的隐变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公式推导"><span class="nav-number">3.3.</span> <span class="nav-text">公式推导</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EM算法的目标函数"><span class="nav-number">3.3.1.</span> <span class="nav-text">EM算法的目标函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法流程"><span class="nav-number">3.4.</span> <span class="nav-text">算法流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结尾"><span class="nav-number">4.</span> <span class="nav-text">结尾</span></a></li></ol></div>
             
 
           </div>
