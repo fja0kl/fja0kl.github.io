@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
 <meta property="og:description" content="Q 隐含变量是什么？ 参数估计估计的什么参数？ EM算法用来干什么的的？E是什么？M又是什么？ 流程是什么？ 原理是什么？ 应用场景？  背景知识极大似然估计一种参数估计方法。什么是参数估计？用在概率模型中，一般认为事件概率符合一定的分布，而这个分布的参数就是要估计的参数。参数估计就是用实验观测的结果取估计可能概率分布的参数，或者说是知道结果推原因。 最大似然估计会寻找关于θ的最可能的值（即，在所">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-06T14:54:49.926Z">
+<meta property="og:updated_time" content="2019-05-06T14:56:24.028Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EM算法">
 <meta name="twitter:description" content="Q 隐含变量是什么？ 参数估计估计的什么参数？ EM算法用来干什么的的？E是什么？M又是什么？ 流程是什么？ 原理是什么？ 应用场景？  背景知识极大似然估计一种参数估计方法。什么是参数估计？用在概率模型中，一般认为事件概率符合一定的分布，而这个分布的参数就是要估计的参数。参数估计就是用实验观测的结果取估计可能概率分布的参数，或者说是知道结果推原因。 最大似然估计会寻找关于θ的最可能的值（即，在所">
@@ -298,7 +298,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-06T22:54:49+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-06T22:56:24+08:00">
                 2019-05-06
               </time>
             
@@ -423,7 +423,7 @@
 <p>一个条件概率，如果$Q_i(z^{(i)})=P(z^{(i)}|x^{(i)};\theta)$, 那么就可以算出包含隐变量的对数似然函数的一个下界。如果能极大化这个下界，也就相当于在极大化我们的对数似然函数。所以，我们需要极大化下式：</p>
 <p>$argmax_{\theta} \sum_i^m \sum_{z^{(i)}} Q_i(z^{(i)})log \frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}\$</p>
 <p>去掉常数部分，小极大化的对数似然下界为：</p>
-<p>$argmax_{\theta} \sum_i^m\sum_{z^{(i)}}Q_i(z^{(i)})log p(x^{(i)},z^{(i)};\theta)$</p>
+<p>$argmax_{\theta} \sum_i^m \sum_{z^{(i)}} Q_i(z^{(i)})log p(x^{(i)},z^{(i)};\theta)$</p>
 <p>这个式子是我们EM算法中的M步。E步是求logP(x(i)，z(i);θ)基于条件概率分布Qi(z(i))的期望 ∑z(i)Qi(z(i))logP(x(i)，z(i);θ)。</p>
 <h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><p>输入：观察数据$x=(x^{(1)}, x^{(2)},…,x^{(m)})$，联合分布p(x,z;theta),条件分布p(z|x;theta)，最大迭代次数J</p>
 <ol>
