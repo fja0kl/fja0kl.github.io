@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
 <meta property="og:description" content="Q 隐含变量是什么？ 参数估计估计的什么参数？ EM算法用来干什么的的？E是什么？M又是什么？ 流程是什么？ 原理是什么？ 应用场景？  背景知识极大似然估计一种参数估计方法。什么是参数估计？用在概率模型中，一般认为事件概率符合一定的分布，而这个分布的参数就是要估计的参数。参数估计就是用实验观测的结果取估计可能概率分布的参数，或者说是知道结果推原因。 最大似然估计会寻找关于θ的最可能的值（即，在所">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-06T14:44:29.509Z">
+<meta property="og:updated_time" content="2019-05-06T14:48:56.629Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EM算法">
 <meta name="twitter:description" content="Q 隐含变量是什么？ 参数估计估计的什么参数？ EM算法用来干什么的的？E是什么？M又是什么？ 流程是什么？ 原理是什么？ 应用场景？  背景知识极大似然估计一种参数估计方法。什么是参数估计？用在概率模型中，一般认为事件概率符合一定的分布，而这个分布的参数就是要估计的参数。参数估计就是用实验观测的结果取估计可能概率分布的参数，或者说是知道结果推原因。 最大似然估计会寻找关于θ的最可能的值（即，在所">
@@ -298,7 +298,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-06T22:44:29+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-06T22:48:56+08:00">
                 2019-05-06
               </time>
             
@@ -413,7 +413,7 @@
 特别地，如果f是严格凸函数，当且仅当 P(X = EX) = 1，即X是常量时，上式取等号，也就是$E[f(x)] = f(EX)$</p>
 </blockquote>
 <p>同时利用Jensen不等式，可以得到：</p>
-<p>$\sum_{i=1}^m logp(x^{(i)}; \theta)=\sum_{i=1}^mlog\sum_z p(x^{(i)},z;\theta)=\newline \sum_{i=1}^m log\sum_{z^{(i)}}Q_i(z^{(i)})\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})} \geq\sum_i\sum_{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$</p>
+<p>$\sum_{i=1}^m logp(x^{(i)}; \theta) = \sum_{i=1}^m log \sum_z p(x^{(i)},z;\theta)= \newline\sum_{i=1}^m log \sum_{z^{(i)}} Q_i(z^{(i)}) \frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})} \geq\sum_i \sum_{z^{(i)}} Q_i(z^{(i)})log \frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$</p>
 <p>其中，$\sum_{z^{(i)}}Q_i(z^{(i)})\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$是$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$的期望，相应概率为$Q_i(z^{(i)})$</p>
 <p>如果要满足Jensen不等式的等号，则有：</p>
 <p>$\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})} = c$, c为常数。</p>
@@ -421,7 +421,7 @@
 <p>从上面两个式子可以知道，</p>
 <p>$Q_i(z^{(i)}) = \frac{P(x^{(i)}, z^{(i)}; \theta)}{\sum_zP(x^{(i)}, z^{(i)}; \theta)=\newline\frac{P(x^{(i)}, z^{(i)}; \theta)}{P(x^{(i)}; \theta)}} = P(z^{(i)|x^{(i)}; \theta})$</p>
 <p>一个条件概率，如果$Q_i(z^{(i)})=P(z^{(i)}|x^{(i)};\theta)$, 那么就可以算出包含隐变量的对数似然函数的一个下界。如果能极大化这个下界，也就相当于在极大化我们的对数似然函数。所以，我们需要极大化下式：</p>
-<p>$argmax_{\theta} \sum_i^m\sum_{z^{(i)}}Q_i(z^{(i)})log\frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}\$</p>
+<p>$argmax_{\theta} \sum_i^m \sum_{z^{(i)}} Q_i(z^{(i)})log \frac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}\$</p>
 <p>去掉常数部分，小极大化的对数似然下界为：</p>
 <p>$argmax_{\theta} \sum_i^m\sum_{z^{(i)}}Q_i(z^{(i)})log p(x^{(i)},z^{(i)};\theta)$</p>
 <p>这个式子是我们EM算法中的M步。E步是求logP(x(i)，z(i);θ)基于条件概率分布Qi(z(i))的期望 ∑z(i)Qi(z(i))logP(x(i)，z(i);θ)。</p>
@@ -434,7 +434,7 @@
 <li>$L(\theta, \theta^j) = \sum_{i=1}^m\sum_{z^{(i)}}Q_i(z^{(i)})logP(x^{(i)}, z^{(i)};\theta)$</li>
 </ul>
 </li>
-<li>M步：极大化L(\theta, \theta^j),得到$\theta^{j+1}$:<ul>
+<li>M步：极大化$L(\theta, \theta^j)$,得到$\theta^{j+1}$:<ul>
 <li>$\theta^{j+1} = argmax_{\theta}L(\theta, \theta^j)$</li>
 </ul>
 </li>
