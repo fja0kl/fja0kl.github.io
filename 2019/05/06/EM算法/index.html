@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
 <meta property="og:description" content="Q 隐含变量是什么？ 参数估计估计的什么参数？ EM算法用来干什么的的？E是什么？M又是什么？ 流程是什么？ 原理是什么？ 应用场景？  背景知识极大似然估计一种参数估计方法。什么是参数估计？用在概率模型中，一般认为事件概率符合一定的分布，而这个分布的参数就是要估计的参数。参数估计就是用实验观测的结果取估计可能概率分布的参数，或者说是知道结果推原因。 最大似然估计会寻找关于θ的最可能的值（即，在所">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-06T14:40:54.082Z">
+<meta property="og:updated_time" content="2019-05-06T14:44:29.509Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EM算法">
 <meta name="twitter:description" content="Q 隐含变量是什么？ 参数估计估计的什么参数？ EM算法用来干什么的的？E是什么？M又是什么？ 流程是什么？ 原理是什么？ 应用场景？  背景知识极大似然估计一种参数估计方法。什么是参数估计？用在概率模型中，一般认为事件概率符合一定的分布，而这个分布的参数就是要估计的参数。参数估计就是用实验观测的结果取估计可能概率分布的参数，或者说是知道结果推原因。 最大似然估计会寻找关于θ的最可能的值（即，在所">
@@ -298,7 +298,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-06T22:40:54+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-06T22:44:29+08:00">
                 2019-05-06
               </time>
             
@@ -443,6 +443,10 @@
 <li>如果$\theta^{j+1}$已经收敛，则算法结束；否则继续回到E步进行迭代.</li>
 </ol>
 <h1 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h1><p>算法已知的是观察数据，未知的是隐含变量和模型参数。在E步，所做的事情就是固定模型参数的值，优化隐含数据的分布；而在M步，所做的事情就是固定隐含数据分布，优化模型参数的值。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://www.cnblogs.com/pinard/p/6912636.html" target="_blank" rel="noopener">刘建平Pinard-EM算法原理总结</a></li>
+<li><a href="https://blog.csdn.net/v_july_v/article/details/81708386" target="_blank" rel="noopener">如何通俗理解EM算法</a></li>
+</ul>
 
       
     </div>
@@ -649,7 +653,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Q"><span class="nav-number">1.</span> <span class="nav-text">Q</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#背景知识"><span class="nav-number">2.</span> <span class="nav-text">背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#极大似然估计"><span class="nav-number">2.1.</span> <span class="nav-text">极大似然估计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EM算法"><span class="nav-number">3.</span> <span class="nav-text">EM算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EM算法的隐变量"><span class="nav-number">3.2.</span> <span class="nav-text">EM算法的隐变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公式推导"><span class="nav-number">3.3.</span> <span class="nav-text">公式推导</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EM算法的目标函数"><span class="nav-number">3.3.1.</span> <span class="nav-text">EM算法的目标函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法流程"><span class="nav-number">3.4.</span> <span class="nav-text">算法流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结尾"><span class="nav-number">4.</span> <span class="nav-text">结尾</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Q"><span class="nav-number">1.</span> <span class="nav-text">Q</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#背景知识"><span class="nav-number">2.</span> <span class="nav-text">背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#极大似然估计"><span class="nav-number">2.1.</span> <span class="nav-text">极大似然估计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EM算法"><span class="nav-number">3.</span> <span class="nav-text">EM算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EM算法的隐变量"><span class="nav-number">3.2.</span> <span class="nav-text">EM算法的隐变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公式推导"><span class="nav-number">3.3.</span> <span class="nav-text">公式推导</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EM算法的目标函数"><span class="nav-number">3.3.1.</span> <span class="nav-text">EM算法的目标函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法流程"><span class="nav-number">3.4.</span> <span class="nav-text">算法流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结尾"><span class="nav-number">4.</span> <span class="nav-text">结尾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
