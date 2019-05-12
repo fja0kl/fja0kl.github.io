@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://ae01.alicdn.com/kf/HTB1pw5zVxjaK1RjSZFAq6zdLFXaT.jpg">
 <meta property="og:image" content="https://ae01.alicdn.com/kf/HTB1..StVAPoK1RjSZKbq6x1IXXa5.jpg">
 <meta property="og:image" content="https://ae01.alicdn.com/kf/HTB14iygVzDpK1RjSZFrq6y78VXak.jpg">
-<meta property="og:updated_time" content="2019-05-12T11:54:55.715Z">
+<meta property="og:updated_time" content="2019-05-12T11:56:21.762Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[LeetCode]96. Unique Binary Search Trees">
 <meta name="twitter:description" content="QuestionGiven n, how many structurally unique BST’s (binary search trees) that store values 1 … n? Example: Input: 3 Output: 5 Explanation: Given n = 3, there are a total of 5 unique BST’s: 123451">
@@ -302,7 +302,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-12T19:54:55+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-12T19:56:21+08:00">
                 2019-05-12
               </time>
             
@@ -402,8 +402,8 @@
 $dp[3] = dp[0] <em> dp[2] + dp[1]</em>dp[1] + dp[3] * dp[0]$</p>
 <p>表示当1为根节点，左子树的组合数为dp<a href="没有节点">0</a>，右子树为dp<a href="右子树有2个节点">2</a>；当2为根；当3为根，三种情况之和。</p>
 <h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numTrees</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp(n+<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">        dp[<span class="number">0</span>] = dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=n; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>; j&lt;=i; j++)#根节点分别为：<span class="number">1</span>-i</span><br><span class="line">                dp[i] += dp[j<span class="number">-1</span>] * dp[i-j];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a href="https://zh.wikipedia.org/wiki/%E5%8D%A1%E5%A1%94%E5%85%B0%E6%95%B0" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%8D%A1%E5%A1%94%E5%85%B0%E6%95%B0</a>
-<a href="https://www.cnblogs.com/grandyang/p/4299608.html" target="_blank" rel="noopener">https://www.cnblogs.com/grandyang/p/4299608.html</a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a href="https://zh.wikipedia.org/wiki/%E5%8D%A1%E5%A1%94%E5%85%B0%E6%95%B0" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%8D%A1%E5%A1%94%E5%85%B0%E6%95%B0</a></p>
+<p><a href="https://www.cnblogs.com/grandyang/p/4299608.html" target="_blank" rel="noopener">https://www.cnblogs.com/grandyang/p/4299608.html</a></p>
 
       
     </div>
