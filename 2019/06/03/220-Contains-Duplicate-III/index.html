@@ -381,7 +381,7 @@
 But the shortcoming of this solution is that the time-consuming is very high, Can’t pass all test cases.</p>
 <p>After analysis, two indices i and j, the condition is : |nums[i] – nums[j]|&lt;= t &amp;&amp; | i – j | &lt;=k. We can maintain a window that does not exceed size k. According the size, the condition about index is met. So the main problem is the value limit. The current value nums[i], a value in the window x, then, -t &lt;= x-nums[i] &lt;= t, nums[i]-t &lt;= x &lt;= nums[i] + t. So we can judge the result by finding whether there is a element in the window meeting the condition.</p>
 <h3 id="Codes"><a href="#Codes" class="headerlink" title="Codes"></a>Codes</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">containsNearbyAlmostDuplicate</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k, <span class="keyword">int</span> t)</span></span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (nums.empty() || k &lt;= <span class="number">0</span> || t &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">set</span>&lt;LL&gt; order;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; nums.size(); ++i)&#123;</span><br><span class="line">            <span class="comment">//返回第一个大于等于val元素的iterator(下标)</span></span><br><span class="line">            <span class="keyword">auto</span> it = order.lower_bound((LL)nums[i] - (LL)t);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (it != order.end() &amp;&amp; *it &lt;= (LL)nums[i] + (LL)t)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (i &gt;= k) order.erase(nums[i-k]);</span><br><span class="line">            order.insert(nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://blog.themismin.com/posts/9f45d08c.html">Linux-awk统计排序命令</a></li></ul></div>
       
     </div>
     
@@ -536,7 +536,7 @@ But the shortcoming of this solution is that the time-consuming is very high, Ca
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -558,7 +558,7 @@ But the shortcoming of this solution is that the time-consuming is very high, Ca
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -591,7 +591,7 @@ But the shortcoming of this solution is that the time-consuming is very high, Ca
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Codes"><span class="nav-number">2.2.</span> <span class="nav-text">Codes</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Codes"><span class="nav-number">2.2.</span> <span class="nav-text">Codes</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
             
 
           </div>
