@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="博客, fja0kl, Hexo, DL">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="出处Xubao blog: 不平衡数据下的机器学习方法简介 http://baogege.info/2015/11/16/learning-from-imbalanced-data/ 引言不平衡数据的场景有, 搜索引擎的点击预测,电子商务领域的商品推荐,信用卡欺诈,网络攻击识别等等. 问题定义顾名思义,数据集样本类别极不平衡. 以二分类为例,假设数据集为S, 多数类和少数类的样本比例达到100:1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转载]不平衡数据下的机器学习方法简介">
+<meta property="og:url" content="http://fja0kl.github.io/2019/06/15/转载-不平衡数据下的机器学习方法简介/index.html">
+<meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="出处Xubao blog: 不平衡数据下的机器学习方法简介 http://baogege.info/2015/11/16/learning-from-imbalanced-data/ 引言不平衡数据的场景有, 搜索引擎的点击预测,电子商务领域的商品推荐,信用卡欺诈,网络攻击识别等等. 问题定义顾名思义,数据集样本类别极不平衡. 以二分类为例,假设数据集为S, 多数类和少数类的样本比例达到100:1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://fja0kl.github.io/2019/06/15/转载-不平衡数据下的机器学习方法简介/![](https://ae01.alicdn.com/kf/HTB1tRetcrus3KVjSZKbq6xqkFXaF.jpg">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/HTB1ufmOcBOD3KVjSZFF763n9pXaD.png">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/HTB1mQWMcECF3KVjSZJn762nHFXa8.png">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/HTB1HXaZcqWs3KVjSZFx761WUXXaj.png">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/HTB1WROScCSD3KVjSZFK76210VXaw.png">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/HTB1riuUcBGE3KVjSZFh763kaFXaB.png">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/HTB1J1uScEGF3KVjSZFo762mpFXaA.png">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/HTB19vmGbkxz61VjSZFt761DSVXaD.png">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/HTB1Pg1Scv5G3KVjSZPx762I3XXaP.png">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/HTB10YiHbkxz61VjSZFt761DSVXau.png">
+<meta property="og:updated_time" content="2019-06-15T13:39:24.090Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转载]不平衡数据下的机器学习方法简介">
+<meta name="twitter:description" content="出处Xubao blog: 不平衡数据下的机器学习方法简介 http://baogege.info/2015/11/16/learning-from-imbalanced-data/ 引言不平衡数据的场景有, 搜索引擎的点击预测,电子商务领域的商品推荐,信用卡欺诈,网络攻击识别等等. 问题定义顾名思义,数据集样本类别极不平衡. 以二分类为例,假设数据集为S, 多数类和少数类的样本比例达到100:1">
+<meta name="twitter:image" content="http://fja0kl.github.io/2019/06/15/转载-不平衡数据下的机器学习方法简介/![](https://ae01.alicdn.com/kf/HTB1tRetcrus3KVjSZKbq6xqkFXaF.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fja0kl.github.io/2019/06/15/转载-不平衡数据下的机器学习方法简介/">
+
+
+
+
+
+  <title>[转载]不平衡数据下的机器学习方法简介 | fja0kl's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">fja0kl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">但行好事 莫问前程</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2019/06/15/转载-不平衡数据下的机器学习方法简介/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fja0kl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fja0kl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[转载]不平衡数据下的机器学习方法简介</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-15T21:38:29+08:00">
+                2019-06-15
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-15T21:39:24+08:00">
+                2019-06-15
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/15/转载-不平衡数据下的机器学习方法简介/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/15/转载-不平衡数据下的机器学习方法简介/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/06/15/转载-不平衡数据下的机器学习方法简介/" class="leancloud_visitors" data-flag-title="[转载]不平衡数据下的机器学习方法简介">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="出处"><a href="#出处" class="headerlink" title="出处"></a>出处</h2><p><a href="http://baogege.info/2015/11/16/learning-from-imbalanced-data/" target="_blank" rel="noopener">Xubao blog: 不平衡数据下的机器学习方法简介 http://baogege.info/2015/11/16/learning-from-imbalanced-data/</a></p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>不平衡数据的场景有, 搜索引擎的点击预测,电子商务领域的商品推荐,信用卡欺诈,网络攻击识别等等.</p>
+<h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><p>顾名思义,<strong>数据集样本类别极不平衡</strong>. 以二分类为例,假设数据集为S, 多数类和少数类的样本比例达到100:1, 1000:1甚至10000:1. 这种情况下是不平衡数据,不平衡数据的学习就是需要在如此分布不平衡的数据集中学习有用的信息.</p>
+<h3 id="为什么不平衡学习"><a href="#为什么不平衡学习" class="headerlink" title="为什么不平衡学习"></a>为什么不平衡学习</h3><p>传统的学习方法以降低总体分类精度为目标, 将所有样本一视同仁, 同等对待,<strong>造成分类器在多数类的分类精度较高,而在少数类的分类精度很低</strong>.比如二分类, 数据比例为499:1, 那么只要将学习器全部预测为负类,准确率(精度)可以达到非常高,但很显然这并不是一个很好的学习效果, 因此传统的学习算法在不平衡数据集中具有较大的局限性.</p>
+<p><img src="![](https://ae01.alicdn.com/kf/HTB1tRetcrus3KVjSZKbq6xqkFXaF.jpg" alt="">)</p>
+<h2 id="不平衡学习的方法"><a href="#不平衡学习的方法" class="headerlink" title="不平衡学习的方法"></a>不平衡学习的方法</h2><p>解决方法主要分为两个方面: </p>
+<ol>
+<li>从数据的角度出发, 主要方法为抽样. 通过某种策略进行抽样,进而样我们的数据相对均衡一点;</li>
+<li>从算法的角度出发,考虑不同误分类情况代价的差异性对算法进行优化,使得算法在不平衡数据下也能有较好的效果.</li>
+</ol>
+<h3 id="采样"><a href="#采样" class="headerlink" title="采样"></a>采样</h3><p>采样算法通过某一种策略改变样本的类别分布, 以达到将不平衡分布的样本转换为相对平衡分布的样本的目的.</p>
+<h4 id="随机采样"><a href="#随机采样" class="headerlink" title="随机采样"></a>随机采样</h4><p>随机采样算法是采样算法中最简单也最直观易懂的一种方法. 随机采样主要分为两种类型, 分别为<strong>随机欠采样和随机过采样</strong>.随机欠采样顾名思义即从多数类中随机选择少量样本E再合并原有少数类样本作为新的训练数据集, 新的数据集为$S_{min} + E$. 随机欠采样有两种类型分别为有放回和无放回两种. 无放回欠采样在对多数类某样本采样后不会再被重复采样, 有放回采样则有可能. 随机过采样则正好相反, 通过多次有放回随机过采样从少数类中抽取数据集E, 采样的数量大于原有少数类的数量,最终训练集为$S_{maj} + E$.</p>
+<p>随机采样通过改变多数类或少数类样本比例以达到修改样本分布的目的，从而让样本分布较为均衡，但是他们也存在一些问题。对于随机欠采样，由于采样的样本要少于原样本集合，因此会造成一些信息缺失，未被采样的样本往往带有很重要的信息。对于随机过采样，由于需要对少数类样本进行复制因此扩大了数据集，造成模型训练复杂度加大，另一方面也容易造成模型的过拟合问题。针对这些问题提出了几种其它的采样算法。</p>
+<h4 id="SMOTE采样"><a href="#SMOTE采样" class="headerlink" title="SMOTE采样"></a>SMOTE采样</h4><p>Synthetic Minority Oversampling Technique即合成少数类过采样技术. 它是<strong>基于随机过采样算法的一种改进方案</strong>，由于随机过采样采取简单复制样本的策略来增加少数类样本，这样容易产生模型过拟合的问题，即使得模型学习到的信息过于特别(Specific)而不够泛化(General)，SMOTE算法的<strong>基本思想是对少数类样本进行分析并根据少数类样本人工合成新样本添加到数据集中</strong>，算法流程如下。</p>
+<ol>
+<li>对于<strong>少数类中每一个样本x</strong>,以欧氏距离为标准计算它到少数类样本集$S_{min}$中所有样本的距离,得到其k近邻;</li>
+<li>根据样本不平衡比例设置一个<strong>采样比例以确定采样倍率N</strong>,对于每一个少数类样本x,从其k近邻中随机选择若干个样本, 假设选择的近邻为$\hat x$;</li>
+<li>对于每一个随机选出的近邻$\hatx$,分别与原样本按照如下公式构建新的样本.
+$x_{new} = x + rand(0,1) * (\hatx- x)$
+<img src="https://ae01.alicdn.com/kf/HTB1ufmOcBOD3KVjSZFF763n9pXaD.png" alt=""></li>
+</ol>
+<p>过采样, 每个样本, k近邻, 随机性—&gt; 新的少数类样本.</p>
+<p>该算法主要存在两方面的问题：一是在近邻选择时，存在一定的盲目性。从上面的算法流程可以看出，在算法执行过程中，需要确定k值，即选择多少个近邻样本，这需要用户自行解决。从k值的定义可以看出，k值的下限是sampling_rate(sampling_rate为从k个近邻中随机挑选出的近邻样本的个数，且有 sampling_rate &lt; k ), sampling_rate的大小可以根据负类样本数量、正类样本数量和数据集最后需要达到的平衡率决定。但k值的上限没有办法确定，只能根据具体的数据集去反复测试。因此如何确定k值，才能使算法达到最优这是未知的。</p>
+<p>另外，该算法无法克服非平衡数据集的数据分布问题，<strong>容易产生分布边缘化问题</strong>。由于正类样本(少数类样本)的分布决定了其可选择的近邻，<strong>如果一个正类样本处在正类样本集的分布边缘，则由此正类样本和相邻样本产生的“人造”样本也会处在这个边缘，且会越来越边缘化，从而模糊了正类样本和负类样本的边界，而且使边界变得越来越模糊</strong>。这种边界模糊性，虽然使数据集的平衡性得到了改善，但加大了分类算法进行分类的难度。</p>
+<p>SMOTE算法摒弃了随机过采样复制样本的方法, 可以防止随机过采样易过拟合的问题,实践证明此方法可以提高分类器的性能. 但是由于对每个少数类样本都生成新样本,因此容易发生生成样本重叠overlapping的问题, 为了解决smote算法的这一缺点提出一些改进算法,其中之一是一种Borderline-SMOTE算法. </p>
+<p><img src="https://ae01.alicdn.com/kf/HTB1mQWMcECF3KVjSZJn762nHFXa8.png" alt=""></p>
+<p>在Borderline-SMOTE中,若少数类样本的每个样本xi求k近邻,记作Si-knn, 且Si-knn属于真个样本集合S而不再是少数类样本, 若满足 $\frac{k}{2} &lt; |S_{i-knn} \cap S_{maj}| &lt; k$
+则将样本xi加入DANGER集合,显然DANGER集合代表了接近分类边界的样本,将DANGER当做SMOTE种子样本的输入生成新样本. 特别地,当上述条件取右边界,即k近邻中全部样本都是多数类时,此样本不会被选择为种样本生成新样本,此情况下的样本为噪音.</p>
+<p>Borderline-SMOTE与原始SMOTE不同的地方在于，原始的SMOTE是对所有少数类样本生成新样本。而改进的方法则是先根据规则判断出少数类的边界样本，再对这些样本生成新样本。</p>
+<p>判断边界的一个简单的规则为：K近邻中有一半以上多数类样本的少数类为边界样本。直观地讲，只为那些周围大部分是多数类样本的少数类样本生成新样本。</p>
+<p>假设a为少数类中的一个样本，此时少数类的样本分为三类，如下图所示：</p>
+<p>(i) 噪音样本(noise)， 该少数类的所有最近邻样本都来自于不同于样本a的其他类别：</p>
+<p>(ii) 危险样本(in danger)， 至少一半的最近邻样本来自于同一类(不同于a的类别)；</p>
+<p>(iii) 安全样本(safe)， 所有的最近邻样本都来自于同一个类。</p>
+<h4 id="Informed-Undersampling"><a href="#Informed-Undersampling" class="headerlink" title="Informed Undersampling"></a>Informed Undersampling</h4><p>既然SMOTE可以解决随机过采样容易发生的模型过拟合问题,对应地也有一些采样方法,可以解决<strong>随机欠采样造成的数据信息丢失问题</strong>,答案是informed undersampling采样技术, <strong>informed undersampling采样技术主要有两种方法分别是easyensemble算法和balanceCascade算法</strong>. </p>
+<p>EasyEnsemble算法如下图所示, 此算法<strong>类似于随机森林的bagging</strong>方法, <strong>它把数据划分为两部分,分别是多数类样本和少数类样本, 对于多数类样本$S_{maj}$, 通过n次有放回抽样生成n份子集(有放回, 防止抽样数据不同,导致的问题),少数类样本分别和这n份样本合并训练一个模型,这样可以得到n个模型,最终的模型是这n个模型预测结果的平均值</strong>.</p>
+<p><img src="https://ae01.alicdn.com/kf/HTB1HXaZcqWs3KVjSZFx761WUXXaj.png" alt=""></p>
+<p>BalanceCascade算法是一种级联算法,利用增量训练的思想(Boosting). BalanceCascade从多数类$S_{maj}$中下采样生成训练集,训练一个分类器,对于那些分类正确的对偶舒蕾样本不放回, 然后对这个更小的多数类样本下采样产生数据集,训练第二个分类器,以此类推,最终组合所有分类器的结果得到最终结果.</p>
+<h3 id="代价敏感学习"><a href="#代价敏感学习" class="headerlink" title="代价敏感学习"></a>代价敏感学习</h3><h4 id="代价矩阵"><a href="#代价矩阵" class="headerlink" title="代价矩阵"></a>代价矩阵</h4><p>在算法层面上解决不平衡数据学习的方法主要是基于代价敏感学习算法(cost-sensitive-learning), <strong>代价敏感学习方法的核心要素是代价矩阵</strong>,在实际应用中不同类型的误分类情况导致的代价是不一样的,例如在医疗中,”将病人误诊为健康人”和”将健康人误诊为病人”的代价不同…</p>
+<h4 id="代价矩阵学习方法"><a href="#代价矩阵学习方法" class="headerlink" title="代价矩阵学习方法"></a>代价矩阵学习方法</h4><p>基于以上代价矩阵的分析,代价敏感学习方法主要有一下三种实现方式,分别是:</p>
+<ol>
+<li><strong>从学习模型出发,着眼于对某一具体学习方法的改造</strong>,使之能使用不平衡数据下的学习,研究者们针对不同的学习模型如感知机,支持向量机,决策树等分别提出了其代价敏感的版本. 以代价敏感的决策树为例,可从三个方面对其进行改进以适应不平衡数据的学习,这三个方面分别是:决策阈值的选择,分裂标准的选择方面,剪枝方面. 这三个方面中都可以将带将矩阵引入.</li>
+<li><strong>从贝叶斯理论出发,把代价敏感学习看成是分类结果的一种后处理</strong>,按照传统方法学习到一个模型,以实现损失最小的目标对结果进行调整,优化公式如下. 此方法的<strong>优点在于它可以不依赖所用具体的分类器,但是缺点也能明显它要求分类器输出值为概率</strong>.</li>
+<li><strong>从预处理的角度出发, 将代价用于权重的调整</strong>, 使得分类器满足代价敏感的特性. 比如,基于AdaBoost的权重更新策略.</li>
+</ol>
+<h4 id="AdaCost算法"><a href="#AdaCost算法" class="headerlink" title="AdaCost算法"></a>AdaCost算法</h4><p>AdaBoost权重更新方法, 正确分类样本权重降低,错误分类样本权重加大, 最终模型是多次迭代模型的一个加权线性组合,分类越准确的分类器将会获得越大的权重.</p>
+<p><img src="https://ae01.alicdn.com/kf/HTB1WROScCSD3KVjSZFK76210VXaw.png" alt=""></p>
+<p>AdaCost算法修改了AdaBoost算法的权重更新策略, 其基本思想是对于代价过高的误分类样本大大地提高其权重,而对于代价高的正确分类样本适当地降低其权重,使其权重降低相对较小. 总体思想是代价高的样本权重增加得大降低得缓慢.其样本权重按照如下公式进行更新.beta+和beta-分别表示样本被正确和错误分类情况下beta的取值.
+<img src="https://ae01.alicdn.com/kf/HTB1riuUcBGE3KVjSZFh763kaFXaB.png" alt=""></p>
+<h2 id="不平衡学习的评价方法"><a href="#不平衡学习的评价方法" class="headerlink" title="不平衡学习的评价方法"></a>不平衡学习的评价方法</h2><h3 id="正确率和F值"><a href="#正确率和F值" class="headerlink" title="正确率和F值"></a>正确率和F值</h3><p>正确值和F值都是基于混淆矩阵的.每行代表预测情况,每列代表实际类别.</p>
+<p><img src="https://ae01.alicdn.com/kf/HTB1J1uScEGF3KVjSZFo762mpFXaA.png" alt=""></p>
+<p>正确率和F值的计算公式如下.正确率和错误率不能表示不平衡数据下模型的表现,对于不平衡数据即使全部预测为多数类也可以达到较高的正确率较低的错误率, 而F值同时考虑到了少数类的准确率和召回率,因此能衡量不平衡数据下模型的表现,其中beta通常取1.</p>
+<p><img src="https://ae01.alicdn.com/kf/HTB19vmGbkxz61VjSZFt761DSVXaD.png" alt=""></p>
+<h3 id="G-mean"><a href="#G-mean" class="headerlink" title="G-mean"></a>G-mean</h3><p>G-Mean是另一个指标,能评价不平衡数据的模型表现.考虑了真阳率和假阳率,</p>
+<p><img src="https://ae01.alicdn.com/kf/HTB1Pg1Scv5G3KVjSZPx762I3XXaP.png" alt=""></p>
+<h3 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h3><p>真阳率和假阳率, 假阳率又表示为1-负类召回率, 真阳率又表示为正类召回率, 模型最好的时候FP_rate=0,TP_rate=1, 以假阳率为横坐标,真阳率为纵坐标,位置在左上角. ROC曲线越靠近A表示模型表现越好, 曲线下面积越大,表现也越好. 
+<img src="https://ae01.alicdn.com/kf/HTB10YiHbkxz61VjSZFt761DSVXau.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><a href="https://www.cnblogs.com/kamekin/p/9824294.html" target="_blank" rel="noopener">https://www.cnblogs.com/kamekin/p/9824294.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>您的支持就是我更新的最大动力!谢谢!</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpeg" alt="fja0kl 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpeg" alt="fja0kl 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/15/LeetCode-45-Jump-Game-II/" rel="next" title="[LeetCode]45. Jump Game II">
+                <i class="fa fa-chevron-left"></i> [LeetCode]45. Jump Game II
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
+            
+              <p class="site-author-name" itemprop="name">fja0kl</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#出处"><span class="nav-number">1.</span> <span class="nav-text">出处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">2.</span> <span class="nav-text">引言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义"><span class="nav-number">2.1.</span> <span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么不平衡学习"><span class="nav-number">2.2.</span> <span class="nav-text">为什么不平衡学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不平衡学习的方法"><span class="nav-number">3.</span> <span class="nav-text">不平衡学习的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#采样"><span class="nav-number">3.1.</span> <span class="nav-text">采样</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机采样"><span class="nav-number">3.1.1.</span> <span class="nav-text">随机采样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SMOTE采样"><span class="nav-number">3.1.2.</span> <span class="nav-text">SMOTE采样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Informed-Undersampling"><span class="nav-number">3.1.3.</span> <span class="nav-text">Informed Undersampling</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价敏感学习"><span class="nav-number">3.2.</span> <span class="nav-text">代价敏感学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代价矩阵"><span class="nav-number">3.2.1.</span> <span class="nav-text">代价矩阵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代价矩阵学习方法"><span class="nav-number">3.2.2.</span> <span class="nav-text">代价矩阵学习方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AdaCost算法"><span class="nav-number">3.2.3.</span> <span class="nav-text">AdaCost算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不平衡学习的评价方法"><span class="nav-number">4.</span> <span class="nav-text">不平衡学习的评价方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正确率和F值"><span class="nav-number">4.1.</span> <span class="nav-text">正确率和F值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#G-mean"><span class="nav-number">4.2.</span> <span class="nav-text">G-mean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROC曲线和AUC"><span class="nav-number">4.3.</span> <span class="nav-text">ROC曲线和AUC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fja0kl</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz',
+        appKey: 'Nw8hvihjOt1jGKfvVpix3P5V',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("9F44Ig7yDXaxGUY9BiFfq2Wa-gzGzoHsz", "Nw8hvihjOt1jGKfvVpix3P5V");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
