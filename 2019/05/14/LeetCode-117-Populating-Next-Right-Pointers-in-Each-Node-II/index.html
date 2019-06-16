@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="tree,recursion,">
+  <meta name="keywords" content="recursion,tree,">
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="ProblemGiven a binary tree 123456struct Node &amp;#123;  int val;  Node *left;  Node *right;  Node *next;&amp;#125; Populate each next pointer to point to its next right node. If there is no next right node,">
-<meta name="keywords" content="tree,recursion">
+<meta name="keywords" content="recursion,tree">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[LeetCode]117. Populating Next Right Pointers in Each Node II">
 <meta property="og:url" content="http://fja0kl.github.io/2019/05/14/LeetCode-117-Populating-Next-Right-Pointers-in-Each-Node-II/index.html">
@@ -401,7 +401,7 @@
 <p>题目要求使用常量空间。这里继续对程序进行优化，主要优化方向就是减少空间的占用。这里利用一个变量来存储下层节点的起始位置，然后当本层节点的孩子节点赋值完成后，变更到保存节点的位置。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">// Definition for a Node.</span></span><br><span class="line"><span class="comment">class Node &#123;</span></span><br><span class="line"><span class="comment">public:</span></span><br><span class="line"><span class="comment">    int val;</span></span><br><span class="line"><span class="comment">    Node* left;</span></span><br><span class="line"><span class="comment">    Node* right;</span></span><br><span class="line"><span class="comment">    Node* next;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    Node() &#123;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    Node(int _val, Node* _left, Node* _right, Node* _next) &#123;</span></span><br><span class="line"><span class="comment">        val = _val;</span></span><br><span class="line"><span class="comment">        left = _left;</span></span><br><span class="line"><span class="comment">        right = _right;</span></span><br><span class="line"><span class="comment">        next = _next;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">Node* <span class="title">connect</span><span class="params">(Node* root)</span> </span>&#123;</span><br><span class="line">        Node* dummy = <span class="keyword">new</span> Node(<span class="number">-1</span>, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>), *cur = dummy, *head = root;</span><br><span class="line">        <span class="comment">// dummy节点使得操作统一，不用判断是不是第一个节点</span></span><br><span class="line">        <span class="keyword">while</span> (root)&#123;</span><br><span class="line">            <span class="comment">// 当前节点的孩子进行赋值</span></span><br><span class="line">            <span class="keyword">if</span> (root-&gt;left)&#123;</span><br><span class="line">                cur-&gt;next = root-&gt;left;</span><br><span class="line">                cur = cur-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (root-&gt;right)&#123;</span><br><span class="line">                cur-&gt;next = root-&gt;right;</span><br><span class="line">                cur = cur-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 访问兄弟节点</span></span><br><span class="line">            root = root-&gt;next;</span><br><span class="line">            <span class="keyword">if</span> (!root)&#123;<span class="comment">//如果为空，换一层</span></span><br><span class="line">                root = dummy-&gt;next;</span><br><span class="line">                dummy-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">                cur = dummy;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a href="https://www.cnblogs.com/grandyang/p/4290148.html" target="_blank" rel="noopener">https://www.cnblogs.com/grandyang/p/4290148.html</a></p>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2019/05/14/LeetCode-114-Flatten-Binary-Tree-to-Linked-List/">[LeetCode]114. Flatten Binary Tree to Linked List</a></li><li><a href="http://fja0kl.github.io/2019/05/26/LeetCode-109-Convert-Sorted-List-to-Binary-Search-Tree/">[LeetCode]109. Convert Sorted List to Binary Search Tree</a></li><li><a href="http://fja0kl.github.io/2019/05/22/LeetCode-110-Balanced-Binary-Tree/">[LeetCode]110. Balanced Binary Tree</a></li></ul></div>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2019/05/22/LeetCode-110-Balanced-Binary-Tree/">[LeetCode]110. Balanced Binary Tree</a></li><li><a href="http://fja0kl.github.io/2019/05/22/LeetCode-236-Lowest-Common-Ancestor-of-a-Binary-Tree/">[LeetCode]236. Lowest Common Ancestor of a Binary Tree</a></li><li><a href="http://fja0kl.github.io/2019/05/26/LeetCode-109-Convert-Sorted-List-to-Binary-Search-Tree/">[LeetCode]109. Convert Sorted List to Binary Search Tree</a></li></ul></div>
       
     </div>
     
@@ -447,9 +447,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/tree/" rel="tag"># tree</a>
-          
             <a href="/tags/recursion/" rel="tag"># recursion</a>
+          
+            <a href="/tags/tree/" rel="tag"># tree</a>
           
         </div>
       
@@ -558,7 +558,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -580,7 +580,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -385,7 +385,7 @@ dp_min(k) = min( dp_max(k-1) <em> A[k], A[k], dp_min(k-1) </em> A[k] )</p>
 <h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>节省空间. 实际上每个状态转移时,仅仅和上一个状态有关,所以空间复杂度可以变成O(1).</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProduct</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 没想到会用两个动态规划数组</span></span><br><span class="line">        <span class="keyword">if</span>(nums.empty()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> result = nums[<span class="number">0</span>], mn = nums[<span class="number">0</span>], mx = nums[<span class="number">0</span>], size = nums.size();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt; size; ++i)&#123;</span><br><span class="line">            <span class="keyword">int</span> tmax = mx, tmin = mn;</span><br><span class="line">            mx = max(max(nums[i], tmax*nums[i]), tmin*nums[i]);</span><br><span class="line">            mn = min(min(nums[i], tmax*nums[i]), tmin*nums[i]);</span><br><span class="line">            </span><br><span class="line">            result = max(mx, result);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p><a href="https://www.cnblogs.com/grandyang/p/4028713.html" target="_blank" rel="noopener">https://www.cnblogs.com/grandyang/p/4028713.html</a></p>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2019/06/11/LeetCode-72-Edit-Distance/">[LeetCode]72. Edit Distance</a></li><li><a href="http://fja0kl.github.io/2019/05/12/LeetCode-96-Unique-Binary-Search-Trees/">[LeetCode]96. Unique Binary Search Trees</a></li><li><a href="http://fja0kl.github.io/2019/05/03/LeetCode-Longest-Increasing-Subsequence/">[Leetcode]Longest Increasing Subsequence</a></li></ul></div>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2019/05/12/LeetCode-96-Unique-Binary-Search-Trees/">[LeetCode]96. Unique Binary Search Trees</a></li><li><a href="http://fja0kl.github.io/2019/05/03/LeetCode-Longest-Increasing-Subsequence/">[Leetcode]Longest Increasing Subsequence</a></li><li><a href="http://fja0kl.github.io/2019/05/07/LeetCode-Word-Break/">[LeetCode]Word Break</a></li></ul></div>
       
     </div>
     
@@ -540,7 +540,7 @@ dp_min(k) = min( dp_max(k-1) <em> A[k], A[k], dp_min(k-1) </em> A[k] )</p>
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -562,7 +562,7 @@ dp_min(k) = min( dp_max(k-1) <em> A[k], A[k], dp_min(k-1) </em> A[k] )</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
