@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="博客, fja0kl, Hexo, DL">
+  <meta name="keywords" content="two-pointers,">
 
 
 
@@ -79,14 +79,18 @@
 
 
 
+<meta name="description" content="ProblemGiven a sorted array nums, remove the duplicates in-place such that duplicates appeared at most twice and return the new length. Do not allocate extra space for another array, you must do this">
+<meta name="keywords" content="two-pointers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[LeetCode]80. Remove Duplicates from Sorted Array II">
 <meta property="og:url" content="http://fja0kl.github.io/2019/06/18/LeetCode-80-Remove-Duplicates-from-Sorted-Array-II-1/index.html">
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
+<meta property="og:description" content="ProblemGiven a sorted array nums, remove the duplicates in-place such that duplicates appeared at most twice and return the new length. Do not allocate extra space for another array, you must do this">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-18T12:41:13.601Z">
+<meta property="og:updated_time" content="2019-06-18T12:47:49.426Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[LeetCode]80. Remove Duplicates from Sorted Array II">
+<meta name="twitter:description" content="ProblemGiven a sorted array nums, remove the duplicates in-place such that duplicates appeared at most twice and return the new length. Do not allocate extra space for another array, you must do this">
 
 
 
@@ -294,12 +298,34 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-18T20:41:13+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-18T20:47:49+08:00">
                 2019-06-18
               </time>
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -349,7 +375,19 @@
       
 
       
-        
+        <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given a sorted array nums, remove the duplicates in-place such that duplicates appeared at most twice and return the new length.</p>
+<p>Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Given nums = [1,1,1,2,2,3],</span><br><span class="line"></span><br><span class="line">Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3 respectively.</span><br><span class="line"></span><br><span class="line">It doesn&apos;t matter what you leave beyond the returned length.</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Given nums = [0,0,1,1,1,1,2,3,3],</span><br><span class="line"></span><br><span class="line">Your function should return length = 7, with the first seven elements of nums being modified to 0, 0, 1, 1, 2, 3 and 3 respectively.</span><br><span class="line"></span><br><span class="line">It doesn&apos;t matter what values are set beyond the returned length.</span><br></pre></td></tr></table></figure></p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>和<a href="https://fja0kl.github.io/2019/06/18/LeetCode-26-Remove-Duplicates-from-Sorted-Array/">[LeetCode]26. Remove Duplicates from Sorted Array</a>要求类似: 有序数组,删除重复数字, 不过这里允许同一数字出现两次, 最多出现两次. 空间复杂度为O(1). 不能使用声明额外的存储空间.</p>
+<p>同样,因为数组是有序的,重复数字在数组中位置一定是连续的,比如[1,1,1,2,2,3]. 三个1位置上是连续出现的. 同样使用双指针, 一个指向结果的有序数组idx,一个指向原始数组i. i从下标2开始判断, 如果它和结果有序数组idx-1的数字相等,说明这个数字是第三次出现,跳过它,否则, 加入到结果的有序数组中.</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p><strong>Method One</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums.size() &lt;= <span class="number">2</span>) <span class="keyword">return</span> nums.size();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> idx = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>; i&lt; nums.size(); i++)</span><br><span class="line">            <span class="keyword">if</span> (nums[i] != nums[idx<span class="number">-1</span>])</span><br><span class="line">                nums[++idx] = nums[i];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> idx+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>也可以将初始的判断条件和下面的业务操作合并到一起. 原始数组的指针i从0开始, 结果数组指针idx也从0开始,这时候idx表示结果数组中可以存放元素的位置下标, 存放时,直接放入就行. 和上面的方法不同,上面idx指向结果数组的右边界,存放时要先开拓空间. 此时,存放的条件变为当前数和idx-2位置的数不相等. idx-1为有序数组的右边界,idx-2就是前两个位置的数, 不相等时说明这个数是第一次或第二次出现,是满足条件的, 如果相等,说明是第三次出现, 跳过.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num: nums)&#123;</span><br><span class="line">            <span class="keyword">if</span> (idx &lt; <span class="number">2</span> || nums[idx<span class="number">-2</span>] != num)</span><br><span class="line">                nums[idx++] = num;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> idx;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>还有另一种方法, 直接根据题目要求, 如果当前数是第三次出现跳过它,否则存储到新数组中. 第三次出现怎么表示呢? 当i&gt;=2时,开始判断, nums[i] == nums[idx-1] &amp;&amp; nums[i] == nums[idx-2]; 因为当i&lt;2时,之前的数最多出现两次,满足条件.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; nums.size(); ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span> (i &gt;=<span class="number">2</span> &amp;&amp; nums[i] == nums[idx<span class="number">-1</span>] &amp;&amp; nums[idx<span class="number">-1</span>] == nums[idx<span class="number">-2</span>])</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            nums[idx++] = nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> idx;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="类似问题"><a href="#类似问题" class="headerlink" title="类似问题"></a>类似问题</h2><p><a href="https://fja0kl.github.io/2019/06/18/LeetCode-26-Remove-Duplicates-from-Sorted-Array/">[LeetCode]26. Remove Duplicates from Sorted Array</a></p>
+
       
     </div>
     
@@ -392,6 +430,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/two-pointers/" rel="tag"># two-pointers</a>
+          
+        </div>
       
 
       
@@ -467,8 +511,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -530,6 +583,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code"><span class="nav-number">2.2.</span> <span class="nav-text">Code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类似问题"><span class="nav-number">3.</span> <span class="nav-text">类似问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
