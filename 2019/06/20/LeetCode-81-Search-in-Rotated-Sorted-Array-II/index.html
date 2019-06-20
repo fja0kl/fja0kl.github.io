@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="线性代数,矩阵迹求导,">
+  <meta name="keywords" content="binary-search,">
 
 
 
@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="$\bigtriangledown trABA^TC = CAB + C^TAB^T$. 证明过程:  Notes: (uv)’ = uv’ + u’v. 公式适合于所有的积运算(包括:矩阵). 推荐文章（由hexo文章推荐插件驱动）矩阵微分:推导与应用线性代数回归">
-<meta name="keywords" content="线性代数,矩阵迹求导">
+<meta name="description" content="ProblemSuppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. (i.e., [0,0,1,2,2,5,6] might become [2,5,6,0,0,1,2]). You are given a target value to search. If f">
+<meta name="keywords" content="binary-search">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一个矩阵迹求导公式的证明">
-<meta property="og:url" content="http://fja0kl.github.io/2018/11/15/一个矩阵迹求导公式的证明/index.html">
+<meta property="og:title" content="[LeetCode]81. Search in Rotated Sorted Array II">
+<meta property="og:url" content="http://fja0kl.github.io/2019/06/20/LeetCode-81-Search-in-Rotated-Sorted-Array-II/index.html">
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
-<meta property="og:description" content="$\bigtriangledown trABA^TC = CAB + C^TAB^T$. 证明过程:  Notes: (uv)’ = uv’ + u’v. 公式适合于所有的积运算(包括:矩阵). 推荐文章（由hexo文章推荐插件驱动）矩阵微分:推导与应用线性代数回归">
+<meta property="og:description" content="ProblemSuppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. (i.e., [0,0,1,2,2,5,6] might become [2,5,6,0,0,1,2]). You are given a target value to search. If f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.superbed.cn/pic/5becd0609dc6d61ad66ee25c">
-<meta property="og:updated_time" content="2018-11-15T01:53:12.913Z">
+<meta property="og:updated_time" content="2019-06-20T13:15:14.101Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一个矩阵迹求导公式的证明">
-<meta name="twitter:description" content="$\bigtriangledown trABA^TC = CAB + C^TAB^T$. 证明过程:  Notes: (uv)’ = uv’ + u’v. 公式适合于所有的积运算(包括:矩阵). 推荐文章（由hexo文章推荐插件驱动）矩阵微分:推导与应用线性代数回归">
-<meta name="twitter:image" content="https://www.superbed.cn/pic/5becd0609dc6d61ad66ee25c">
+<meta name="twitter:title" content="[LeetCode]81. Search in Rotated Sorted Array II">
+<meta name="twitter:description" content="ProblemSuppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. (i.e., [0,0,1,2,2,5,6] might become [2,5,6,0,0,1,2]). You are given a target value to search. If f">
 
 
 
@@ -122,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://fja0kl.github.io/2018/11/15/一个矩阵迹求导公式的证明/">
+  <link rel="canonical" href="http://fja0kl.github.io/2019/06/20/LeetCode-81-Search-in-Rotated-Sorted-Array-II/">
 
 
 
 
 
-  <title>一个矩阵迹求导公式的证明 | fja0kl's Blog</title>
+  <title>[LeetCode]81. Search in Rotated Sorted Array II | fja0kl's Blog</title>
   
 
 
@@ -255,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/11/15/一个矩阵迹求导公式的证明/">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2019/06/20/LeetCode-81-Search-in-Rotated-Sorted-Array-II/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fja0kl">
@@ -272,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">一个矩阵迹求导公式的证明</h1>
+          <h1 class="post-title" itemprop="name headline">[LeetCode]81. Search in Rotated Sorted Array II</h1>
         
 
         <div class="post-meta">
@@ -284,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-15T09:52:23+08:00">
-                2018-11-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-20T21:14:19+08:00">
+                2019-06-20
               </time>
             
 
@@ -300,8 +298,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-11-15T09:53:12+08:00">
-                2018-11-15
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-20T21:15:14+08:00">
+                2019-06-20
               </time>
             
           </span>
@@ -319,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/线性代数/" itemprop="url" rel="index">
-                    <span itemprop="name">线性代数</span>
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
                   </a>
                 </span>
 
@@ -337,8 +335,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/11/15/一个矩阵迹求导公式的证明/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/15/一个矩阵迹求导公式的证明/" itemprop="commentCount"></span>
+                <a href="/2019/06/20/LeetCode-81-Search-in-Rotated-Sorted-Array-II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/20/LeetCode-81-Search-in-Rotated-Sorted-Array-II/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -346,7 +344,7 @@
 
           
           
-             <span id="/2018/11/15/一个矩阵迹求导公式的证明/" class="leancloud_visitors" data-flag-title="一个矩阵迹求导公式的证明">
+             <span id="/2019/06/20/LeetCode-81-Search-in-Rotated-Sorted-Array-II/" class="leancloud_visitors" data-flag-title="[LeetCode]81. Search in Rotated Sorted Array II">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -377,12 +375,20 @@
       
 
       
-        <p>$\bigtriangledown trABA^TC = CAB + C^TAB^T$.</p>
-<p>证明过程:</p>
-<p><img src="https://www.superbed.cn/pic/5becd0609dc6d61ad66ee25c" alt="证明过程"></p>
-<p><strong>Notes</strong>:
-(uv)’ = uv’ + u’v. 公式适合于所有的积运算(包括:矩阵).</p>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/11/14/矩阵微分-推导与应用/">矩阵微分:推导与应用</a></li><li><a href="http://fja0kl.github.io/2018/11/13/线性代数回归/">线性代数回归</a></li></ul></div>
+        <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.</p>
+<p>(i.e., [0,0,1,2,2,5,6] might become [2,5,6,0,0,1,2]).</p>
+<p>You are given a target value to search. If found in the array return true, otherwise return false.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: nums = [2,5,6,0,0,1,2], target = 0</span><br><span class="line">Output: true</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: nums = [2,5,6,0,0,1,2], target = 3</span><br><span class="line">Output: false</span><br></pre></td></tr></table></figure>
+<p>Follow up:</p>
+<ul>
+<li>This is a follow up problem to Search in Rotated Sorted Array, where nums may contain duplicates.</li>
+<li>Would this affect the run-time complexity? How and why?</li>
+</ul>
+<p>这个题作为33题<a href="https://fja0kl.github.io/2019/06/19/LeetCode-33-Search-in-Rotated-Sorted-Array/">Search in Rotated Sorted Array</a>的扩展题,或者说变形题. 由原来不存在重复元素的数组,变为存在重复元素的颠倒数组. 其他条件类似, 给定target在数组中查找这个target, 存在,返回true,不存在返回false.</p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>由于重复元素的存在, nums[mid]和nums[right]之间就并不仅仅是大下关系了, 两者有可能相等. 但是判断条件nums[mid] &lt; nums[right]如果满足,那么这个子区间一定是有序的, 此外, 如果两者相等, 因为之前已经判断过nums[mid]和target之间的对等关系, 所以我们可以确定nums[right]!=target. 所以,可以变换right的范围,让right自减. 其他情况就类似.</p>
+<p>具体实现,看代码.</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">search</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.size() - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// nums[mid] &lt;= nums[right]: 不能保证[mid, right]为递增序列</span></span><br><span class="line">        <span class="comment">//eg: [1,1,3,1]: 细分分成nums[mid] &lt; nums[right];</span></span><br><span class="line">        <span class="comment">// nums[mid] == nums[right]: 不能确定,因为mid肯定不是,</span></span><br><span class="line">        <span class="comment">// 那么right对应位置也不是, 跳过right</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid = left + (right - left)/<span class="number">2</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (nums[mid] == target)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &lt; nums[right])&#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[mid] &lt; target &amp;&amp; nums[right] &gt;= target)</span><br><span class="line">                    left = mid + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    right = mid - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; nums[right])&#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[left] &lt;= target &amp;&amp; nums[mid] &gt; target)</span><br><span class="line">                    right = mid <span class="number">-1</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    left = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                right--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -428,9 +434,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/线性代数/" rel="tag"># 线性代数</a>
-          
-            <a href="/tags/矩阵迹求导/" rel="tag"># 矩阵迹求导</a>
+            <a href="/tags/binary-search/" rel="tag"># binary-search</a>
           
         </div>
       
@@ -443,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/14/矩阵微分-推导与应用/" rel="next" title="矩阵微分:推导与应用">
-                <i class="fa fa-chevron-left"></i> 矩阵微分:推导与应用
+              <a href="/2019/06/20/LeetCode-33-Search-in-Rotated-Sorted-Array-1/" rel="next" title="[LeetCode]33. Search in Rotated Sorted Array">
+                <i class="fa fa-chevron-left"></i> [LeetCode]33. Search in Rotated Sorted Array
               </a>
             
           </div>
@@ -452,10 +456,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/25/决策树/" rel="prev" title="决策树">
-                决策树 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -594,7 +594,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code"><span class="nav-number">2.2.</span> <span class="nav-text">Code</span></a></li></ol></li></ol></div>
             
 
           </div>
