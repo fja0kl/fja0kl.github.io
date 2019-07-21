@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hash,">
+  <meta name="keywords" content="two-pointers,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="ProblemGiven an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the">
-<meta name="keywords" content="hash">
+<meta name="description" content="ProblemGiven a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n). 12345Example:Input: S = &amp;quot;ADOBECODEBANC&amp;quot;, T = &amp;quot;ABC&amp;quo">
+<meta name="keywords" content="two-pointers">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[LeetCode]1. Two Sum">
-<meta property="og:url" content="http://fja0kl.github.io/2019/06/22/LeetCode-1-Two-Sum/index.html">
+<meta property="og:title" content="[LeetCode]76. Minimum Window Substring">
+<meta property="og:url" content="http://fja0kl.github.io/2019/07/21/LeetCode-76-Minimum-Window-Substring/index.html">
 <meta property="og:site_name" content="fja0kl&#39;s Blog">
-<meta property="og:description" content="ProblemGiven an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the">
+<meta property="og:description" content="ProblemGiven a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n). 12345Example:Input: S = &amp;quot;ADOBECODEBANC&amp;quot;, T = &amp;quot;ABC&amp;quo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-22T02:04:34.061Z">
+<meta property="og:updated_time" content="2019-07-21T08:31:59.489Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[LeetCode]1. Two Sum">
-<meta name="twitter:description" content="ProblemGiven an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the">
+<meta name="twitter:title" content="[LeetCode]76. Minimum Window Substring">
+<meta name="twitter:description" content="ProblemGiven a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n). 12345Example:Input: S = &amp;quot;ADOBECODEBANC&amp;quot;, T = &amp;quot;ABC&amp;quo">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://fja0kl.github.io/2019/06/22/LeetCode-1-Two-Sum/">
+  <link rel="canonical" href="http://fja0kl.github.io/2019/07/21/LeetCode-76-Minimum-Window-Substring/">
 
 
 
 
 
-  <title>[LeetCode]1. Two Sum | fja0kl's Blog</title>
+  <title>[LeetCode]76. Minimum Window Substring | fja0kl's Blog</title>
   
 
 
@@ -253,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2019/06/22/LeetCode-1-Two-Sum/">
+    <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2019/07/21/LeetCode-76-Minimum-Window-Substring/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fja0kl">
@@ -270,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[LeetCode]1. Two Sum</h1>
+          <h1 class="post-title" itemprop="name headline">[LeetCode]76. Minimum Window Substring</h1>
         
 
         <div class="post-meta">
@@ -282,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-22T10:03:14+08:00">
-                2019-06-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-21T16:30:31+08:00">
+                2019-07-21
               </time>
             
 
@@ -298,8 +298,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-22T10:04:34+08:00">
-                2019-06-22
+              <time title="更新于" itemprop="dateModified" datetime="2019-07-21T16:31:59+08:00">
+                2019-07-21
               </time>
             
           </span>
@@ -335,8 +335,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/06/22/LeetCode-1-Two-Sum/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/22/LeetCode-1-Two-Sum/" itemprop="commentCount"></span>
+                <a href="/2019/07/21/LeetCode-76-Minimum-Window-Substring/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/21/LeetCode-76-Minimum-Window-Substring/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -344,7 +344,7 @@
 
           
           
-             <span id="/2019/06/22/LeetCode-1-Two-Sum/" class="leancloud_visitors" data-flag-title="[LeetCode]1. Two Sum">
+             <span id="/2019/07/21/LeetCode-76-Minimum-Window-Substring/" class="leancloud_visitors" data-flag-title="[LeetCode]76. Minimum Window Substring">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -375,16 +375,19 @@
       
 
       
-        <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given an array of integers, return indices of the two numbers such that they add up to a specific target.</p>
-<p>You may assume that each input would have exactly one solution, and you may not use the same element twice.
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Example:</span><br><span class="line"></span><br><span class="line">Given nums = [2, 7, 11, 15], target = 9,</span><br><span class="line"></span><br><span class="line">Because nums[0] + nums[1] = 2 + 7 = 9,</span><br><span class="line">return [0, 1].</span><br></pre></td></tr></table></figure></p>
-<p>给定一个数组,一个数字target, 在数组中查找两个数之和等于target. 返回查找的下标.</p>
-<p>假定每个target只有一个solution,不能重复使用元素.</p>
-<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>最朴素的办法: 双层循环. 时间复杂度O(N*N). 这个就不介绍了.</p>
-<p>改进方法: O(N). 借助hash表[空间换时间]. hash表记录元素与下标对应关系. 这里我们不用事先对hash表进行初始化. <strong>边循环数组边赋值</strong>: 如果查找元素不存在,进行赋值.</p>
-<p>具体代码如下:</p>
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; twoSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; tabel;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; nums.size(); ++i)&#123;</span><br><span class="line">            <span class="comment">// 查找数字为target-nums[i]; 如果存在说明找到答案, nums[i]也不用存到hash表,直接退出循环,返回结果</span></span><br><span class="line">            <span class="keyword">if</span> (tabel.find(target - nums[i]) != tabel.end())&#123;</span><br><span class="line">                result.push_back(tabel[target-nums[i]]);</span><br><span class="line">                result.push_back(i);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 不存在, 存入hash表</span></span><br><span class="line">            tabel[nums[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2019/06/16/LeetCode-219-Contains-Duplicate-II/">[LeetCode]219. Contains Duplicate II</a></li><li><a href="http://fja0kl.github.io/2019/06/16/LeetCode-205-Isomorphic-Strings/">[LeetCode]205. Isomorphic Strings</a></li><li><a href="http://fja0kl.github.io/2019/06/22/LeetCode-128-Longest-Consecutive-Sequence/">[LeetCode]128. Longest Consecutive Sequence</a></li></ul></div>
+        <h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Example:</span><br><span class="line"></span><br><span class="line">Input: S = &quot;ADOBECODEBANC&quot;, T = &quot;ABC&quot;</span><br><span class="line">Output: &quot;BANC&quot;</span><br><span class="line">Note:</span><br></pre></td></tr></table></figure>
+<ul>
+<li>If there is no such window in S that covers all characters in T, return the empty string “”.</li>
+<li>If there is such window, you are guaranteed that there will always be only one unique minimum window in S.</li>
+</ul>
+<p>给定两个字符串S,T, 在串S中找到包含T串中所有字符的最短子串. 时间复杂度要求O(N).</p>
+<p>时间复杂度给定了一个具体的要求.线性时间. 所以暴力破解是不可行的. 要求S的子串包含组成T的所有字符,没有顺序的要求,只要包含就行.T串字符可能会有重复元素存在. 所以使用一个unordered_map哈希表来记录T.</p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>具体做法,就是先记录T的组成.然后遍历S串,找到一个解之后,更新左边界,因为这个解当中可能会存在无关元素,以及重复元素.</p>
+<p>最短: 通过一个全局变量,记录当前解的长度,及时更新这个变量,最后找到最终解.</p>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">minWindow</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">string</span> result = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, cnt = <span class="number">0</span>, min_len = INT_MAX;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; table;<span class="comment">//t中字符可能会有重复</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;ch: t)</span><br><span class="line">            table[ch]++;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; s.size(); i++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (--table[s[i]] &gt;= <span class="number">0</span>)<span class="comment">// s[i]是t中一个字符; 无关元素(没有出现过)会变为负数.</span></span><br><span class="line">                cnt++;</span><br><span class="line">            <span class="comment">// 此时,这个解可能包含若干冗余元素,重复元素</span></span><br><span class="line">            <span class="keyword">while</span> (cnt == t.size())&#123;<span class="comment">//找到一个解</span></span><br><span class="line">                <span class="keyword">if</span> (min_len &gt; i - left + <span class="number">1</span>)&#123;</span><br><span class="line">                    min_len = i - left + <span class="number">1</span>;</span><br><span class="line">                    result = s.substr(left, min_len);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (++table[s[left]] &gt; <span class="number">0</span>)<span class="comment">// 更新左边界:说明left是t中一个字符,如果不是应该小于等于0</span></span><br><span class="line">                    cnt--;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p><a href="https://www.cnblogs.com/grandyang/p/4340948.html" target="_blank" rel="noopener">https://www.cnblogs.com/grandyang/p/4340948.html</a></p>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2019/06/26/LeetCode-16-3Sum-Closest/">[LeetCode]16. 3Sum Closest</a></li><li><a href="http://fja0kl.github.io/2019/06/16/LeetCode-287-Find-the-Duplicate-Number/">[LeetCode]287. Find the Duplicate Number</a></li><li><a href="http://fja0kl.github.io/2019/06/26/LeetCode-18-4Sum/">[LeetCode]18. 4Sum</a></li></ul></div>
       
     </div>
     
@@ -430,7 +433,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hash/" rel="tag"># hash</a>
+            <a href="/tags/two-pointers/" rel="tag"># two-pointers</a>
           
         </div>
       
@@ -443,8 +446,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/22/LeetCode-15-3Sum/" rel="next" title="[LeetCode]15. 3Sum">
-                <i class="fa fa-chevron-left"></i> [LeetCode]15. 3Sum
+              <a href="/2019/07/04/LeetCode-66-Plus-One/" rel="next" title="[LeetCode]66. Plus One">
+                <i class="fa fa-chevron-left"></i> [LeetCode]66. Plus One
               </a>
             
           </div>
@@ -452,10 +455,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/22/LeetCode-4-Median-of-Two-Sorted-Arrays-1/" rel="prev" title="[LeetCode]4. Median of Two Sorted Arrays">
-                [LeetCode]4. Median of Two Sorted Arrays <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -594,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code"><span class="nav-number">2.2.</span> <span class="nav-text">Code</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Problem"><span class="nav-number">1.</span> <span class="nav-text">Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solution"><span class="nav-number">2.</span> <span class="nav-text">Solution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Analysis"><span class="nav-number">2.1.</span> <span class="nav-text">Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code"><span class="nav-number">2.2.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#References"><span class="nav-number">2.3.</span> <span class="nav-text">References</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
             
 
           </div>
