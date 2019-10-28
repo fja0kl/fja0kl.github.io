@@ -6,7 +6,7 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -73,6 +73,8 @@
 
 
 
+
+  <link rel="alternate" href="/atom.xml" title="fja0kl's Blog" type="application/atom+xml">
 
 
 
@@ -143,7 +145,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -153,7 +155,7 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -227,9 +229,41 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -253,20 +287,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/07/18/Deep-Learning-with-Python-机器学习基础/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fja0kl">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/uploads/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="fja0kl's Blog">
     </span>
 
@@ -321,7 +355,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/DL/" itemprop="url" rel="index">
                     <span itemprop="name">DL</span>
                   </a>
@@ -409,11 +443,11 @@
 最终，训练的模型在验证集上表现非常好，因为这正是我们优化的结果。但我们最终关心的是模型在新数据上的表现如何，所以需要使用一个完全不同的、没有见过的数据集来评估模型—测试集。所以，模型直到最后才会接触到测试集。
 将数据分成训练集、验证集和测试集可能看起来比较简单直观，但当数据量很小时也有其他的处理方式–留出法、K折交叉验证和打乱迭代K折验证。</p>
 <h4 id="简单的留出法hold-out"><a href="#简单的留出法hold-out" class="headerlink" title="简单的留出法hold-out"></a>简单的留出法hold-out</h4><p>将数据集留出一部分作为测试集。在剩余部分数据上进行训练，在测试集上进行评估。为了避免信息泄露，不能根据测试集的表现去修改模型参数。
-<img src="http://chuantu.biz/t6/343/1531658555x-1404793208.png" alt="">
+<img src="http://chuantu.biz/t6/343/1531658555x-1404793208.png" alt>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">num_validation_samples = <span class="number">10000</span></span><br><span class="line"></span><br><span class="line">np.random.shuffle(data)</span><br><span class="line"></span><br><span class="line">validation_data = data[:num_validation_samples]</span><br><span class="line">data = data[num_validation_samples:]</span><br><span class="line"></span><br><span class="line">training_data = data[:]</span><br><span class="line"></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(training_data)</span><br><span class="line">validation_score = model.evaluate(validation_data)<span class="comment"># 在验证集上进行验证</span></span><br><span class="line"></span><br><span class="line">根据验证结果修改参数设置，之后反复训练、评估、调整参数。</span><br><span class="line"></span><br><span class="line">一旦参数最后确定，使用除测试集以外的全部数据进行模型训练。</span><br><span class="line"></span><br><span class="line">model = get_model()</span><br><span class="line">model.train(np.concatenate([training_data,validation_data]))</span><br><span class="line"></span><br><span class="line">test_score = model.evaluate(test_data)</span><br></pre></td></tr></table></figure></p>
 <p>这是最简单的评估方法，但有一个缺点：如果数据集过小，那么测试集和验证集样本量也会很小，数据的代表性不够。这种情况很容易辨别：如果划分数据时每次打乱划分的结果，导致最终评估结果差异性很大时。K折验证和迭代K折验证能处理这种问题。</p>
 <h4 id="K折验证"><a href="#K折验证" class="headerlink" title="K折验证"></a>K折验证</h4><p>将数据分成K份，每份数据量相同。每次训练在K-1份数据上，在第i份数据上进行验证。最后将K个验证结果的平均值作为最后的评估结果。
-<img src="http://chuantu.biz/t6/343/1531661047x-1404793208.png" alt=""></p>
+<img src="http://chuantu.biz/t6/343/1531661047x-1404793208.png" alt></p>
 <h4 id="打乱迭代K折验证"><a href="#打乱迭代K折验证" class="headerlink" title="打乱迭代K折验证"></a>打乱迭代K折验证</h4><p>当数据量很小，但又想模型评估尽可能准确，可以采用这种方法。<strong>Kaggle比赛非常有用</strong>。
 多次使用K折验证，但在数据划分成K份时，先进行数据打乱。最终以多次运行K折验证的结果的平均数为准。相当于训练了P X K个模型(P是K折验证的迭代次数)—-花销很大。</p>
 <h3 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h3><p>当选择评估方法时，需要留意：</p>
@@ -454,7 +488,7 @@
 <p>Keras中，通过向网络层声明参数传递权重正则化实例来进行权重正则化。如，添加L2正则化：
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> regularizers</span><br><span class="line"></span><br><span class="line">model = models.Sequential()</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, kernel_regularizer=regularizers.l2(<span class="number">0.001</span>),activation=<span class="string">'relu'</span>, input_shape=(<span class="number">10000</span>,)))</span><br><span class="line">model.add(layers.Dense(<span class="number">16</span>, kernel_regularizer=regularizers.l2(<span class="number">0.001</span>),activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>))</span><br></pre></td></tr></table></figure></p>
 <h3 id="Dropout层"><a href="#Dropout层" class="headerlink" title="Dropout层"></a>Dropout层</h3><p>Dropout是神经网络中最有效和最常用的正则化方法。Dropout应用于网络层，随机”扔掉”训练过程的网络层的一部分输出特征(设置为0).Dropout rate指特征设置为0的比率，通常在0.2~0.5之间。在测试过程中，没有神经元被“扔掉”；正相反，网络层的输出值需要用和Dropout rate相等数进行缩放，平衡掉与训练过程相比更多的神经元处于激活状态。(另一种平衡方法是训练过程中对输出进行和Dropout rate相同的放大，而测试过程中不做变换。)
-<img src="http://chuantu.biz/t6/343/1531726115x-1566688347.png" alt="">
+<img src="http://chuantu.biz/t6/343/1531726115x-1566688347.png" alt>
 Keras中，有Dropout网络层—对上一层的输出结果做Dropout。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.add(layers.Dropout(<span class="number">0.25</span>))</span><br></pre></td></tr></table></figure></p>
 <p>实际应用：
@@ -476,7 +510,7 @@ Keras中，有Dropout网络层—对上一层的输出结果做Dropout。
 <li>损失函数：和解决问题类型相匹配；回归问题mse、二分类binary_crossentropy</li>
 <li>优化配置：是用什么优化方法？学习率是多少？rmsprop对大多数问题都有效，作为默认方法。
 最常见的选择：
-<img src="http://chuantu.biz/t6/343/1531728945x-1566688670.png" alt=""></li>
+<img src="http://chuantu.biz/t6/343/1531728945x-1566688670.png" alt></li>
 </ul>
 <h3 id="训练一个过拟合模型"><a href="#训练一个过拟合模型" class="headerlink" title="训练一个过拟合模型"></a>训练一个过拟合模型</h3><p>明确需要训练模型的复杂度，先开发一个过拟合模型：</p>
 <ul>
@@ -635,7 +669,7 @@ Keras中，有Dropout网络层—对上一层的输出结果做Dropout。
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
             
@@ -681,6 +715,13 @@ Keras中，有Dropout网络层—对上一层的输出结果做Dropout。
           </nav>
 
           
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
 
           
 
@@ -705,7 +746,7 @@ Keras中，有Dropout网络层—对上一层的输出结果做Dropout。
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习四分支"><span class="nav-number">1.</span> <span class="nav-text">机器学习四分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#监督学习"><span class="nav-number">1.1.</span> <span class="nav-text">监督学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非监督学习"><span class="nav-number">1.2.</span> <span class="nav-text">非监督学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#半监督学习"><span class="nav-number">1.3.</span> <span class="nav-text">半监督学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强化学习"><span class="nav-number">1.4.</span> <span class="nav-text">强化学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型评估"><span class="nav-number">2.</span> <span class="nav-text">模型评估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#训练集、验证集和测试集"><span class="nav-number">2.1.</span> <span class="nav-text">训练集、验证集和测试集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单的留出法hold-out"><span class="nav-number">2.1.1.</span> <span class="nav-text">简单的留出法hold-out</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#K折验证"><span class="nav-number">2.1.2.</span> <span class="nav-text">K折验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打乱迭代K折验证"><span class="nav-number">2.1.3.</span> <span class="nav-text">打乱迭代K折验证</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键点"><span class="nav-number">2.2.</span> <span class="nav-text">关键点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据预处理，特征工程和特征学习"><span class="nav-number">3.</span> <span class="nav-text">数据预处理，特征工程和特征学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据预处理"><span class="nav-number">3.1.</span> <span class="nav-text">数据预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#向量化"><span class="nav-number">3.1.1.</span> <span class="nav-text">向量化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#归一化"><span class="nav-number">3.1.2.</span> <span class="nav-text">归一化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理缺失值"><span class="nav-number">3.1.3.</span> <span class="nav-text">处理缺失值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征工程"><span class="nav-number">3.2.</span> <span class="nav-text">特征工程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过拟合和欠拟合"><span class="nav-number">4.</span> <span class="nav-text">过拟合和欠拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简化模型"><span class="nav-number">4.1.</span> <span class="nav-text">简化模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权重正则化"><span class="nav-number">4.2.</span> <span class="nav-text">权重正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dropout层"><span class="nav-number">4.3.</span> <span class="nav-text">Dropout层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习一般性流程"><span class="nav-number">5.</span> <span class="nav-text">机器学习一般性流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义和数据获取"><span class="nav-number">5.1.</span> <span class="nav-text">问题定义和数据获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择评估指标"><span class="nav-number">5.2.</span> <span class="nav-text">选择评估指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#决定评估方法"><span class="nav-number">5.3.</span> <span class="nav-text">决定评估方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据准备"><span class="nav-number">5.4.</span> <span class="nav-text">数据准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型训练–好于基准模型"><span class="nav-number">5.5.</span> <span class="nav-text">模型训练–好于基准模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练一个过拟合模型"><span class="nav-number">5.6.</span> <span class="nav-text">训练一个过拟合模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型正则化和超参数微调"><span class="nav-number">5.7.</span> <span class="nav-text">模型正则化和超参数微调</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习四分支"><span class="nav-number">1.</span> <span class="nav-text">机器学习四分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#监督学习"><span class="nav-number">1.1.</span> <span class="nav-text">监督学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非监督学习"><span class="nav-number">1.2.</span> <span class="nav-text">非监督学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#半监督学习"><span class="nav-number">1.3.</span> <span class="nav-text">半监督学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强化学习"><span class="nav-number">1.4.</span> <span class="nav-text">强化学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型评估"><span class="nav-number">2.</span> <span class="nav-text">模型评估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#训练集、验证集和测试集"><span class="nav-number">2.1.</span> <span class="nav-text">训练集、验证集和测试集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单的留出法hold-out"><span class="nav-number">2.1.1.</span> <span class="nav-text">简单的留出法hold-out</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#K折验证"><span class="nav-number">2.1.2.</span> <span class="nav-text">K折验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打乱迭代K折验证"><span class="nav-number">2.1.3.</span> <span class="nav-text">打乱迭代K折验证</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键点"><span class="nav-number">2.2.</span> <span class="nav-text">关键点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据预处理，特征工程和特征学习"><span class="nav-number">3.</span> <span class="nav-text">数据预处理，特征工程和特征学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据预处理"><span class="nav-number">3.1.</span> <span class="nav-text">数据预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#向量化"><span class="nav-number">3.1.1.</span> <span class="nav-text">向量化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#归一化"><span class="nav-number">3.1.2.</span> <span class="nav-text">归一化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理缺失值"><span class="nav-number">3.1.3.</span> <span class="nav-text">处理缺失值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征工程"><span class="nav-number">3.2.</span> <span class="nav-text">特征工程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过拟合和欠拟合"><span class="nav-number">4.</span> <span class="nav-text">过拟合和欠拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简化模型"><span class="nav-number">4.1.</span> <span class="nav-text">简化模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权重正则化"><span class="nav-number">4.2.</span> <span class="nav-text">权重正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dropout层"><span class="nav-number">4.3.</span> <span class="nav-text">Dropout层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机器学习一般性流程"><span class="nav-number">5.</span> <span class="nav-text">机器学习一般性流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义和数据获取"><span class="nav-number">5.1.</span> <span class="nav-text">问题定义和数据获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择评估指标"><span class="nav-number">5.2.</span> <span class="nav-text">选择评估指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#决定评估方法"><span class="nav-number">5.3.</span> <span class="nav-text">决定评估方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据准备"><span class="nav-number">5.4.</span> <span class="nav-text">数据准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型训练–好于基准模型"><span class="nav-number">5.5.</span> <span class="nav-text">模型训练–好于基准模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练一个过拟合模型"><span class="nav-number">5.6.</span> <span class="nav-text">训练一个过拟合模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型正则化和超参数微调"><span class="nav-number">5.7.</span> <span class="nav-text">模型正则化和超参数微调</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
             
 
           </div>
@@ -937,6 +978,323 @@ Keras中，有Dropout网络层—对上一层的输出结果做Dropout。
 
 
   
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
 
 
 

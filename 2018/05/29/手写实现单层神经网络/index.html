@@ -6,7 +6,7 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -73,6 +73,8 @@
 
 
 
+
+  <link rel="alternate" href="/atom.xml" title="fja0kl's Blog" type="application/atom+xml">
 
 
 
@@ -141,7 +143,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -151,7 +153,7 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -225,9 +227,41 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -251,20 +285,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/05/29/手写实现单层神经网络/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fja0kl">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/uploads/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="fja0kl's Blog">
     </span>
 
@@ -319,7 +353,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/DL/" itemprop="url" rel="index">
                     <span itemprop="name">DL</span>
                   </a>
@@ -420,9 +454,9 @@
 <p>成本函数：$J = \frac{1}{m} \sum_{i=1}^{m} L(a^{(i)},y^{(i)})$</p>
 <h5 id="反向传播过程"><a href="#反向传播过程" class="headerlink" title="反向传播过程"></a>反向传播过程</h5><p>假设输入数据维度为2；权重系数维度是2.</p>
 <p>反向传播的计算图:</p>
-<p><img src="http://chuantu.biz/t6/321/1527581310x-1404792580.png" alt=""></p>
+<p><img src="http://chuantu.biz/t6/321/1527581310x-1404792580.png" alt></p>
 <p>以输入维度为2，权重系数w为2维，举例：</p>
-<p><img src="http://chuantu.biz/t6/321/1527600045x-1404792580.png" alt=""></p>
+<p><img src="http://chuantu.biz/t6/321/1527600045x-1404792580.png" alt></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">propagate</span><span class="params">(w, b, X, Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实现前向传播和反向传播过程</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">    w -- 权重系数，numpy array，size (num_px * num_px * 3, 1)</span></span><br><span class="line"><span class="string">    b -- 偏置，标量</span></span><br><span class="line"><span class="string">    X -- 输入的测试数据，shape (num_px * num_px * 3, 样本数m)</span></span><br><span class="line"><span class="string">    Y -- 测试数据的标签向量 ( 0 不是猫, 1 猫) ，size (1, m) </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Return:</span></span><br><span class="line"><span class="string">    cost -- logistic 回归的成本函数值</span></span><br><span class="line"><span class="string">    dw -- 成本函数关于参数w的梯度值</span></span><br><span class="line"><span class="string">    db -- 成本函数关于参数w的梯度值</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    </span><br><span class="line">    m = X.shape[<span class="number">1</span>] <span class="comment"># 获取样本数</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 前向传播过程</span></span><br><span class="line">    Z = np.dot(w.T, X) + b</span><br><span class="line">    A = sigmoid(Z) <span class="comment">#计算激活函数</span></span><br><span class="line">    cost = <span class="number">-1</span> / m * np.sum(Y * np.log(A) + (<span class="number">1</span> - Y) * np.log(<span class="number">1</span> - A))  <span class="comment"># 计算成本函数</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 反向传播过程计算梯度</span></span><br><span class="line">    dw = <span class="number">1</span> / m * np.dot(X, (A - Y).T) <span class="comment"># 向量</span></span><br><span class="line">    db = <span class="number">1</span> / m * np.sum(A - Y)</span><br><span class="line">    <span class="keyword">assert</span>(dw.shape == w.shape)</span><br><span class="line">    <span class="keyword">assert</span>(db.dtype == float)</span><br><span class="line">    cost = np.squeeze(cost) <span class="comment"># 成本函数</span></span><br><span class="line">    <span class="keyword">assert</span>(cost.shape == ())</span><br><span class="line">    </span><br><span class="line">    grads = &#123;<span class="string">"dw"</span>: dw,</span><br><span class="line">             <span class="string">"db"</span>: db&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> grads, cost</span><br></pre></td></tr></table></figure>
 <h4 id="参数优化"><a href="#参数优化" class="headerlink" title="参数优化"></a>参数优化</h4><p>参数更新过程–使用梯度下降算法；</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">optimize</span><span class="params">(w,b,X,y,num_iters,learning_rate,print_cost=True)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    参数优化过程</span></span><br><span class="line"><span class="string">    :param w: 系数矩阵</span></span><br><span class="line"><span class="string">    :param b: 偏置</span></span><br><span class="line"><span class="string">    :param X: 测试集</span></span><br><span class="line"><span class="string">    :param y: 测试集标签</span></span><br><span class="line"><span class="string">    :param num_iters: 迭代次数</span></span><br><span class="line"><span class="string">    :param learning_rate: 学习率</span></span><br><span class="line"><span class="string">    :param print_cost: 是否打印输出cost变化;每100次打印输出一次</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    - params: 更新后的参数</span></span><br><span class="line"><span class="string">    - grads: 梯度计算值</span></span><br><span class="line"><span class="string">    - costs：cost变化过程；每100次为一个记录值</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    costs = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num_iters):</span><br><span class="line">        grads, cost = propagate(w, b, X, y)</span><br><span class="line">        dw = grads[<span class="string">'dw'</span>]</span><br><span class="line">        db = grads[<span class="string">'db'</span>]</span><br><span class="line">        <span class="comment">#参数更新</span></span><br><span class="line">        w = w - learning_rate * dw</span><br><span class="line">        b = b - learning_rate * db</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span>:<span class="comment">#添加到costs</span></span><br><span class="line">            costs.append(cost)</span><br><span class="line">        <span class="keyword">if</span> print_cost <span class="keyword">and</span> i % <span class="number">100</span> == <span class="number">0</span>: <span class="comment"># 打印输出</span></span><br><span class="line">            print(<span class="string">"Cost after iteration &#123;&#125;:&#123;&#125;"</span>.format(i, cost))</span><br><span class="line"></span><br><span class="line">        params = &#123;<span class="string">'w'</span>: w,</span><br><span class="line">                  <span class="string">'b'</span>: b&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> params, grads, costs</span><br></pre></td></tr></table></figure>
@@ -584,7 +618,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
             
@@ -630,6 +664,13 @@
           </nav>
 
           
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
 
           
 
@@ -654,7 +695,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络用途"><span class="nav-number">1.</span> <span class="nav-text">网络用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络架构"><span class="nav-number">2.</span> <span class="nav-text">网络架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数学表示"><span class="nav-number">2.1.</span> <span class="nav-text">数学表示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型定义"><span class="nav-number">3.</span> <span class="nav-text">模型定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型定义步骤"><span class="nav-number">3.1.</span> <span class="nav-text">模型定义步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">3.2.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#辅助函数"><span class="nav-number">3.2.1.</span> <span class="nav-text">辅助函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数初始化"><span class="nav-number">3.2.2.</span> <span class="nav-text">参数初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前向传播和反向传播"><span class="nav-number">3.2.3.</span> <span class="nav-text">前向传播和反向传播</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#前向传播过程"><span class="nav-number">3.2.3.1.</span> <span class="nav-text">前向传播过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反向传播过程"><span class="nav-number">3.2.3.2.</span> <span class="nav-text">反向传播过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数优化"><span class="nav-number">3.2.4.</span> <span class="nav-text">参数优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型预测"><span class="nav-number">3.2.5.</span> <span class="nav-text">模型预测</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数整合"><span class="nav-number">3.3.</span> <span class="nav-text">函数整合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络用途"><span class="nav-number">1.</span> <span class="nav-text">网络用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络架构"><span class="nav-number">2.</span> <span class="nav-text">网络架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数学表示"><span class="nav-number">2.1.</span> <span class="nav-text">数学表示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型定义"><span class="nav-number">3.</span> <span class="nav-text">模型定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型定义步骤"><span class="nav-number">3.1.</span> <span class="nav-text">模型定义步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">3.2.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#辅助函数"><span class="nav-number">3.2.1.</span> <span class="nav-text">辅助函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数初始化"><span class="nav-number">3.2.2.</span> <span class="nav-text">参数初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前向传播和反向传播"><span class="nav-number">3.2.3.</span> <span class="nav-text">前向传播和反向传播</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#前向传播过程"><span class="nav-number">3.2.3.1.</span> <span class="nav-text">前向传播过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反向传播过程"><span class="nav-number">3.2.3.2.</span> <span class="nav-text">反向传播过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数优化"><span class="nav-number">3.2.4.</span> <span class="nav-text">参数优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型预测"><span class="nav-number">3.2.5.</span> <span class="nav-text">模型预测</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数整合"><span class="nav-number">3.3.</span> <span class="nav-text">函数整合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
             
 
           </div>
@@ -886,6 +927,323 @@
 
 
   
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
 
 
 

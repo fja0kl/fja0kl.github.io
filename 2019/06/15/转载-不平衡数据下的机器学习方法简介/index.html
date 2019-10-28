@@ -6,7 +6,7 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -73,6 +73,8 @@
 
 
 
+
+  <link rel="alternate" href="/atom.xml" title="fja0kl's Blog" type="application/atom+xml">
 
 
 
@@ -148,7 +150,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -158,7 +160,7 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -232,9 +234,41 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -258,20 +292,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2019/06/15/转载-不平衡数据下的机器学习方法简介/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fja0kl">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/uploads/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="fja0kl's Blog">
     </span>
 
@@ -326,7 +360,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/ML/" itemprop="url" rel="index">
                     <span itemprop="name">ML</span>
                   </a>
@@ -389,7 +423,7 @@
 <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>不平衡数据的场景有, 搜索引擎的点击预测,电子商务领域的商品推荐,信用卡欺诈,网络攻击识别等等.</p>
 <h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><p>顾名思义,<strong>数据集样本类别极不平衡</strong>. 以二分类为例,假设数据集为S, 多数类和少数类的样本比例达到100:1, 1000:1甚至10000:1. 这种情况下是不平衡数据,不平衡数据的学习就是需要在如此分布不平衡的数据集中学习有用的信息.</p>
 <h3 id="为什么不平衡学习"><a href="#为什么不平衡学习" class="headerlink" title="为什么不平衡学习"></a>为什么不平衡学习</h3><p>传统的学习方法以降低总体分类精度为目标, 将所有样本一视同仁, 同等对待,<strong>造成分类器在多数类的分类精度较高,而在少数类的分类精度很低</strong>.比如二分类, 数据比例为499:1, 那么只要将学习器全部预测为负类,准确率(精度)可以达到非常高,但很显然这并不是一个很好的学习效果, 因此传统的学习算法在不平衡数据集中具有较大的局限性.</p>
-<p><img src="![](https://ae01.alicdn.com/kf/HTB1tRetcrus3KVjSZKbq6xqkFXaF.jpg" alt="">)</p>
+<p><img src="![](https://ae01.alicdn.com/kf/HTB1tRetcrus3KVjSZKbq6xqkFXaF.jpg" alt>)</p>
 <h2 id="不平衡学习的方法"><a href="#不平衡学习的方法" class="headerlink" title="不平衡学习的方法"></a>不平衡学习的方法</h2><p>解决方法主要分为两个方面: </p>
 <ol>
 <li>从数据的角度出发, 主要方法为抽样. 通过某种策略进行抽样,进而样我们的数据相对均衡一点;</li>
@@ -404,13 +438,13 @@
 <li>根据样本不平衡比例设置一个<strong>采样比例以确定采样倍率N</strong>,对于每一个少数类样本x,从其k近邻中随机选择若干个样本, 假设选择的近邻为$\hat x$;</li>
 <li>对于每一个随机选出的近邻$\hatx$,分别与原样本按照如下公式构建新的样本.
 $x_{new} = x + rand(0,1) * (\hatx- x)$
-<img src="https://ae01.alicdn.com/kf/HTB1ufmOcBOD3KVjSZFF763n9pXaD.png" alt=""></li>
+<img src="https://ae01.alicdn.com/kf/HTB1ufmOcBOD3KVjSZFF763n9pXaD.png" alt></li>
 </ol>
 <p>过采样, 每个样本, k近邻, 随机性—&gt; 新的少数类样本.</p>
 <p>该算法主要存在两方面的问题：一是在近邻选择时，存在一定的盲目性。从上面的算法流程可以看出，在算法执行过程中，需要确定k值，即选择多少个近邻样本，这需要用户自行解决。从k值的定义可以看出，k值的下限是sampling_rate(sampling_rate为从k个近邻中随机挑选出的近邻样本的个数，且有 sampling_rate &lt; k ), sampling_rate的大小可以根据负类样本数量、正类样本数量和数据集最后需要达到的平衡率决定。但k值的上限没有办法确定，只能根据具体的数据集去反复测试。因此如何确定k值，才能使算法达到最优这是未知的。</p>
 <p>另外，该算法无法克服非平衡数据集的数据分布问题，<strong>容易产生分布边缘化问题</strong>。由于正类样本(少数类样本)的分布决定了其可选择的近邻，<strong>如果一个正类样本处在正类样本集的分布边缘，则由此正类样本和相邻样本产生的“人造”样本也会处在这个边缘，且会越来越边缘化，从而模糊了正类样本和负类样本的边界，而且使边界变得越来越模糊</strong>。这种边界模糊性，虽然使数据集的平衡性得到了改善，但加大了分类算法进行分类的难度。</p>
 <p>SMOTE算法摒弃了随机过采样复制样本的方法, 可以防止随机过采样易过拟合的问题,实践证明此方法可以提高分类器的性能. 但是由于对每个少数类样本都生成新样本,因此容易发生生成样本重叠overlapping的问题, 为了解决smote算法的这一缺点提出一些改进算法,其中之一是一种Borderline-SMOTE算法. </p>
-<p><img src="https://ae01.alicdn.com/kf/HTB1mQWMcECF3KVjSZJn762nHFXa8.png" alt=""></p>
+<p><img src="https://ae01.alicdn.com/kf/HTB1mQWMcECF3KVjSZJn762nHFXa8.png" alt></p>
 <p>在Borderline-SMOTE中,若少数类样本的每个样本xi求k近邻,记作Si-knn, 且Si-knn属于真个样本集合S而不再是少数类样本, 若满足 $\frac{k}{2} &lt; |S_{i-knn} \cap S_{maj}| &lt; k$
 则将样本xi加入DANGER集合,显然DANGER集合代表了接近分类边界的样本,将DANGER当做SMOTE种子样本的输入生成新样本. 特别地,当上述条件取右边界,即k近邻中全部样本都是多数类时,此样本不会被选择为种样本生成新样本,此情况下的样本为噪音.</p>
 <p>Borderline-SMOTE与原始SMOTE不同的地方在于，原始的SMOTE是对所有少数类样本生成新样本。而改进的方法则是先根据规则判断出少数类的边界样本，再对这些样本生成新样本。</p>
@@ -421,7 +455,7 @@ $x_{new} = x + rand(0,1) * (\hatx- x)$
 <p>(iii) 安全样本(safe)， 所有的最近邻样本都来自于同一个类。</p>
 <h4 id="Informed-Undersampling"><a href="#Informed-Undersampling" class="headerlink" title="Informed Undersampling"></a>Informed Undersampling</h4><p>既然SMOTE可以解决随机过采样容易发生的模型过拟合问题,对应地也有一些采样方法,可以解决<strong>随机欠采样造成的数据信息丢失问题</strong>,答案是informed undersampling采样技术, <strong>informed undersampling采样技术主要有两种方法分别是easyensemble算法和balanceCascade算法</strong>. </p>
 <p>EasyEnsemble算法如下图所示, 此算法<strong>类似于随机森林的bagging</strong>方法, <strong>它把数据划分为两部分,分别是多数类样本和少数类样本, 对于多数类样本$S_{maj}$, 通过n次有放回抽样生成n份子集(有放回, 防止抽样数据不同,导致的问题),少数类样本分别和这n份样本合并训练一个模型,这样可以得到n个模型,最终的模型是这n个模型预测结果的平均值</strong>.</p>
-<p><img src="https://ae01.alicdn.com/kf/HTB1HXaZcqWs3KVjSZFx761WUXXaj.png" alt=""></p>
+<p><img src="https://ae01.alicdn.com/kf/HTB1HXaZcqWs3KVjSZFx761WUXXaj.png" alt></p>
 <p>BalanceCascade算法是一种级联算法,利用增量训练的思想(Boosting). BalanceCascade从多数类$S_{maj}$中下采样生成训练集,训练一个分类器,对于那些分类正确的对偶舒蕾样本不放回, 然后对这个更小的多数类样本下采样产生数据集,训练第二个分类器,以此类推,最终组合所有分类器的结果得到最终结果.</p>
 <h3 id="代价敏感学习"><a href="#代价敏感学习" class="headerlink" title="代价敏感学习"></a>代价敏感学习</h3><h4 id="代价矩阵"><a href="#代价矩阵" class="headerlink" title="代价矩阵"></a>代价矩阵</h4><p>在算法层面上解决不平衡数据学习的方法主要是基于代价敏感学习算法(cost-sensitive-learning), <strong>代价敏感学习方法的核心要素是代价矩阵</strong>,在实际应用中不同类型的误分类情况导致的代价是不一样的,例如在医疗中,”将病人误诊为健康人”和”将健康人误诊为病人”的代价不同…</p>
 <h4 id="代价矩阵学习方法"><a href="#代价矩阵学习方法" class="headerlink" title="代价矩阵学习方法"></a>代价矩阵学习方法</h4><p>基于以上代价矩阵的分析,代价敏感学习方法主要有一下三种实现方式,分别是:</p>
@@ -431,17 +465,17 @@ $x_{new} = x + rand(0,1) * (\hatx- x)$
 <li><strong>从预处理的角度出发, 将代价用于权重的调整</strong>, 使得分类器满足代价敏感的特性. 比如,基于AdaBoost的权重更新策略.</li>
 </ol>
 <h4 id="AdaCost算法"><a href="#AdaCost算法" class="headerlink" title="AdaCost算法"></a>AdaCost算法</h4><p>AdaBoost权重更新方法, 正确分类样本权重降低,错误分类样本权重加大, 最终模型是多次迭代模型的一个加权线性组合,分类越准确的分类器将会获得越大的权重.</p>
-<p><img src="https://ae01.alicdn.com/kf/HTB1WROScCSD3KVjSZFK76210VXaw.png" alt=""></p>
+<p><img src="https://ae01.alicdn.com/kf/HTB1WROScCSD3KVjSZFK76210VXaw.png" alt></p>
 <p>AdaCost算法修改了AdaBoost算法的权重更新策略, 其基本思想是对于代价过高的误分类样本大大地提高其权重,而对于代价高的正确分类样本适当地降低其权重,使其权重降低相对较小. 总体思想是代价高的样本权重增加得大降低得缓慢.其样本权重按照如下公式进行更新.beta+和beta-分别表示样本被正确和错误分类情况下beta的取值.
-<img src="https://ae01.alicdn.com/kf/HTB1riuUcBGE3KVjSZFh763kaFXaB.png" alt=""></p>
+<img src="https://ae01.alicdn.com/kf/HTB1riuUcBGE3KVjSZFh763kaFXaB.png" alt></p>
 <h2 id="不平衡学习的评价方法"><a href="#不平衡学习的评价方法" class="headerlink" title="不平衡学习的评价方法"></a>不平衡学习的评价方法</h2><h3 id="正确率和F值"><a href="#正确率和F值" class="headerlink" title="正确率和F值"></a>正确率和F值</h3><p>正确值和F值都是基于混淆矩阵的.每行代表预测情况,每列代表实际类别.</p>
-<p><img src="https://ae01.alicdn.com/kf/HTB1J1uScEGF3KVjSZFo762mpFXaA.png" alt=""></p>
+<p><img src="https://ae01.alicdn.com/kf/HTB1J1uScEGF3KVjSZFo762mpFXaA.png" alt></p>
 <p>正确率和F值的计算公式如下.正确率和错误率不能表示不平衡数据下模型的表现,对于不平衡数据即使全部预测为多数类也可以达到较高的正确率较低的错误率, 而F值同时考虑到了少数类的准确率和召回率,因此能衡量不平衡数据下模型的表现,其中beta通常取1.</p>
-<p><img src="https://ae01.alicdn.com/kf/HTB19vmGbkxz61VjSZFt761DSVXaD.png" alt=""></p>
+<p><img src="https://ae01.alicdn.com/kf/HTB19vmGbkxz61VjSZFt761DSVXaD.png" alt></p>
 <h3 id="G-mean"><a href="#G-mean" class="headerlink" title="G-mean"></a>G-mean</h3><p>G-Mean是另一个指标,能评价不平衡数据的模型表现.考虑了真阳率和假阳率,</p>
-<p><img src="https://ae01.alicdn.com/kf/HTB1Pg1Scv5G3KVjSZPx762I3XXaP.png" alt=""></p>
+<p><img src="https://ae01.alicdn.com/kf/HTB1Pg1Scv5G3KVjSZPx762I3XXaP.png" alt></p>
 <h3 id="ROC曲线和AUC"><a href="#ROC曲线和AUC" class="headerlink" title="ROC曲线和AUC"></a>ROC曲线和AUC</h3><p>真阳率和假阳率, 假阳率又表示为1-负类召回率, 真阳率又表示为正类召回率, 模型最好的时候FP_rate=0,TP_rate=1, 以假阳率为横坐标,真阳率为纵坐标,位置在左上角. ROC曲线越靠近A表示模型表现越好, 曲线下面积越大,表现也越好. 
-<img src="https://ae01.alicdn.com/kf/HTB10YiHbkxz61VjSZFt761DSVXau.png" alt=""></p>
+<img src="https://ae01.alicdn.com/kf/HTB10YiHbkxz61VjSZFt761DSVXau.png" alt></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><a href="https://www.cnblogs.com/kamekin/p/9824294.html" target="_blank" rel="noopener">https://www.cnblogs.com/kamekin/p/9824294.html</a></p>
 
       
@@ -577,7 +611,7 @@ $x_{new} = x + rand(0,1) * (\hatx- x)$
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
             
@@ -622,6 +656,13 @@ $x_{new} = x + rand(0,1) * (\hatx- x)$
 
           </nav>
 
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -879,6 +920,323 @@ $x_{new} = x + rand(0,1) * (\hatx- x)$
 
 
   
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
 
 
 

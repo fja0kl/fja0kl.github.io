@@ -6,7 +6,7 @@
 
 
 <html class="theme-next gemini use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -73,6 +73,8 @@
 
 
 
+
+  <link rel="alternate" href="/atom.xml" title="fja0kl's Blog" type="application/atom+xml">
 
 
 
@@ -151,7 +153,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -161,7 +163,7 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -235,9 +237,41 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -261,20 +295,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fja0kl.github.io/2018/07/22/Deep-Learning-with-Python-计算机视觉中的深度学习/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="fja0kl">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/uploads/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="fja0kl's Blog">
     </span>
 
@@ -329,7 +363,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/读书笔记/" itemprop="url" rel="index">
                     <span itemprop="name">读书笔记</span>
                   </a>
@@ -418,7 +452,7 @@
 <ul>
 <li>学习具有平移不变性的模式特征：一旦学习到图片左上角的模式特征，可以在任何地方识别，如右下角，这种特性使得图片处理更加有效，需要的样本相对减少(实际生活中具有平移不变性)</li>
 <li>学习模式的空间层次结构：第一个卷积层将学习小的局部模式，如边缘，第二个卷积层将学习由第一层特征构成的更大图案，等等。这使得卷积网络能够有效地学习越来越复杂和抽象的视觉概念。(现实生活中许多都是分级的)。
-<img src="http://chuantu.biz/t6/344/1531795369x-1404817491.png" alt=""></li>
+<img src="http://chuantu.biz/t6/344/1531795369x-1404817491.png" alt></li>
 </ul>
 <p>卷积在3D张量上运算，称为特征映射，具有两个空间轴（高度和宽度）以及深度轴(也称为通道轴).对RGB三原色图片来说，通道数为3–红、绿、蓝；MNIST数据集中图片通道数为1–灰度图。卷积操作在输入特征图上小分片上，然后将多个操作结果生成最后的特征图。输出的特征图仍然是3D张量：width、height，深度可以是任意值，因为深度是网络层的一个参数，而且深度值不再代表红绿蓝颜色通道，表示过滤器的个数。过滤器对输入数据的特定方面进行编码：比如在高级别，单个过滤器可以编码“输入中存在面部”的概念。
 卷积定义的两个参数：</p>
@@ -428,7 +462,7 @@
 </ul>
 <p>Keras中，Conv2D网络层定义:Conv2D(output_depth, (window_height, window_width)) .
 卷积：卷积核在上一层的特征图的全通道进行滑动，然后抽取形状为(window_height,window_width,input_depth)形状的3D片特征。每个3D片特征最后转换成1D向量(卷积运算–张量点积)，形状(output_depth,)，所有的结果向量整合形成最后的3D特征(height,width,output_depth).
-<img src="http://chuantu.biz/t6/345/1531984788x-1376440240.png" alt=""></p>
+<img src="http://chuantu.biz/t6/345/1531984788x-1376440240.png" alt></p>
 <p>输出结果的宽度和高度可能和输入宽度高度不同，由于：</p>
 <ul>
 <li>Padding项；</li>
@@ -466,7 +500,7 @@
 <p>模型保存：
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.save(<span class="string">'cats_and_dogs_small_1.h5'</span>)</span><br></pre></td></tr></table></figure></p>
 <p>训练集验证集准确率、损失值变化：
-<img src="http://chuantu.biz/t6/346/1532158983x-1404755510.png" alt=""></p>
+<img src="http://chuantu.biz/t6/346/1532158983x-1404755510.png" alt></p>
 <p>可以发现模型发生过拟合现象。训练准确率随着时间线性增加，直到100%，而验证集准确率在70-72%波动。验证集损失在5个epoch之后达到最小值，之后开始波动；训练集损失线性减少直到为0</p>
 <p>因为训练集只有2000张图片，遇到的第一个问题就是模型过拟合。Dropout、权重衰减可以减缓过拟合，还有一个计算机视觉任务中，经常使用的处理方法：数据增强data augmentation。</p>
 <h3 id="数据增强"><a href="#数据增强" class="headerlink" title="数据增强"></a>数据增强</h3><p><strong>过度拟合是由于样本太少而无法学习，导致无法训练可以推广到新数据的模型</strong>。给定无限的数据，模型可以学习到手头数据分布的每个可能方面：永远不会过拟合。<strong>数据增强采用从现有训练样本生成更多训练数据的方法，通过大量随机变换来增加样本，从而产生新的可靠的图像样本。</strong>
@@ -479,7 +513,7 @@ Keras中，可以通过实例化ImageDataGenerator实例，确定图片转换方
 <p>使用数据增强和Dropout训练网络。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">train_datagen = ImageDataGenerator(</span><br><span class="line">rescale=<span class="number">1.</span>/<span class="number">255</span>,</span><br><span class="line">rotation_range=<span class="number">40</span>,</span><br><span class="line">width_shift_range=<span class="number">0.2</span>,</span><br><span class="line">height_shift_range=<span class="number">0.2</span>,</span><br><span class="line">shear_range=<span class="number">0.2</span>,</span><br><span class="line">zoom_range=<span class="number">0.2</span>,</span><br><span class="line">horizontal_flip=<span class="keyword">True</span>,)</span><br><span class="line"></span><br><span class="line">test_datagen = ImageDataGenerator(rescale=<span class="number">1.</span>/<span class="number">255</span>)</span><br><span class="line"></span><br><span class="line">train_generator = train_datagen.flow_from_directory(train_dir,</span><br><span class="line">target_size=(<span class="number">150</span>, <span class="number">150</span>),batch_size=<span class="number">32</span>,class_mode=<span class="string">'binary'</span>)</span><br><span class="line"></span><br><span class="line">validation_generator = test_datagen.flow_from_directory(validation_dir,</span><br><span class="line">target_size=(<span class="number">150</span>, <span class="number">150</span>),batch_size=<span class="number">32</span>,class_mode=<span class="string">'binary'</span>)</span><br><span class="line"></span><br><span class="line">history = model.fit_generator(train_generator,steps_per_epoch=<span class="number">100</span>,</span><br><span class="line">epochs=<span class="number">100</span>,validation_data=validation_generator,validation_steps=<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">model.save(<span class="string">'cats_and_dogs_small_2.h5'</span>)<span class="comment">#模型保存</span></span><br></pre></td></tr></table></figure></p>
 <p>使用数据增强和Dropout后，训练集、验证集准确率和损失函数变化。
-<img src="http://chuantu.biz/t6/346/1532162474x1822611251.png" alt="">
+<img src="http://chuantu.biz/t6/346/1532162474x1822611251.png" alt>
 模型不再过拟合：训练集曲线和验证集曲线几乎相互吻合。准确率82%，提高了15%左右。使用正则化技术，微调网络超参数，模型准确率会进一步提高，到86%~87%.但是很难继续提高，因为训练数据有限，样本量太少。另一种方法，可以采用预先训练好的网络模型，做特征提取，提高准确率。</p>
 <h2 id="使用预训练卷积网络"><a href="#使用预训练卷积网络" class="headerlink" title="使用预训练卷积网络"></a>使用预训练卷积网络</h2><p><strong>在小图像数据集上使用深度学习的一种常见且高效的方法是使用预训练网络。</strong>预训练网络是先前在大型数据集上训练的已保存网络，通常是处理大规模图像分类任务。<strong>如果这个原始数据集足够大且代表性强，则预训练网络学习的特征的空间层次结构可以有效地充当视觉世界的通用模型，因此其特征可以证明对许多不同的计算机视觉问题都有用，甚至这些新问题可能涉及与原始任务完全不同。</strong>例如，可以在ImageNet上训练网络（其中类主要是动物和日常物品），然后将这个训练好的网络重新用于识别图像中的家具物品任务中。<strong>与许多较旧的浅学习方法(传统机器学习方法)相比，学习特征在不同问题中的这种可移植性是深度学习的关键优势，并且它使得深度学习对于小数据问题非常有效。</strong></p>
 <p>比如在ImageNet数据集上训练的网络模型（140万个标记图像和1,000个不同类）。ImageNet包含许多动物类别，包括不同种类的猫和狗，因此可以期望在狗与猫的分类问题上表现良好。</p>
@@ -487,7 +521,7 @@ Keras中，可以通过实例化ImageDataGenerator实例，确定图片转换方
 <strong>使用预训练网络有两种方法：特征提取和微调。</strong></p>
 <h3 id="特征提取"><a href="#特征提取" class="headerlink" title="特征提取"></a>特征提取</h3><p><strong>特征提取包括使用先前网络学习的表示从新样本中提取有趣特征。</strong>然后，这些功能将通过一个新的分类器运行，该分类器从头开始训练。</p>
 <p>如前所述，用于图像分类的网络包含两部分：它们以一系列池化和卷积层开始，并以密集连接的分类器结束。第一部分称为模型的卷积基础。<strong>在卷积网络中，特征提取包括获取先前训练的网络的卷积基础，通过它运行新数据，以及在输出之上训练新的分类器。</strong>
-<img src="http://chuantu.biz/t6/346/1532163859x-1566688718.png" alt=""></p>
+<img src="http://chuantu.biz/t6/346/1532163859x-1566688718.png" alt></p>
 <p><strong>为什么只重用卷积网络？是否可以重复使用全连接分类器？</strong>一般来说，应该避免这样做。原因是卷积网络学习的表示可能更通用，因此更可重复使用：特征网络的特征图是图片上<strong>一般概念的存在图</strong>，无论处理的计算机视觉问题是什么，都可能是有用的。但是，<strong>分类器学习的表示必然特定于训练模型的类集 - 它们将仅包含关于整个图像中该类或该类的存在概率的信息</strong>。此外，在全连接网络层的输出表示不再包含有关对象在输入图像中的位置信息：这些表示消除了空间的概念，而卷积特征图还可以描述对象的位置信息。对于对象位置很重要的问题，全连接的特征表示在很大程度上是无用的。</p>
 <p><strong>注意，由特定卷积层提取的表示的一般性（以及因此可重用性）的级别取决于模型中网络层的深度。模型中较早出现的图层会提取局部的，高度通用的特征贴图（例如可视边缘，颜色和纹理），而较高层的图层会提取更抽象的概念（例如“猫耳朵”或“狗眼”） 。因此，如果训练数据集与训练原始模型的数据集有很大差异，那么最好只使用模型的前几层来进行特征提取，而不是使用整个卷积网络的输出。</strong></p>
 <p>在这种情况下，因为ImageNet类集包含多个dog和cat类，所以重用原始模型的全连接层中包含的信息可能是有益的。但是我们会选择不这样做，以便涵盖新问题的类集不与原始模型的类集重叠的更一般情况。通过使用在ImageNet上训练的VGG16网络的卷积网络来实现这一点，从猫和狗图像中提取有趣的特征，然后在这些特征之上训练狗与猫的分类器。
@@ -523,7 +557,7 @@ VGG16网络模型架构：<figure class="highlight python"><table><tr><td class=
 <p>定义全连接分类器，将特征数据送到分类器中训练。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> layers</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> optimizers</span><br><span class="line"></span><br><span class="line">model = models.Sequential()</span><br><span class="line"></span><br><span class="line">model.add(layers.Dense(<span class="number">256</span>, activation=<span class="string">'relu'</span>, input_dim=<span class="number">4</span> * <span class="number">4</span> * <span class="number">512</span>))</span><br><span class="line">model.add(layers.Dropout(<span class="number">0.5</span>))</span><br><span class="line">model.add(layers.Dense(<span class="number">1</span>, activation=<span class="string">'sigmoid'</span>))</span><br><span class="line">model.compile(optimizer=optimizers.RMSprop(lr=<span class="number">2e-5</span>),</span><br><span class="line">			loss=<span class="string">'binary_crossentropy'</span>,metrics=[<span class="string">'acc'</span>])</span><br><span class="line">history = model.fit(train_features, train_labels,epochs=<span class="number">30</span>,</span><br><span class="line">	batch_size=<span class="number">20</span>,</span><br><span class="line">	validation_data=(validation_features, validation_labels))</span><br></pre></td></tr></table></figure></p>
 <p>验证集、训练集上损失值和准确率变化情况：
-<img src="http://chuantu.biz/t6/347/1532227325x1822611413.png" alt="">
+<img src="http://chuantu.biz/t6/347/1532227325x1822611413.png" alt>
 验证集准确率达到90%.但图示显示模型从开始就过拟合了。使用数据正增强可以缓解一下。
 <strong>使用数据增强的特征提取</strong>
 和第一种方法相比，运算速度更慢、耗费运算资源更多，通常需要GPU。如果GPU上速度还慢，最好使用第一种方法。
@@ -536,10 +570,10 @@ VGG16网络模型架构：<figure class="highlight python"><table><tr><td class=
 <p>注意，为了使这些更改生效，必须首先编译模型。如果在编译后修改了权重可训练性，则应重新编译模型，否则将忽略这些更改。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.preprocessing.image <span class="keyword">import</span> ImageDataGenerator</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> optimizers</span><br><span class="line"></span><br><span class="line">train_datagen = ImageDataGenerator(rescale=<span class="number">1.</span>/<span class="number">255</span>,</span><br><span class="line">			rotation_range=<span class="number">40</span>,</span><br><span class="line">			width_shift_range=<span class="number">0.2</span>,</span><br><span class="line">			height_shift_range=<span class="number">0.2</span>,</span><br><span class="line">			shear_range=<span class="number">0.2</span>,</span><br><span class="line">			zoom_range=<span class="number">0.2</span>,</span><br><span class="line">			horizontal_flip=<span class="keyword">True</span>,</span><br><span class="line">			fill_mode=<span class="string">'nearest'</span>)</span><br><span class="line"></span><br><span class="line">test_datagen = ImageDataGenerator(rescale=<span class="number">1.</span>/<span class="number">255</span>)</span><br><span class="line"></span><br><span class="line">train_generator=train_datagen.flow_from_directory(train_dir,</span><br><span class="line">			target_size=(<span class="number">150</span>, <span class="number">150</span>),	batch_size=<span class="number">20</span>,class_mode=<span class="string">'binary'</span>)</span><br><span class="line"></span><br><span class="line">validation_generator = test_datagen.flow_from_directory(validation_dir,</span><br><span class="line">	target_size=(<span class="number">150</span>, <span class="number">150</span>),batch_size=<span class="number">20</span>,class_mode=<span class="string">'binary'</span>)</span><br><span class="line"></span><br><span class="line">model.compile(loss=<span class="string">'binary_crossentropy'</span>,optimizer=optimizers.RMSprop(lr=<span class="number">2e-5</span>),metrics=[<span class="string">'acc'</span>])</span><br><span class="line"></span><br><span class="line">history = model.fit_generator(train_generator,steps_per_epoch=<span class="number">100</span>,</span><br><span class="line">epochs=<span class="number">30</span>,validation_data=validation_generator,validation_steps=<span class="number">50</span>)</span><br></pre></td></tr></table></figure>
 <p>损失值和准确率变化：
-<img src="http://chuantu.biz/t6/347/1532228340x-1404817724.png" alt="">
+<img src="http://chuantu.biz/t6/347/1532228340x-1404817724.png" alt>
 验证集上准确率达到96%.</p>
 <h3 id="模型微调Fine-tuning"><a href="#模型微调Fine-tuning" class="headerlink" title="模型微调Fine-tuning"></a>模型微调Fine-tuning</h3><p>另一种广泛使用的模型重用技术，对特征提取的补充，就是模型参数微调。<strong>微调包括解冻用于特征提取的冻结模型基础的一些顶层，并联合训练模型的新添加部分（在这种情况下，全连接的分类器）和这些顶层。这称为微调，因为它稍微调整了重复使用的模型的抽象表示，以使它们与手头的问题更相关。</strong>
-<img src="http://chuantu.biz/t6/347/1532228720x-1376440240.png" alt=""></p>
+<img src="http://chuantu.biz/t6/347/1532228720x-1376440240.png" alt></p>
 <p>微调网络模型步骤：</p>
 <ol>
 <li>在已经训练好的网络模型上添加自定义网络模型；</li>
@@ -561,7 +595,7 @@ VGG16网络模型架构：<figure class="highlight python"><table><tr><td class=
 <p>现在可以开始微调网络了。使用RMSProp优化器以非常低的学习速率执行此操作。使用低学习率的原因是希望限制对正在微调的三个网络层的表示所做的修改的幅度。太大的更新可能会损害这些表示。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model.compile(loss=<span class="string">'binary_crossentropy'</span>,optimizer=optimizers.RMSprop(lr=<span class="number">1e-5</span>),metrics=[<span class="string">'acc'</span>])</span><br><span class="line">history = model.fit_generator(train_generator,steps_per_epoch=<span class="number">100</span>,</span><br><span class="line">epochs=<span class="number">100</span>,validation_data=validation_generator,validation_steps=<span class="number">50</span>)</span><br></pre></td></tr></table></figure></p>
 <p>验证集、测试集上损失函数和准确率变化：
-<img src="http://chuantu.biz/t6/347/1532230462x-1404755510.png" alt="">
+<img src="http://chuantu.biz/t6/347/1532230462x-1404755510.png" alt>
 请注意，损失曲线没有显示任何真正的改善（事实上，它正在恶化）。如果损失没有减少，准确度如何保持稳定或改善？答案很简单：展示的是指数损失值的平均值;但是对于准确性而言重要的是损失值的分布，而不是它们的平均值，因为精度是模型预测的类概率的二元阈值的结果。即使没有反映在平均损失中，该模型仍可能会有所改善。
 在测试集上评估：
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test_generator = test_datagen.flow_from_directory(test_dir,</span><br><span class="line">	target_size=(<span class="number">150</span>, <span class="number">150</span>),batch_size=<span class="number">20</span>,class_mode=<span class="string">'binary'</span>)</span><br><span class="line">test_loss, test_acc = model.evaluate_generator(test_generator,steps=<span class="number">50</span>)</span><br><span class="line">print(<span class="string">'test acc:'</span>, test_acc)</span><br><span class="line"><span class="comment">#97%</span></span><br></pre></td></tr></table></figure></p>
@@ -587,10 +621,10 @@ VGG16网络模型架构：<figure class="highlight python"><table><tr><td class=
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">activations = activation_model.predict(img_tensor)<span class="comment">#输出：每层激活值一个数组</span></span><br></pre></td></tr></table></figure></p>
 <p>第一个卷积层结果：
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">first_layer_activation = activations[<span class="number">0</span>]</span><br><span class="line">print(first_layer_activation.shape)</span><br><span class="line"><span class="comment">#(1, 148, 148, 32)</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.matshow(first_layer_activation[<span class="number">0</span>, :, :, <span class="number">4</span>], cmap=<span class="string">'viridis'</span>)<span class="comment">#第4通道可视化</span></span><br></pre></td></tr></table></figure></p>
-<p><img src="http://chuantu.biz/t6/347/1532246247x-1404817724.png" alt="">
+<p><img src="http://chuantu.biz/t6/347/1532246247x-1404817724.png" alt>
 网络中所有激活函数值可视化，将8个网络层激活函数值的所有通道结果显示出来。
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">layer_names = []</span><br><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> model.layers[:<span class="number">8</span>]:</span><br><span class="line">	layer_names.append(layer.name)</span><br><span class="line">images_per_row = <span class="number">16</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> layer_name, layer_activation <span class="keyword">in</span> zip(layer_names, activations):</span><br><span class="line">	n_features = layer_activation.shape[<span class="number">-1</span>]</span><br><span class="line">	size = layer_activation.shape[<span class="number">1</span>]</span><br><span class="line">	</span><br><span class="line">	n_cols = n_features // images_per_row</span><br><span class="line">	display_grid = np.zeros((size * n_cols, images_per_row * size))</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> col <span class="keyword">in</span> range(n_cols):</span><br><span class="line">		<span class="keyword">for</span> row <span class="keyword">in</span> range(images_per_row):</span><br><span class="line">			channel_image=layer_activation[<span class="number">0</span>,:,:,col*images_per_row+row]</span><br><span class="line">			channel_image -= channel_image.mean()</span><br><span class="line">			channel_image /= channel_image.std()</span><br><span class="line">			channel_image *= <span class="number">64</span></span><br><span class="line">			channel_image += <span class="number">128</span></span><br><span class="line">			channel_image=np.clip(channel_image,<span class="number">0</span>, <span class="number">255</span>).astype(<span class="string">'uint8'</span>)</span><br><span class="line">			display_grid[col*size:(col+<span class="number">1</span>)*size,row*size:(row+<span class="number">1</span>)*size]=channel_image</span><br><span class="line">	scale = <span class="number">1.</span> / size</span><br><span class="line">	plt.figure(figsize=(scale * display_grid.shape[<span class="number">1</span>],</span><br><span class="line">	scale * display_grid.shape[<span class="number">0</span>]))</span><br><span class="line">	plt.title(layer_name)</span><br><span class="line">	plt.grid(<span class="keyword">False</span>)</span><br><span class="line">	plt.imshow(display_grid, aspect=<span class="string">'auto'</span>, cmap=<span class="string">'viridis'</span>)</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://chuantu.biz/t6/347/1532247423x-1376440240.png" alt="">
+<p><img src="http://chuantu.biz/t6/347/1532247423x-1376440240.png" alt>
 值得注意的是：</p>
 <ul>
 <li>第一层充当各种边缘检测器的集合。在那个阶段，激活值几乎保留了初始图片中的所有信息；</li>
@@ -614,7 +648,7 @@ VGG16网络模型架构：<figure class="highlight python"><table><tr><td class=
 <p>这些过滤器可视化展示了很多关于如何使用数字网络层来查看世界：网络中的每个层都学习了一组过滤器，以便它们的输入可以表示为过滤器的组合。</p>
 <h3 id="类别激活值heatmap可视化"><a href="#类别激活值heatmap可视化" class="headerlink" title="类别激活值heatmap可视化"></a>类别激活值heatmap可视化</h3><p>一种可视化技术：有助于理解给定图像的哪些部分引导其进行最终分类决策的可视化技术。
 这种通用类别的技术称为类激活图（CAM）可视化，它包括在输入图像上生成类激活的热图。<strong>类激活热图是与特定输出类相关联的分数的2D网格，针对任何输入图像中的每个位置计算，指示每个位置相对于所考虑的类的重要程度。</strong>
-<img src="http://chuantu.biz/t6/347/1532250598x-1376440150.png" alt=""></p>
+<img src="http://chuantu.biz/t6/347/1532250598x-1376440150.png" alt></p>
 <h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><ul>
 <li>Convnets是处理视觉分类问题的最佳工具；</li>
 <li>Convnets通过学习模块化模式和概念的层次结构来表示视觉世界；</li>
@@ -764,7 +798,7 @@ VGG16网络模型架构：<figure class="highlight python"><table><tr><td class=
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image" src="/uploads/avatar.gif" alt="fja0kl">
             
@@ -810,6 +844,13 @@ VGG16网络模型架构：<figure class="highlight python"><table><tr><td class=
           </nav>
 
           
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
 
           
 
@@ -834,7 +875,7 @@ VGG16网络模型架构：<figure class="highlight python"><table><tr><td class=
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积网络介绍"><span class="nav-number">1.</span> <span class="nav-text">卷积网络介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积操作"><span class="nav-number">1.1.</span> <span class="nav-text">卷积操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最大池化-MaxPooling"><span class="nav-number">1.2.</span> <span class="nav-text">最大池化 MaxPooling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小数据集上训练卷积网络"><span class="nav-number">2.</span> <span class="nav-text">小数据集上训练卷积网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#深度学习与小数据问题的相关性"><span class="nav-number">2.1.</span> <span class="nav-text">深度学习与小数据问题的相关性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据下载"><span class="nav-number">2.2.</span> <span class="nav-text">数据下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建模型"><span class="nav-number">2.3.</span> <span class="nav-text">构建模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据预处理"><span class="nav-number">2.4.</span> <span class="nav-text">数据预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据增强"><span class="nav-number">2.5.</span> <span class="nav-text">数据增强</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用预训练卷积网络"><span class="nav-number">3.</span> <span class="nav-text">使用预训练卷积网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特征提取"><span class="nav-number">3.1.</span> <span class="nav-text">特征提取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型微调Fine-tuning"><span class="nav-number">3.2.</span> <span class="nav-text">模型微调Fine-tuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">3.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积学习结果可视化"><span class="nav-number">4.</span> <span class="nav-text">卷积学习结果可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#可视化中间激活值"><span class="nav-number">4.1.</span> <span class="nav-text">可视化中间激活值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可视化卷积核"><span class="nav-number">4.2.</span> <span class="nav-text">可视化卷积核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类别激活值heatmap可视化"><span class="nav-number">4.3.</span> <span class="nav-text">类别激活值heatmap可视化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结-1"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积网络介绍"><span class="nav-number">1.</span> <span class="nav-text">卷积网络介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积操作"><span class="nav-number">1.1.</span> <span class="nav-text">卷积操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最大池化-MaxPooling"><span class="nav-number">1.2.</span> <span class="nav-text">最大池化 MaxPooling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小数据集上训练卷积网络"><span class="nav-number">2.</span> <span class="nav-text">小数据集上训练卷积网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#深度学习与小数据问题的相关性"><span class="nav-number">2.1.</span> <span class="nav-text">深度学习与小数据问题的相关性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据下载"><span class="nav-number">2.2.</span> <span class="nav-text">数据下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建模型"><span class="nav-number">2.3.</span> <span class="nav-text">构建模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据预处理"><span class="nav-number">2.4.</span> <span class="nav-text">数据预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据增强"><span class="nav-number">2.5.</span> <span class="nav-text">数据增强</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用预训练卷积网络"><span class="nav-number">3.</span> <span class="nav-text">使用预训练卷积网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特征提取"><span class="nav-number">3.1.</span> <span class="nav-text">特征提取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型微调Fine-tuning"><span class="nav-number">3.2.</span> <span class="nav-text">模型微调Fine-tuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">3.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积学习结果可视化"><span class="nav-number">4.</span> <span class="nav-text">卷积学习结果可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#可视化中间激活值"><span class="nav-number">4.1.</span> <span class="nav-text">可视化中间激活值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可视化卷积核"><span class="nav-number">4.2.</span> <span class="nav-text">可视化卷积核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类别激活值heatmap可视化"><span class="nav-number">4.3.</span> <span class="nav-text">类别激活值heatmap可视化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结-1"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></li></div>
             
 
           </div>
@@ -1066,6 +1107,323 @@ VGG16网络模型架构：<figure class="highlight python"><table><tr><td class=
 
 
   
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
 
 
 
