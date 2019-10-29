@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fja0kl.github.io/"/>
-  <updated>2019-09-22T14:09:14.524Z</updated>
+  <updated>2019-10-29T02:15:59.885Z</updated>
   <id>http://fja0kl.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>程序员技术变现笔记及感想</title>
+    <link href="http://fja0kl.github.io/2019/10/29/%E7%A8%8B%E5%BA%8F%E5%91%98%E6%8A%80%E6%9C%AF%E5%8F%98%E7%8E%B0%E7%AC%94%E8%AE%B0%E5%8F%8A%E6%84%9F%E6%83%B3/"/>
+    <id>http://fja0kl.github.io/2019/10/29/程序员技术变现笔记及感想/</id>
+    <published>2019-10-29T02:14:25.000Z</published>
+    <updated>2019-10-29T02:15:59.885Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>阅读内容来自<a href="https://time.geekbang.org/column/intro/48" target="_blank" rel="noopener">极客时间-左耳听风</a></p></blockquote><h2 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a><strong>笔记</strong></h2><p>程序员本质上是一个手艺人，不要妄自菲薄，加深自己的知识储备。努力使自己的能力变得突出，做的“人无我有，人有我精”，“独一份”才更能体现价值，获得价值。</p><ul><li><p>要去经历大多数人经历不到的，要把学习时间花在那些比较难的地方；</p></li><li><p>要写文章就要写没有人写过的，或是别人写过，但我能写得更好的[SEO更加，更容易被检索到];</p></li><li><p>技术和知识完全是可以变现的。</p></li></ul><p>要做的上述，</p><ul><li>第一，千里之行，积于跬步。任何一件成功的大事，都是通过一个一个的小成功达到的。</li><li>第二，关注有价值的东西。什么是有价值的东西？价值其实是受供需关系影响的，供大于求，就没什么价值，供不应求，就有价值。这意味着不仅要看到市场，还要看到技术的趋势，分辨出什么是主流技术，什么是过度式技术。</li><li>第三，关注技术付费点。技术付费点基本体现在两个地方，一个是，能帮别人“挣钱的地方”；另一个是，能帮别人“省钱”的地方。</li><li>第四，提升自己的能力和经历。</li><li>第五，找到有价值的信息源。信息社会，如果你比别人有更好的信息源，那么你就可以比别人成长得更快。对于技术人员来说，我们知道，几乎所有的技术都源自西方世界，所以，你应该走到信息的源头去。English is important！</li><li>第六，<strong>投资自己，最宝贵的财富并不是钱，而是你的时间。利用好自己的时间，投到一些有意义的地方</strong>。</li></ul><p>在学习技术的过程中一定要多问自己两个问题：“1. 这个技术解决什么问题？为什么别的同类技术做不到？2. 为什是这样解决的？有没有更好的方式？” 一个简单的判断方法，如果一个新的技术顺应技术发展趋势，那么在这个新的技术出现时，后面一定会有大型的商业公司支持，这类公司支持得越多，就说明你越需要关注。</p><h2 id="For-Me"><a href="#For-Me" class="headerlink" title="For Me"></a><strong>For Me</strong></h2><ol><li><p>学会提问？多问几个为什么，把新知识和自己的知识”连接“起来，形成体系；</p></li><li><p>新信息最好在源头找，信息流；English is important！学好英语。</p></li><li><p>动手能力，丰富自己的经历，这是自己的基础，<strong>行胜于言</strong>，加深理解。</p></li><li><p>利用好时间，将时间花费在比较难的地方，提高ROI；</p></li><li><p>关注付费点，找准当前技术的发展方向以及流行技术，新兴技术。</p></li><li><p>反思，<strong>提高ROI</strong>。通过自我经历，复盘，明白优点以及不足，总结，减少重复犯错，这样能让经历更有价值。</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;阅读内容来自&lt;a href=&quot;https://time.geekbang.org/column/intro/48&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;极客时间-左耳听风&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2
+      
+    
+    </summary>
+    
+      <category term="For-Me" scheme="http://fja0kl.github.io/categories/For-Me/"/>
+    
+    
+      <category term="thinkings" scheme="http://fja0kl.github.io/tags/thinkings/"/>
+    
+  </entry>
   
   <entry>
     <title>2019十月计划</title>
@@ -494,31 +522,6 @@ tags: binary-search&lt;/p&gt;
     
     
       <category term="two-pointers" scheme="http://fja0kl.github.io/tags/two-pointers/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[LeetCode]205. Isomorphic Strings</title>
-    <link href="http://fja0kl.github.io/2019/06/16/LeetCode-205-Isomorphic-Strings/"/>
-    <id>http://fja0kl.github.io/2019/06/16/LeetCode-205-Isomorphic-Strings/</id>
-    <published>2019-06-16T02:40:17.000Z</published>
-    <updated>2019-06-16T02:43:01.918Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Given two strings s and t, determine if they are isomorphic.</p><p>Two strings are isomorphic if the characters in s can be replaced to get t.</p><p>All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: s = &quot;egg&quot;, t = &quot;add&quot;</span><br><span class="line">Output: true</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: s = &quot;foo&quot;, t = &quot;bar&quot;</span><br><span class="line">Output: false</span><br><span class="line">Example 3:</span><br><span class="line"></span><br><span class="line">Input: s = &quot;paper&quot;, t = &quot;title&quot;</span><br><span class="line">Output: true</span><br></pre></td></tr></table></figure></p><p>Note:</p><blockquote><p>You may assume both s and t have the same length.</p></blockquote><h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>题目给定两个串,判断两者是不是同一种格式.比如例一:”egg”和”add”, 两者都可以表示为”ABB”格式; 例二”foo”和”bar”,格式分别为”ABB”和”ABC”,例三”paper”和”title”分别为”ABACD”和”ABACD”. </p><p>所以,我可以写一个辅助函数归纳一个字符串的格式, 这里的格式不仅和字符出现的频率有关,而且和字符之间的顺序相关, 因为题目中给定都是小写字母,本来想归纳到数字上,但是由于数字之间不具有区分关系,’123’不能分辨出来,到底是”1”和”23”还是”12”和”3”还是”1”和”2”和”3”. 所以统一归纳到大写字母上.</p><p>还有一种相对简单的关系,不用统一映射到”ABC”上, 两个串之间直接相互映射: s-&gt;t, t-&gt;s. 然后逐个记录映射关系,比较映射关系,得到最终答案.</p><h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p><strong>Solution One</strong></p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isIsomorphic</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s == t) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (convert(s) == convert(t))</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// 统一到ABCD上, 找到当前字符串的表达公式, eg:abb -&gt; ABB, cdd-&gt;ABB</span></span><br><span class="line">    <span class="comment">// 两个原串进行转换,判断各自的表达公式是否相同.</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">convert</span><span class="params">(<span class="built_in">string</span> s)</span></span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">char</span>&gt; tabel;<span class="comment">// 方便归纳"ABA"等, 这种出现重复字符的情况.</span></span><br><span class="line">        <span class="keyword">char</span> start = <span class="string">'A'</span>;</span><br><span class="line">        <span class="built_in">string</span> result = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> ch : s)&#123;</span><br><span class="line">            <span class="keyword">if</span> (tabel.find(ch) != tabel.end())&#123;<span class="comment">// found</span></span><br><span class="line">                result += tabel[ch];</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;<span class="comment">// not exists</span></span><br><span class="line">                result += start;</span><br><span class="line">                tabel[ch] = start;</span><br><span class="line">                ++start;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p><strong>Solution Two</strong></p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isIsomorphic</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span> sTotMap[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">char</span> tTosMap[<span class="number">256</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (i &lt; s.size() &amp;&amp; j &lt; t.size())&#123;</span><br><span class="line">            <span class="comment">// s To t mapping</span></span><br><span class="line">            <span class="keyword">if</span> (sTotMap[s[i]] != <span class="number">0</span>)&#123;<span class="comment">// 重复出现</span></span><br><span class="line">                <span class="keyword">if</span> (sTotMap[s[i]] != t[j])<span class="comment">//判断映射是否正确</span></span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span><span class="comment">// 没出现,记录映射关系</span></span><br><span class="line">                sTotMap[s[i]] = t[j];</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// t To s mapping</span></span><br><span class="line">            <span class="keyword">if</span> (tTosMap[t[j]] != <span class="number">0</span>)&#123;<span class="comment">//和上面类似</span></span><br><span class="line">                <span class="keyword">if</span> (tTosMap[t[j]] != s[i])</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span></span><br><span class="line">                tTosMap[t[j]] = s[i];</span><br><span class="line">            </span><br><span class="line">            ++i;</span><br><span class="line">            ++j;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2019/06/22/LeetCode-1-Two-Sum/">[LeetCode]1. Two Sum</a></li><li><a href="http://fja0kl.github.io/2019/08/04/LeetCode-290-Word-Pattern/">[LeetCode]290. Word Pattern</a></li><li><a href="http://fja0kl.github.io/2019/06/16/LeetCode-219-Contains-Duplicate-II/">[LeetCode]219. Contains Duplicate II</a></li></ul></div>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;Problem&quot;&gt;&lt;a href=&quot;#Problem&quot; class=&quot;headerlink&quot; title=&quot;Problem&quot;&gt;&lt;/a&gt;Problem&lt;/h2&gt;&lt;p&gt;Given two strings s and t, determine if they are i
-      
-    
-    </summary>
-    
-      <category term="LeetCode" scheme="http://fja0kl.github.io/categories/LeetCode/"/>
-    
-    
-      <category term="hash" scheme="http://fja0kl.github.io/tags/hash/"/>
     
   </entry>
   

@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>程序员技术变现笔记及感想</title>
+    <url>/2019/10/29/%E7%A8%8B%E5%BA%8F%E5%91%98%E6%8A%80%E6%9C%AF%E5%8F%98%E7%8E%B0%E7%AC%94%E8%AE%B0%E5%8F%8A%E6%84%9F%E6%83%B3/</url>
+    <content><![CDATA[<blockquote>
+<p>阅读内容来自<a href="https://time.geekbang.org/column/intro/48" target="_blank" rel="noopener">极客时间-左耳听风</a></p>
+</blockquote>
+<h2 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a><strong>笔记</strong></h2><p>程序员本质上是一个手艺人，不要妄自菲薄，加深自己的知识储备。努力使自己的能力变得突出，做的“人无我有，人有我精”，“独一份”才更能体现价值，获得价值。</p>
+<ul>
+<li><p>要去经历大多数人经历不到的，要把学习时间花在那些比较难的地方；</p>
+</li>
+<li><p>要写文章就要写没有人写过的，或是别人写过，但我能写得更好的[SEO更加，更容易被检索到];</p>
+</li>
+<li><p>技术和知识完全是可以变现的。</p>
+</li>
+</ul>
+<p>要做的上述，</p>
+<ul>
+<li>第一，千里之行，积于跬步。任何一件成功的大事，都是通过一个一个的小成功达到的。</li>
+<li>第二，关注有价值的东西。什么是有价值的东西？价值其实是受供需关系影响的，供大于求，就没什么价值，供不应求，就有价值。这意味着不仅要看到市场，还要看到技术的趋势，分辨出什么是主流技术，什么是过度式技术。</li>
+<li>第三，关注技术付费点。技术付费点基本体现在两个地方，一个是，能帮别人“挣钱的地方”；另一个是，能帮别人“省钱”的地方。</li>
+<li>第四，提升自己的能力和经历。</li>
+<li>第五，找到有价值的信息源。信息社会，如果你比别人有更好的信息源，那么你就可以比别人成长得更快。对于技术人员来说，我们知道，几乎所有的技术都源自西方世界，所以，你应该走到信息的源头去。English is important！</li>
+<li>第六，<strong>投资自己，最宝贵的财富并不是钱，而是你的时间。利用好自己的时间，投到一些有意义的地方</strong>。</li>
+</ul>
+<p>在学习技术的过程中一定要多问自己两个问题：“1. 这个技术解决什么问题？为什么别的同类技术做不到？2. 为什是这样解决的？有没有更好的方式？” 一个简单的判断方法，如果一个新的技术顺应技术发展趋势，那么在这个新的技术出现时，后面一定会有大型的商业公司支持，这类公司支持得越多，就说明你越需要关注。</p>
+<h2 id="For-Me"><a href="#For-Me" class="headerlink" title="For Me"></a><strong>For Me</strong></h2><ol>
+<li><p>学会提问？多问几个为什么，把新知识和自己的知识”连接“起来，形成体系；</p>
+</li>
+<li><p>新信息最好在源头找，信息流；English is important！学好英语。</p>
+</li>
+<li><p>动手能力，丰富自己的经历，这是自己的基础，<strong>行胜于言</strong>，加深理解。</p>
+</li>
+<li><p>利用好时间，将时间花费在比较难的地方，提高ROI；</p>
+</li>
+<li><p>关注付费点，找准当前技术的发展方向以及流行技术，新兴技术。</p>
+</li>
+<li><p>反思，<strong>提高ROI</strong>。通过自我经历，复盘，明白优点以及不足，总结，减少重复犯错，这样能让经历更有价值。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>For-Me</category>
+      </categories>
+      <tags>
+        <tag>thinkings</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2019十月计划</title>
     <url>/2019/09/22/2019%E5%8D%81%E6%9C%88%E8%AE%A1%E5%88%92/</url>
     <content><![CDATA[<blockquote>
@@ -5179,8 +5226,8 @@ Dense网络层堆叠时回答两个关键的问题：</p>
       </categories>
       <tags>
         <tag>DL</tag>
-        <tag>keras</tag>
         <tag>python</tag>
+        <tag>keras</tag>
         <tag>分类</tag>
       </tags>
   </entry>
