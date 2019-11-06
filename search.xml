@@ -1,6 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>UserCF原理及其实现</title>
+    <url>/2019/11/06/UserCF%E5%8E%9F%E7%90%86%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<h2 id="UserCF原理及其实现"><a href="#UserCF原理及其实现" class="headerlink" title="UserCF原理及其实现"></a>UserCF原理及其实现</h2><p>基于用户的协同过滤的原理及其实现.使用数据来自MoviesLens.之后行为结构,先介绍MoviesLens数据集,然后介绍基于用户的协同过滤UserCF算法原理,最后使用MoviesLens数据集实现一个简单的电影推荐系统.</p>
+<h3 id="MoviesLens数据集"><a href="#MoviesLens数据集" class="headerlink" title="MoviesLens数据集"></a>MoviesLens数据集</h3><p>MovieLens数据集包含多个用户对多部电影的评分数据，也包括电影元数据信息和用户属性信息。这里使用ml-1m数据,解压后有4个文件:movies.dat, users.dat, ratings.dat以及README介绍文件.</p>
+<p>movies.dat是电影数据信息文件,表明每个电影的信息,每行数据格式为:
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MovieID::Title::Genres</span><br><span class="line"># 电影编号::电影标题::电影分类</span><br></pre></td></tr></table></figure></p>
+<p>users.dat是用户信息文件,包含用户的ID,性别,年龄,职业,邮编地址</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">UserID::Gender::Age::Occupation::Zip-code</span><br></pre></td></tr></table></figure>
+<ul>
+<li>gender: M表示男性,F表示女性</li>
+<li>age:<ul>
+<li>1:  “Under 18” 小于18岁</li>
+<li>18:  “18-24” </li>
+<li>25:  “25-34”</li>
+<li>35:  “35-44”</li>
+<li>45:  “45-49”</li>
+<li>50:  “50-55”</li>
+<li>56:  “56+”</li>
+</ul>
+</li>
+<li>occupation: 用户职业信息<ul>
+<li>0:  “other” or not specified</li>
+<li>1:  “academic/educator” </li>
+<li>2:  “artist” </li>
+<li>3:  “clerical/admin” </li>
+<li>4:  “college/grad student”</li>
+<li>5:  “customer service”</li>
+<li>6:  “doctor/health care”</li>
+<li>7:  “executive/managerial”</li>
+<li>8:  “farmer”</li>
+<li>9:  “homemaker”</li>
+<li>10:  “K-12 student”</li>
+<li>11:  “lawyer”</li>
+<li>12:  “programmer”</li>
+<li>13:  “retired”</li>
+<li>14:  “sales/marketing”</li>
+<li>15:  “scientist”</li>
+<li>16:  “self-employed”</li>
+<li>17:  “technician/engineer”</li>
+<li>18:  “tradesman/craftsman”</li>
+<li>19:  “unemployed”</li>
+<li>20:  “writer”</li>
+</ul>
+</li>
+</ul>
+<p>ratings.dat是用户对电影评分数据文件.每行数据格式为:
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">UserID::MovieID::Rating::Timestamp</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>UserIDs 范围在 1 - 6040</li>
+<li>MovieIDs 范围在 1 - 3952</li>
+<li>Ratings 评分数据以5星为标准 (只包含整星,不能为半星)</li>
+<li>Timestamp表示从1970.1.1起的秒</li>
+<li>每个用户至少有20个评分数据</li>
+</ul>
+<h3 id="UserCF原理"><a href="#UserCF原理" class="headerlink" title="UserCF原理"></a>UserCF原理</h3><p>基于用户的协同过滤算法.基本思想是针对用户u来说,先根据用户历史行为数据(这里指用户的电影评分数据)找到跟用户u相似的一个用户集,然后对用户u没有评分的电影,使用用户集的行为数据,根据用户u与用户群体中用户的相似度做加权平均,得到一个<strong>用户u没有看过电影的评分</strong>,根据评分排序,选择topK个电影作为用户u的推荐结果.</p>
+<p>实现UserCF主要关注几个点:</p>
+<ul>
+<li>Users-Items矩阵: 如何根据用户历史行为数据得到这个矩阵;</li>
+<li>用户u的相似群体: 用户之间相似定义,评估,给出量化指标;</li>
+<li>用户u的推荐电影评分: 相似用户评分的加权平均,<strong>权重</strong>的定义,赋值</li>
+</ul>
+<h4 id="users-items矩阵"><a href="#users-items矩阵" class="headerlink" title="users-items矩阵"></a>users-items矩阵</h4><p>通过ratings.dat文件构建users-items矩阵,行表示用户u对所有电影的评分,范围是1-5;如果为0表示用户u还没有看过该电影</p>
+<h4 id="用户相似度计算"><a href="#用户相似度计算" class="headerlink" title="用户相似度计算"></a>用户相似度计算</h4><ul>
+<li><p>离散数据:<img src="https://upload-images.jianshu.io/upload_images/9637742-8e629fe53a0da0e7.png" alt="相似度计算公式"></p>
+</li>
+<li><p>这里采用<strong>余弦相似度</strong>计算公式:两个向量计算相似度</p>
+</li>
+</ul>
+<p>通过用户之间的相似度计算,可以得到一个用户相似度矩阵.</p>
+<h4 id="电影评分"><a href="#电影评分" class="headerlink" title="电影评分"></a>电影评分</h4><p>对于用户u,</p>
+<ol>
+<li>根据用户相似度矩阵选择topK相似用户,形成集合S;</li>
+<li>集合S中的用户评分过的电影中筛选掉用户u看过的电影,得到候选电影集N;</li>
+<li>用户集合S和候选电影集N,推测用户u对没看过电影j的评分公式为<ul>
+<li><img src="https://upload-images.jianshu.io/upload_images/4155986-26d65f5981e5bbd3.png" alt></li>
+<li>其中,S(u,K)表示和用户u最相似的topK个用户</li>
+<li>N(i):表示候选电影集</li>
+</ul>
+</li>
+</ol>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><h4 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h4><ul>
+<li>input: 用户u</li>
+<li>output: 推荐结果topN列表</li>
+</ul>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><p>为了实现上述的效果,我们需要读入电影数据movies.dat以及用户评分数据ratings.dat.</p>
+<ul>
+<li>根据ratings.dat得到users-items矩阵;</li>
+<li>使用UserCF得到topN推荐结果列表,内容是ids;</li>
+<li>根据topN列表电影id查询movies.dat,得到推荐电影名称</li>
+</ul>
+<p>具体参见代码:<a href="https://github.com/fja0kl/HandsNeuralWorks/tree/master/recsys/UserCF" target="_blank" rel="noopener">repo地址</a></p>
+<h3 id="Code-References"><a href="#Code-References" class="headerlink" title="Code References"></a>Code References</h3><p><a href="https://www.jianshu.com/p/e15d40531c21" target="_blank" rel="noopener">推荐系统实战(二)–movieslens数据集实现UserCF算法</a></p>
+]]></content>
+      <categories>
+        <category>recsys</category>
+      </categories>
+      <tags>
+        <tag>UserCF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>搜索推荐系统评测指标</title>
     <url>/2019/10/31/%E6%90%9C%E7%B4%A2%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E8%AF%84%E6%B5%8B%E6%8C%87%E6%A0%87/</url>
     <content><![CDATA[<blockquote>
@@ -1448,7 +1549,7 @@ $dp[3] = dp[0] <em> dp[2] + dp[1]</em>dp[1] + dp[3] * dp[0]$</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a href="https://www.cnblogs.com/grandyang/p/4332522.html" target="_blank" rel="noopener">https://www.cnblogs.com/grandyang/p/4332522.html</a>
 <a href="https://blog.csdn.net/wys2011101169/article/details/72887512" target="_blank" rel="noopener">https://blog.csdn.net/wys2011101169/article/details/72887512</a>
 <a href="https://blog.csdn.net/u010500263/article/details/18435495" target="_blank" rel="noopener">https://blog.csdn.net/u010500263/article/details/18435495</a></p>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="https://huzhiliang.com/posts/3328524931.html">递归</a></li></ul></div>]]></content>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="https://jarrychen.xyz/archives/b1ebb1d3.html">图的深度优先遍历</a></li></ul></div>]]></content>
       <categories>
         <category>LeetCode</category>
       </categories>
@@ -5066,7 +5167,7 @@ Keras中，有Dropout网络层—对上一层的输出结果做Dropout。
 </ul>
 <p><strong>每次使用验证集上的表现调整模型时，验证集的信息会泄露到模型中。</strong>重复几次是无伤大雅的；但重复次数过多，最终会导致在验证集上模型过拟合，评估结果不可信。</p>
 <p>一旦最佳的模型参数、配置情况确定，最后在非测试集上的所有数据进行训练，最后在测试集上进行测试评估。</p>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/13/基于Keras的imdb数据集电影评论情感二分类/">基于Keras的imdb数据集电影评论情感二分类</a></li><li><a href="http://fja0kl.github.io/2018/05/29/手写实现单层神经网络/">手写实现单层神经网络</a></li><li><a href="http://fja0kl.github.io/2018/05/24/指数加权平均/">指数加权平均</a></li></ul></div>]]></content>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2018/07/13/基于Keras的imdb数据集电影评论情感二分类/">基于Keras的imdb数据集电影评论情感二分类</a></li><li><a href="http://fja0kl.github.io/2018/05/29/手写实现单层神经网络/">手写实现单层神经网络</a></li><li><a href="http://fja0kl.github.io/2018/05/24/指数加权平均/">指数加权平均</a></li><li><a href="https://github.com/YifangDONG/2018/10/14/只管去做/">只管去做</a></li></ul></div>]]></content>
       <categories>
         <category>DL</category>
       </categories>
