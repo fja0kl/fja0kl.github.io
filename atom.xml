@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://fja0kl.github.io/"/>
-  <updated>2019-11-08T04:04:14.370Z</updated>
+  <updated>2019-11-11T08:43:12.671Z</updated>
   <id>http://fja0kl.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>FM理论与代码实现</title>
+    <link href="http://fja0kl.github.io/2019/11/11/FM%E7%90%86%E8%AE%BA%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://fja0kl.github.io/2019/11/11/FM理论与代码实现/</id>
+    <published>2019-11-11T08:41:59.000Z</published>
+    <updated>2019-11-11T08:43:12.671Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h1><p>FM(Factorization Machine)是由<strong>Steffen Rendle在2010年提出,解决了稀疏数据场景下的特征组合问题</strong>,在广告,推荐领域被广泛使用.</p><h2 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h2><p>在高度稀疏的数据场景下如推荐系统,计算广告,传统的线性模型LR,不能很好的学习对应的权重.传统的线性模型,每个特征都是独立的,如果需要考虑特征与特征之间的交互作用,可能需要人工对特征进行交叉组合;非线性SVM可以使用核函数对特征进行映射,但是<strong>高维稀疏数据的情况下</strong>,不能很好地学习.</p><p>高维稀疏数据通常的处理方法是对类别特征进行onehot处理.高维稀疏数据表示一个样本中,非零数很少,绝大部分都是0.如果使用传统的线性模型,特征交互的权重之间是相互独立的,如果说对应的特征交互没有出现相应的样本,就会导致对应权重为0,由于样本的稀疏性,导致了交叉权重有绝大部分均为0.</p><blockquote><p>为什么那么,FM是如何解决这个问题的?</p></blockquote><h2 id="FM算法模型"><a href="#FM算法模型" class="headerlink" title="FM算法模型"></a>FM算法模型</h2><h3 id="模型函数"><a href="#模型函数" class="headerlink" title="模型函数"></a>模型函数</h3><p>特征交叉,这里考虑2阶交叉(2-way).对应模型函数为:</p><p><img src="https://i.loli.net/2019/11/11/SftBNRwYq9MsuDW.png" alt="image.png"></p><p>其中,w0是全局偏置(如lr模型中b),w是输入特征的参数,&lt;vi,vj&gt;是输入特征i,j的交叉参数,vi,vj是k维向量.</p><p>这个函数的前两项就是传统的线性模型,后面一个是交叉特征,这是FM区别于线性模型的地方.</p><p>为什么特征交叉对应参数不是直接学习wij,而是通过&lt;vi,vj&gt;来表示?</p><p><strong>因为在稀疏条件下,这样的表示方法打破了特征的独立性,能够更好地挖掘特征之间的相关性</strong>.由于数据的稀疏性,如果直接学习xi,xj的交叉特征对应的wij,可能由于xi,xj均为0,导致wij不能被学习.各个wij可以形成一个权重矩阵W,从矩阵分解角度来看,任意正定矩阵W可以分解为VVT.我们通过对V的学习,来近似估计W.同时由于打破了特征独立性,wij表示为&lt;vi,vj&gt;,实际我们通过学习vi,vj,然后再表示wij,意思说wij的vi不仅仅和vj有关,也和其他xk有关,所有和xi发生交互的特征样本均可以用来学习vi.举例来说wij,wik两个权重公用一个隐向量vi.</p><h3 id="模型计算复杂度"><a href="#模型计算复杂度" class="headerlink" title="模型计算复杂度"></a>模型计算复杂度</h3><p>计算复杂度.通过数据变换,可以将复杂度由O(K<em>N</em>N)变为O(K*N).利用2xy = (x+y)^2-x^2-y^2.</p><p><img src="https://i.loli.net/2019/11/11/ZYw97WLaqRTtQe1.png" alt></p><h3 id="学习方法"><a href="#学习方法" class="headerlink" title="学习方法"></a>学习方法</h3><p>对于大多数的损失函数而言,FM里的参数W和V可以通过随机梯度下降SGD来学习,比如logit loss,hinge loss,square loss,模型参数的梯度计算如下:</p><p><img src="https://i.loli.net/2019/11/11/J7kHQLhSNpPvfr9.png" alt="image.png"></p><p><img src="https://i.loli.net/2019/11/11/HXISVauF8ZDBed5.png" alt="image.png">这部分和样本i是独立的,可以预先计算好.</p><h2 id="FM优缺点"><a href="#FM优缺点" class="headerlink" title="FM优缺点"></a>FM优缺点</h2><p>优点:</p><ul><li>在高度稀疏的条件下能够更好地估计交叉特征权重,尤其是对于样本中没有出现的交叉特征;</li><li>FM的参数学习以及样本估计的时间是线性的.使用SGD优化更可行.</li><li>FM是一个通用的模型可以处理任何实值问题.</li></ul><p>不足:</p><ul><li>交叉特征权重计算时,一个xi对应一个vi,表达力不足;同一个特征和其他不同特征交叉时,对应的隐向量表示应该有所区别;</li><li>模型比较简单,linear regression + 2-way interaction;实际问题中,可能需要更高阶的交叉特征,此时FM学习,表现较差;</li></ul><h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>repo地址: <a href="https://github.com/fja0kl/HandsNeuralWorks/tree/master/recsys/FM" target="_blank" rel="noopener">ClickMe</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;理论&quot;&gt;&lt;a href=&quot;#理论&quot; class=&quot;headerlink&quot; title=&quot;理论&quot;&gt;&lt;/a&gt;理论&lt;/h1&gt;&lt;p&gt;FM(Factorization Machine)是由&lt;strong&gt;Steffen Rendle在2010年提出,解决了稀疏数据场景下的特
+      
+    
+    </summary>
+    
+      <category term="recsys" scheme="http://fja0kl.github.io/categories/recsys/"/>
+    
+    
+      <category term="FM" scheme="http://fja0kl.github.io/tags/FM/"/>
+    
+  </entry>
   
   <entry>
     <title>稀疏矩阵定义以及存储格式(COO,CSR,CSC)</title>
@@ -487,34 +512,6 @@
       
       
         &lt;h2 id=&quot;Problem&quot;&gt;&lt;a href=&quot;#Problem&quot; class=&quot;headerlink&quot; title=&quot;Problem&quot;&gt;&lt;/a&gt;Problem&lt;/h2&gt;&lt;p&gt;Suppose an array sorted in ascending order is rota
-      
-    
-    </summary>
-    
-      <category term="LeetCode" scheme="http://fja0kl.github.io/categories/LeetCode/"/>
-    
-    
-      <category term="binary-search" scheme="http://fja0kl.github.io/tags/binary-search/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[LeetCode]33. Search in Rotated Sorted Array</title>
-    <link href="http://fja0kl.github.io/2019/06/20/LeetCode-33-Search-in-Rotated-Sorted-Array-1/"/>
-    <id>http://fja0kl.github.io/2019/06/20/LeetCode-33-Search-in-Rotated-Sorted-Array-1/</id>
-    <published>2019-06-20T13:11:18.000Z</published>
-    <updated>2019-06-20T13:14:00.709Z</updated>
-    
-    <content type="html"><![CDATA[<hr><p>title: [LeetCode]33. Search in Rotated Sorted Arraytags: binary-search</p><h2 id="notebook-LeetCode"><a href="#notebook-LeetCode" class="headerlink" title="notebook: LeetCode"></a>notebook: LeetCode</h2><h2 id="Problem"><a href="#Problem" class="headerlink" title="Problem"></a>Problem</h2><p>Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.</p><p>(i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).</p><p>You are given a target value to search. If found in the array return its index, otherwise return -1.</p><p>You may assume no duplicate exists in the array.</p><p>Your algorithm’s runtime complexity must be in the order of O(log n).<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Example 1:</span><br><span class="line"></span><br><span class="line">Input: nums = [4,5,6,7,0,1,2], target = 0</span><br><span class="line">Output: 4</span><br><span class="line">Example 2:</span><br><span class="line"></span><br><span class="line">Input: nums = [4,5,6,7,0,1,2], target = 3</span><br><span class="line">Output: -1</span><br></pre></td></tr></table></figure></p><p>给定一个升序数组, 在某个pivot位置发生了颠倒, 同时给定一个target, 在数组中查找确定这个target是否在这个数组中. 如果在, 返回它的下标index, 如果不在,返回-1.</p><p>假设数组中不存在重复元素. </p><p>要求时间复杂度为O(logn).</p><h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>从背景题意中,可以看出数组可以看做是一个有序数组的变形, 一个数组分为两个有序的子数组: 左边一部分和右边一部分. 同时左右两个小数组都是有序的. 同时根据题目关于时间复杂度的要求,可以看出,真正的解决方法应该是使用二分查找法. </p><p>但是这里不能直接使用二分查找法,因为整个数组并不是有序的, 所以需要对二分查找做一个变形. <strong>确保查找,变换的范围的数字是有序的</strong>. 之后就可以使用二分查找了.</p><p>这里就根据nums[mid] 和 nums[right]之间的大小关系确定子数组[mid, right]是否是有序的:</p><ul><li>如果nums[mid]  &lt; nums[right]: 那么说明[mid, right]是有序的, 之前判断nums[mid]和查找数字target之间的对等关系, 相等直接返回结果; 不相等,执行到这里后, 在[mid, right]子数组范围内, 我们在判断target所坐落的范围. 在[mid, right]这个子数组范围内, 如果target在这个范围内, 那么我们修改left指针的值, 否则修改right指针的值.</li><li>否则, 说明[left, mid]这个子范围是有序的, 同样,我们判断target是否在这个区间内, 如果在, 变化right指针, 如果不在,变化left指针.</li></ul><p>有一点需要注意的是, 这里先判断了nums[mid]和nums[right]的大小关系, 而不是nums[mid]和nums[left]的大小关系, 如果先判断后者的话, nums[left] &lt; nums[mid],变换left指针后, 容易出错. 本质在于, int运算的除法的取整性. left有可能等于mid. 加入target正好在left位置处, 而right=left+1, 那么mid=left, 这样变化后,找到target, 返回错误结果.</p><p>具体代码如下:</p><h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.size() - <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (nums[mid] == target) </span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="comment">// 如果target就在left处, 这样left变为mid+1, 导致出错.</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &lt; nums[right])&#123;<span class="comment">// 先检测后半段;因为有可能mid==left</span></span><br><span class="line">                <span class="keyword">if</span> (nums[mid] &lt; target &amp;&amp; nums[right] &gt;= target)</span><br><span class="line">                    left = mid + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    right = mid <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>  &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[left] &lt;= target &amp;&amp; nums[mid] &gt; target)</span><br><span class="line">                    right = mid - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    left = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://fja0kl.github.io/2019/05/28/LeetCode-4-Median-of-Two-Sorted-Arrays/">[LeetCode]4. Median of Two Sorted Arrays</a></li><li><a href="http://fja0kl.github.io/2019/06/19/LeetCode-33-Search-in-Rotated-Sorted-Array/">[LeetCode]33. Search in Rotated Sorted Array</a></li><li><a href="http://fja0kl.github.io/2019/06/20/LeetCode-81-Search-in-Rotated-Sorted-Array-II/">[LeetCode]81. Search in Rotated Sorted Array II</a></li></ul></div>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;p&gt;title: [LeetCode]33. Search in Rotated Sorted Array
-tags: binary-search&lt;/p&gt;
-&lt;h2 id=&quot;notebook-LeetCode&quot;&gt;&lt;a href=&quot;#notebook-LeetCode&quot; 
       
     
     </summary>
